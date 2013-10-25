@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Sans">
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lobster">
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-tagsinput.css">
         <link rel="stylesheet" href="assets/css/font-awesome.css">
         <link rel="stylesheet" href="assets/css/style.css">
 
@@ -42,13 +43,13 @@
                             </h1>
                             <div class="nav-collapse collapse">
                                 <ul class="nav pull-right">
-                                    <li class="current-page">
+                                    <li>
                                         <a href="index.html"><i class="icon-home"></i><br />Accueil</a>
                                     </li>
                                     <li>
                                         <a href="#"><i class="icon-comments"></i><br />Mon Feed</a>
                                     </li>
-                                    <li>
+                                    <li class="current-page">
                                         <a href="profil.html"><i class="icon-user"></i><br />Mon Profil</a>
                                     </li>
                                     <li>
@@ -70,25 +71,27 @@
                 <div class="row">
                     <div class="span12">
                         <i class="icon-tasks page-title-icon"></i>
-                        <h2>Share! /</h2>
-                        <p>Vous pouvez vous connecter ou vous enregistrer si vous n'avez pas de compte.</p>
+                        <h2>Bienvenue, <b class="blue">#</b> /</h2>
+                        <p>Vous pouvez consulter vos informations et postez des liens.</p>
                     </div>
                 </div>
             </div>
         </div>
 		
-			<img src="linkfeed.jpg"   width="750" class="img-rounded">
-		
 <div class="container">
     <div class="row">
+	
 		<div class="span4 offset4 well">
+			<h2 class="blue">Partage de lien :</h2><br>
 			<form method="POST" action="" accept-charset="UTF-8">
-			<input type="text" id="username" class="span4" name="username" placeholder="Nom de compte" required>
-			<input type="password" id="password" class="span4" name="password" placeholder="Mot de passe" required>
-			<button type="submit" name="submit" class="btn btn-info btn-block">Se connecter</button>
+			<input type="url" id="url" class="span4" name="url" placeholder="URL" required>
+			
+			<p class="blue">Tags :</p>
+			<input type="text" value="" data-role="tagsinput"/>
+			
 			<hr>
-			<legend>Vous n'avez pas encore de compte? Inscrivez-vous!</legend>
-			<button type="submit" name="submit" class="btn btn-info btn-block">S'enregistrer</button>
+			<button type="submit" name="submit" class="btn btn-info btn-block">Partager!</button>
+
 			</form>    
 		</div>
 	</div>
@@ -96,8 +99,13 @@
 		
 		
 		
+
+
+
+        <!-- Javascript -->
         <script src="assets/js/jquery-1.8.2.min.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap-tagsinput.min.js"></script>
 
     </body>
 
