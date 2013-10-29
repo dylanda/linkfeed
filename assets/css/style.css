@@ -50,7 +50,11 @@ strong { font-weight: bold; }
    display: inline-block;
     text-indent: -9999px;
     width: 280px;
+<<<<<<< HEAD
     height: 30px;
+=======
+    height: 63px;
+>>>>>>> 32ce8683d9837408d860cf7f6869e10b468269e4
     padding: 30px 0;
    background: url(../img/logo.png) 20px center no-repeat; 
 }
@@ -61,13 +65,21 @@ strong { font-weight: bold; }
 }
 
 .header ul.nav li a {
+<<<<<<< HEAD
     padding: 15px 20px 20px 20px;
+=======
+    padding: 30px 20px 35px 20px;
+>>>>>>> 32ce8683d9837408d860cf7f6869e10b468269e4
     color: #5d5d5d;
     text-shadow: none;
 }
 
 .header ul.nav li.current-page a {
+<<<<<<< HEAD
     padding-top: 10px;
+=======
+    padding-top: 25px;
+>>>>>>> 32ce8683d9837408d860cf7f6869e10b468269e4
     border-top: 5px solid #1f5575;
     background: #f8f8f8;
 }
