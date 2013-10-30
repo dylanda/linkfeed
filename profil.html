@@ -80,14 +80,15 @@
 	
 		<div class="span4 offset4 well">
 			<h2 class="blue">Partage de lien :</h2><br>
-			<form method="POST" action="" accept-charset="UTF-8">
+			<form method="POST" action="http://127.0.0.1:8080/lien/new" accept-charset="UTF-8">
 			<input type="url" id="url" class="span4" name="url" placeholder="URL" required>
 			
 			<p class="blue">Tags :</p>
-			<input type="text" value="" data-role="tagsinput"/>
-			
+			<!-- <input type="text" value="" name="tags" data-role="tagsinput"/> -->
+			<select name="tags" multiple data-role="tagsinput">
+            </select>
 			<hr>
-			<button type="submit" name="submit" class="btn btn-info btn-block">Partager!</button>
+			<button type="submit" class="btn btn-info btn-block">Partager!</button>
 
 			</form>    
 		</div>
