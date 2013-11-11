@@ -16,7 +16,7 @@ app.configure(function(){
 		app.set('views',__dirname + '/views');
 		app.set('view engine','jade');
 		app.use(express.bodyParser());
-		app.use(express.static(__dirname + '/public/assets'));
+		app.use(express.static(__dirname + '/public'));
 });
 
 //users
@@ -43,45 +43,16 @@ app.post('/user/new', function(request,response){
 					response.render('profil.jade',request.body);
 				}
 				else{
-					response.render('index.jade',{messageError:"L'utilisateur existe déjà"});
+					response.render('index.jade',{messageError2:"L'utilisateur existe déjà"});
 				}
 		});
 });
 
-/*app.get('/user/:id', function(request, response) {
-        db.users.find({"_id":request.params.id},function(err,user){
-        console.log(request.params.id);
-        //        console.log(msg);
-        response.redirect('http://127.0.0.1:8888/Linkfeed/profil.html');
-        });
-});
-
-app.post("/user/new",function(request, response){
-        console.log("J'ai eu un post!");
-        console.log(request.body);
-        var user = {};
-        user = request.body;
-        user = db.users.insert(user);
-        console.log("Nouvel utilisateur enregistré");
-        response.redirect('http://127.0.0.1:8888/Linkfeed/index.html');
-});
-
-app.get("/lien/:auteur", function(request,response){
-		db.liens.find({"auteur":request.params.auteur},function(err,liens){
-		console.log(request.params.id);
-		response.redirect('http://127.0.0.1:8888/Linkfeed/profil.html');
-		});
-});*/
-
-// liens	
-app.post("/lien/new",function(request, response){
-        console.log("J'ai eu un post!");
-        console.log(request.body);
-        var lien = {};
-        lien = request.body;
-        lien = db.liens.insert(lien);
-        console.log("Nouveau lien enregistré");
-        response.redirect('http://127.0.0.1:8888/Linkfeed/profil.html');
+//liens
+app.post('/lien/new',function(request,response){
+		db.liens.insert({_id:request.body.username, url:request.body.url, description:request.body.description, tags:request.body.tags});
+		console.log("Nouveau lien enregistré");
+		response.render('profil.jade',request.body);
 });
 
 app.listen(8080);
