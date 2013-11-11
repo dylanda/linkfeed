@@ -6,9 +6,9 @@ html(lang='fr')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Droid+Sans')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster')
-		link(rel='stylesheet', href='public/bootstrap/css/bootstrap.min.css')
-		link(rel='stylesheet', href='public/css/font-awesome.css')
-		link(rel='stylesheet', href='public/css/style.css')
+		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/css/font-awesome.css')
+		link(rel='stylesheet', href='/css/style.css')
 		//if lt IE 9
 		script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
 		style.
@@ -22,33 +22,33 @@ html(lang='fr')
 					div.navbar.navbar-fixed-top
 						div.navbar-inner
 							a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
-							span.icon-bar
-							span.icon-bar
-							span.icon-bar
+								span.icon-bar
+								span.icon-bar
+								span.icon-bar
 							h1
-							a.brand LinkFeed
-						div.nav-collapse.collapse
-							ul.nav.pull-right
-							li.current-page
-								a(href='index.html')
-								i.icon-home
-								br
-								| Accueil
-							li
-								a(href='feed.html')
-								i.icon-comments
-								br
-								| Mon Feed
-							li
-								a(href='profil.html')
-								i.icon-user
-								br
-								| Mon Profil
-							li
-								a(href='#')
-								i.icon-off
-								br
-								| Déconnexion
+								a.brand LinkFeed
+							div.nav-collapse.collapse
+								ul.nav.pull-right
+									li.current-page
+										a(href='index.html')
+											i.icon-home
+											br
+											| Accueil
+									li
+										a(href='feed.html')
+											i.icon-comments
+											br
+											| Mon Feed
+									li
+										a(href='profil.html')
+											i.icon-user
+											br
+											| Mon Profil
+									li
+										a(href='#')
+											i.icon-off
+											br
+											| Déconnexion
 		div.page-title
 			div.container
 				div.row
@@ -56,31 +56,37 @@ html(lang='fr')
 						i.icon-tasks.page-title-icon
 							h2 Share ! /
 							p Connectez-vous ou rejoignez-nous !
+							
 		img.img-rounded(src='linkfeed.jpg', width='750')
+		
 		div.container
 			div.row
 				div.span4.offset2.well
 					legend Identifiez-vous !
+					span #{messageError}
 					form(method='POST', action='http://127.0.0.1:8080/user/login', accept-charset='UTF-8')
-					input#username.span4(type='text', name='username', placeholder='Nom d\'utilisateur', required='required')
-					input#mdp.span4(type='password', name='mdp', placeholder='Mot de passe', required='required')
-					button.btn.btn-info.btn-block(type='submit') Se connecter
+						input#username.span4(type='text', name='username', placeholder='Nom d\'utilisateur', required='required')
+						input#mdp.span4(type='password', name='mdp', placeholder='Mot de passe', required='required')
+						button.btn.btn-info.btn-block(type='submit') Se connecter
 				div.span3.well
 					legend Pas encore inscrit ?
 					a.btn.btn-success.btn-block(data-toggle='modal', href='#myModal') S'inscrire
-		div#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+					
+		#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 			div.modal-dialog
 				div.modal-content
 					div.modal-header
 						button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
 						h4.modal-title Inscription
 					div.modal-body
+						span #{messageError2}
 						form(method='POST', action='http://127.0.0.1:8080/user/new', accept-charset='UTF-8')
-						input#username.span4(type='text', name='username', placeholder='Nom d\'utilisateur', required='required')
-						input#mdp.span4(type='password', name='mdp', placeholder='Mot de passe', required='required')
-						input#email.span4(type='email', name='email', placeholder='Email', required='required')
-						button.btn.btn-success(style='width: 30%;', type='submit') Valider
+							input#username.span4(type='text', name='username', placeholder='Nom d\'utilisateur', required='required')
+							input#mdp.span4(type='password', name='mdp', placeholder='Mot de passe', required='required')
+							input#email.span4(type='email', name='email', placeholder='Email', required='required')
+							br
+							button.btn.btn-success(style='width: 30%;', type='submit') Valider
 					div.modal-footer
 						button.btn.btn-danger(type='button', data-dismiss='modal') Annuler
-		script(src='public/js/jquery-1.8.2.min.js')
-		script(src='public/bootstrap/js/bootstrap.min.js')
+		script(src='/js/jquery-1.8.2.min.js')
+		script(src='/bootstrap/js/bootstrap.min.js')
