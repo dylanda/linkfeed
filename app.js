@@ -31,7 +31,6 @@ app.post('/user/login', function(request,response){
 				}
 				else{
 					response.render('profil.jade',request.body);
-					response.redirect('http://127.0.0.1:8888/Linkfeed/profil.html');
 				}
 		});
 });
@@ -42,7 +41,6 @@ app.post('/user/new', function(request,response){
 					db.users.insert({_id:request.body.username, mdp:request.body.mdp, email:request.body.email});
 					console.log("Nouvel utilisateur enregistré");
 					response.render('profil.jade',request.body);
-					response.redirect('http://127.0.0.1:8888/Linkfeed/index.html');
 				}
 				else{
 					response.render('index.jade',{messageError:"L'utilisateur existe déjà"});

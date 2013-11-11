@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+
+  <head>
+
+    <meta charset="utf-8">
+    <title>LinkFeed - Share what you Care</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="http:/fonts.googleapis.com/css?family=Open+Sans:400italic,400">
+    <link rel="stylesheet" href="http:/fonts.googleapis.com/css?family=Droid+Sans">
+    <link rel="stylesheet" href="http:/fonts.googleapis.com/css?family=Lobster">
+    <link rel="stylesheet" href="public/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/bootstrap/css/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="public/css/font-awesome.css">
+    <link rel="stylesheet" href="public/css/style.css">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+        <script src="http:/html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    <style>
+      body{
+      padding-top:100px;
+      }
+    </style>
+
+
+  </head>
+
+  <body>
+
+    <!-- Header -->
+    <div class="container">
+      <div class="header row">
+        <div class="span12">
+          <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </a>
+              <h1>
+                <a class="brand" href="index.html">LinkFeed</a>
+              </h1>
+              <div class="nav-collapse collapse">
+                <ul class="nav pull-right">
+                  <li>
+                    <a href="index.html"><i class="icon-home"></i><br />Accueil</a>
+                  </li>
+                  <li>
+                    <a href="feed.html"><i class="icon-comments"></i><br />Mon Feed</a>
+                  </li>
+                  <li class="current-page">
+                    <a href="profil.html"><i class="icon-user"></i><br />Mon Profil</a>
+                  </li>
+                  <li>
+                    <a href="index.html"><i class="icon-off"></i><br />Déconnexion</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="page-title">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <i class="icon-tasks page-title-icon"></i>
+            <h2>Bienvenue, <b class="blue">Prénom Nom</b> /</h2>
+            <p>Vous pouvez consulter vos informations et postez des liens.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container">
+      <div class="row">
+	
+	<div class="span4 offset4 well">
+	  <h2 class="blue">Partage de lien :</h2><br>
+	  <form method="POST" action="http:/127.0.0.1:8080/lien/new" accept-charset="UTF-8">
+	    <input type="url" id="url" class="span4" name="url" placeholder="URL" required>
+	    <input type="text" id="description" class="span4" name="description" placeholder="Description"required>
+	    <p class="blue">Tags :</p>
+	    <select id="tags" name="tags" multiple data-role="tagsinput"></select>
+	    
+	    <hr>
+	    <button type="submit" class="btn btn-info btn-block">Partager !</button>
+
+	  </form>    
+	</div>
+      </div>
+    </div>	
+    
+    <!-- Javascript -->
+    <script src="public/js/jquery-1.8.2.min.js"></script>
+    <script src="public/bootstrap/js/bootstrap.min.js"></script>
+    <script src="public/bootstrap/js/bootstrap-tagsinput.min.js"></script>
+
+  </body>
+
+</html>
+
