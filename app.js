@@ -19,11 +19,12 @@ app.configure(function(){
 		app.use(express.static(__dirname + '/public'));
 });
 
-//users
+//index
 app.get('/',function(request,response){
 		response.render("index.jade");
 });
 
+//users
 app.post('/user/login', function(request,response){
 		db.users.find({_id:request.body.username},function(error,user){
 				if(user.length==0 || user[0].mdp != request.body.mdp){
