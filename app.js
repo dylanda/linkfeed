@@ -44,6 +44,7 @@ app.post('/user/new', function(request,response){
 					response.render('profil.jade',request.body);
 				}
 				else{
+					//response.alert('L\'utilisateur existe déjà');
 					response.render('index.jade',{messageError2:"L'utilisateur existe déjà"});
 				}
 		});
@@ -51,7 +52,7 @@ app.post('/user/new', function(request,response){
 
 //liens
 app.post('/lien/new',function(request,response){
-		db.liens.insert({_id:request.body.username, url:request.body.url, description:request.body.description, tags:request.body.tags});
+		db.liens.insert({url:request.body.url, description:request.body.description, tags:request.body.tags});
 		console.log("Nouveau lien enregistré");
 		response.render('profil.jade',request.body);
 });
