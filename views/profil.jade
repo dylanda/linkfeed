@@ -30,12 +30,12 @@ html(lang='fr')
 							div.nav-collapse.collapse
 								ul.nav.pull-right
 									li
-										a(href='feed.html')
+										a(href='/feed')
 											i.icon-comments
 											br
 											| Mon Feed
 									li.current-page
-										a(href='profil.html')
+										a(href='/profil')
 											i.icon-user
 											br
 											| Mon Profil
@@ -58,15 +58,38 @@ html(lang='fr')
 		div.container
 			div.row
 				div.span4.offset4.well
-					h2.blue Partage de lien :
+					h3.blue Partage de lien :
 					br
 					form(method="POST", action="http://127.0.0.1:8080/lien/new", accept-charset="UTF-8")
 						input#url.span4(type="url", name="url", placeholder="URL", required="required")
 						input#description.span4(type="text", name="description", placeholder="Description", required="required")
-						p.blue Tags :
+						p.blue 
+							i.icon-tags
+							| Tags :
 						select#tags(name="tags", multiple data-role="tagsinput")
 						hr
-						button.btn.btn-info.btn-block(type="submit") Partager !
+						button.btn.btn-info.btn-block(type="submit")
+							i.icon-share
+							|  Partager !
+		
+		div.container
+			div.row
+				div.span12
+					h4.blue Vos liens publiés :
+					br
+					table.table
+						tbody
+							tr
+								td 
+									a(href='#{url}' target='_blank') #{url}
+								td #{tags}
+								td #{description}
+								td
+									a(href="#")
+										button.close(type='button',aria-hidden='true') ×
+									
+								
+		
 		script(src="/js/jquery-1.8.2.min.js")
 		script(src="/bootstrap/js/bootstrap.min.js")
 		script(src="/bootstrap/js/bootstrap-tagsinput.min.js")
