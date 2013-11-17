@@ -10,7 +10,9 @@ var app = express();
 
 
 
-//Configuration
+//------------------------------
+// 			Configuration
+//------------------------------
 
 app.configure(function(){
 		app.set('views',__dirname + '/views');
@@ -22,31 +24,40 @@ app.configure(function(){
 });
 
 
-//fonction callback
-function requiresLogin(req,res,next) {
-    console.log("on test si la session existe");
-    if(req.session.user){
+//------------------------------
+//			test session
+//------------------------------
+
+function requiresLogin(request,response,next) {
+    if(request.session.user){
         next();
     } else {
-        res.render('index.jade');
+        response.render('index.jade');
     }
 };
 
 
-//index
+//------------------------------
+//			index
+//------------------------------
 app.get('/',requiresLogin, function(request,response){
-		response.render("profil.jade",request.session);
+		response.redirect("/feed");
 });
 
-//users
+
+
+//------------------------------
+//			Users
+//------------------------------
+
 app.post('/user/login', function(request,response){
 		db.users.find({_id:request.body.username},function(error,user){
 				if(user.length==0 || user[0].mdp != request.body.mdp){
-					response.render('index.jade',{messageError:"Mauvais login ou mot de passe"});
+					response.render('index.jade',{messageError:'Mauvais login ou mot de passe'});
 				}
 				else{
 					request.session.user = request.body.username;
-					response.render('profil.jade',request.session);
+					response.redirect('/feed');
 				}
 		});
 });
@@ -58,29 +69,51 @@ app.post('/user/new', function(request,response){
 					db.users.insert({_id:request.body.username, mdp:request.body.mdp, email:request.body.email});
 					console.log("Nouvel utilisateur enregistré");
 					request.session.user = request.body.username;
-					response.render('profil.jade',request.session);
+					response.redirect('/feed');
 				}
 				else{
+					response.redirect('/');
 					response.render('index.jade',{messageError2:"L'utilisateur existe déjà"});
 				}
 		});
 });
 
 
-//liens
-app.post('/lien/new',function(request,response){
-		db.liens.insert({_id:request.session.user, url:request.body.url, description:request.body.description, tags:request.body.tags});
+//--------------------------------------
+// 				liens
+//--------------------------------------
+app.post('/lien/new',requiresLogin,function(request,response){
+		var lien={url:request.body.url, description:request.body.description, tags:request.body.tags, user:request.session.user};
+		db.liens.insert(lien);
 		console.log("Nouveau lien enregistré");
-		response.render('profil.jade',request.session);
+		response.redirect('/profil');
+		//response.render('profil.jade',request.session);
+});
+
+//filtrage des liens du profil
+app.get('/profil',requiresLogin,function(request,response){
+		var auteur=request.session.user;
+		db.liens.find({user:auteur},function(err,link){
+			response.render('profil',{links: link});
+		});
+});
+
+//afficher tous les liens dans le feed
+app.get('/feed',requiresLogin,function(req,res){
+		db.liens.find({}, function(err, link){
+			res.render('feed', {links: link});
+			});
 });
 
 
-//logout
+//----------------------------------
+//			fermeture session
+//----------------------------------
 app.get("/user/logout", function(request, response){
         if(request.session.user){
                 request.session.user=undefined;
         }
-        response.render('index.jade');
+        response.redirect('/');
 });
 
 app.listen(8080);

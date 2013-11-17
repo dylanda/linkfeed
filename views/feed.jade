@@ -55,15 +55,9 @@ html(lang='fr')
 		div.container
 			div.row
 				div.span12
-					table.table
-						tbody
-							tr
-								td #{user}
-								td 
-									a(href='#{url}' target='_blank') #{url}
-								td #{tags}
-								td #{description}
-					
+					each link in links
+						p URL: #{link.url} Description : #{link.description} Tags: #{link.tags}
+
 		script(src="/js/jquery-1.8.2.min.js")
 		script(src="/bootstrap/js/bootstrap.min.js")
 		script(src="/bootstrap/js/bootstrap-tagsinput.min.js")

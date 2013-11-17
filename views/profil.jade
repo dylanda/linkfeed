@@ -77,16 +77,8 @@ html(lang='fr')
 				div.span12
 					h4.blue Vos liens publiés :
 					br
-					table.table
-						tbody
-							tr
-								td 
-									a(href='#{url}' target='_blank') #{url}
-								td #{tags}
-								td #{description}
-								td
-									a(href="#")
-										button.close(type='button',aria-hidden='true') ×
+					each link in links
+						p URL: #{link.url} Description : #{link.description} Tags: #{link.tags}					
 									
 								
 		
