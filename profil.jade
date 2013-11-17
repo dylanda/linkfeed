@@ -1,0 +1,108 @@
+!!! 5
+html(lang='fr')
+	head
+		meta(charset='utf-8')
+		title LinkFeed - Share what you Care
+		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400')
+		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Droid+Sans')
+		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster')
+		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/css/font-awesome.css')
+		link(rel='stylesheet', href='/css/style.css')
+		//if lt IE 9
+		script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
+		style.
+			body{
+			padding-top:100px;
+			}
+	body
+		div.container
+			div.header.row
+				div.span12
+					div.navbar.navbar-fixed-top
+						div.navbar-inner
+							a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+								span.icon-bar
+								span.icon-bar
+								span.icon-bar
+							h1
+								a.brand LinkFeed
+							div.nav-collapse.collapse
+								ul.nav.pull-right
+									li
+										a(href='/feed')
+											i.icon-comments
+											br
+											| Mon Feed
+									li.current-page
+										a(href='/profil')
+											i.icon-user
+											br
+											| Mon Profil
+									li
+										a(href='/user/logout')
+											i.icon-off
+											br
+											| Déconnexion
+
+		div.page-title
+			div.container
+				div.row
+					div.span12
+						i.icon-tasks.page-title-icon
+						h2
+							| Bienvenue, 
+							b.blue #{auteur}
+							| /
+							p Vous pouvez consulter vos informations et postez des liens.
+							
+						form.form-search.pull-right(method="POST",action="http://127.0.0.1:8080/profil/search",accept-charset="UTF-8")
+							div.input-append
+								input.search-query#searchfield(type="text" name="searchfield" placeholder="Recherche par tags")
+								button.btn.btn-info(type="submit")
+									i.icon-search
+									|  Recherche
+		
+		div.container
+			div.row
+				div.span10.offset1.well
+					h3.blue Partage de lien :
+					br
+					form(method="POST", action="http://127.0.0.1:8080/lien/new", accept-charset="UTF-8")
+						input#url.span4(type="url", name="url", placeholder="URL", required="required")
+						input#description.span4(type="text", name="description", placeholder="Description", required="required")
+						p.blue 
+							i.icon-tags
+							| Tags :
+						select#tags(name="tags", multiple data-role="tagsinput")
+						hr
+						button.btn.btn-info.btn-lg(type="submit")
+							i.icon-share
+							|  Partager !
+		
+		div.container
+			div.row
+				div.span12
+					h4.blue Vos liens publiés :
+					br
+					table.table
+						thead
+							tr
+								th URL
+								th Description
+								th Tags
+						tbody
+							each link in links
+								tr
+									td 
+										a(href="#{link.url}" target="_blank") #{link.url}
+										
+									td #{link.description}
+										
+									td #{link.tags}				
+									
+								
+		
+		script(src="/js/jquery-1.8.2.min.js")
+		script(src="/bootstrap/js/bootstrap.min.js")
+		script(src="/bootstrap/js/bootstrap-tagsinput.min.js")
