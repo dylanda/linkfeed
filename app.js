@@ -53,7 +53,6 @@ app.get('/',requiresLogin, function(request,response){
 app.post('/user/login', function(request,response){
 		db.users.find({_id:request.body.username},function(error,user){
 				if(user.length==0 || user[0].mdp != request.body.mdp){
-					response.render('index.jade',{messageError:'Mauvais login ou mot de passe'});
 					response.render('index',{messageError:'Mauvais login ou mot de passe'});
 				}
 				else{
@@ -74,7 +73,6 @@ app.post('/user/new', function(request,response){
 				}
 				else{
 					response.redirect('/');
-					response.render('index.jade',{messageError2:"L'utilisateur existe déjà"});
 					response.render('index',{messageError2:"L'utilisateur existe déjà"});
 				}
 		});
@@ -82,7 +80,6 @@ app.post('/user/new', function(request,response){
 
 
 //--------------------------------------
-// 				liens
 // 				partage de liens
 //--------------------------------------
 app.post('/lien/new',requiresLogin,function(request,response){
@@ -93,7 +90,6 @@ app.post('/lien/new',requiresLogin,function(request,response){
 		//response.render('profil.jade',request.session);
 });
 
-//filtrage des liens du profil
 //affichage des liens du profil
 app.get('/profil',requiresLogin,function(request,response){
 		var auteur=request.session.user;
@@ -103,22 +99,12 @@ app.get('/profil',requiresLogin,function(request,response){
 });
 
 //afficher tous les liens dans le feed
-app.get('/feed',requiresLogin,function(req,res){
 app.get('/feed',requiresLogin,function(request,response){
 		db.liens.find({}, function(err, link){
-			res.render('feed', {links: link});
 			response.render('feed', {links: link});
 			});
 });
 
-//supprimer lien
-app.get('/delete/:id',requiresLogin,function(req,res){
-	var ObjectID = require('mongodb').ObjectID;
-	var idString = req.params.id;
-	db.liens.remove({_id: new ObjectID(idString)},function(err,todo){
-			res.redirect('/profil');
-        });
-	
 //------------------------------------
 // 			filtres
 //------------------------------------
