@@ -55,8 +55,25 @@ html(lang='fr')
 		div.container
 			div.row
 				div.span12
-					each link in links
-						p URL: #{link.url} Description : #{link.description} Tags: #{link.tags}
+					table.table
+						thead
+							tr
+								th URL
+								th User
+								th Description
+								th Tags
+						tbody
+							each link in links
+								tr
+									td 
+										a(href="#{link.url}" target="_blank") #{link.url}
+									
+									td #{link.user}
+										
+									td #{link.description}
+										
+									td #{link.tags}
+										
 
 		script(src="/js/jquery-1.8.2.min.js")
 		script(src="/bootstrap/js/bootstrap.min.js")
