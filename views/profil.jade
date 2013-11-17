@@ -44,6 +44,7 @@ html(lang='fr')
 											i.icon-off
 											br
 											| Déconnexion
+
 		div.page-title
 			div.container
 				div.row
@@ -54,10 +55,16 @@ html(lang='fr')
 							b.blue #{user}
 							| /
 							p Vous pouvez consulter vos informations et postez des liens.
+						form.form-search.pull-right
+							div.input-append
+								input.search-query(type="text" placeholder="Recherche par tags")
+								button.btn.btn-info(type="submit")
+									i.icon-search
+									|  Recherche
 		
 		div.container
 			div.row
-				div.span4.offset4.well
+				div.span10.offset1.well
 					h3.blue Partage de lien :
 					br
 					form(method="POST", action="http://127.0.0.1:8080/lien/new", accept-charset="UTF-8")
@@ -68,7 +75,7 @@ html(lang='fr')
 							| Tags :
 						select#tags(name="tags", multiple data-role="tagsinput")
 						hr
-						button.btn.btn-info.btn-block(type="submit")
+						button.btn.btn-info.btn-lg(type="submit")
 							i.icon-share
 							|  Partager !
 		
@@ -77,8 +84,21 @@ html(lang='fr')
 				div.span12
 					h4.blue Vos liens publiés :
 					br
-					each link in links
-						p URL: #{link.url} Description : #{link.description} Tags: #{link.tags}					
+					table.table
+						thead
+							tr
+								th URL
+								th Description
+								th Tags
+						tbody
+							each link in links
+								tr
+									td 
+										a(href="#{link.url}" target="_blank") #{link.url}
+										
+									td #{link.description}
+										
+									td #{link.tags}				
 									
 								
 		
