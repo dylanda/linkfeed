@@ -74,7 +74,7 @@ html(lang='fr')
 			div.hide#partage
 				div.row
 					div.span10.offset1.well
-						button.close(onClick="$('#partage').hide('slow');$('#afficher').show();") ×
+						button.close(onClick="$('#partage').hide('slow');$('#afficher').show('slow');") ×
 						h3.blue Partage de lien :
 						form(method="POST", action="http://127.0.0.1:8080/lien/new", accept-charset="UTF-8")
 							input#url.span4(type="url", name="url", placeholder="URL", required="required")
