@@ -105,6 +105,16 @@ app.get('/feed',requiresLogin,function(request,response){
 			});
 });
 
+//supprimer lien
+app.get('/delete/:id',requiresLogin,function(req,res){
+	var ObjectID = require('mongodb').ObjectID;
+	var idString = req.params.id;
+	db.liens.remove({_id: new ObjectID(idString)},function(err,todo){
+			res.redirect('/profil');
+        });
+	
+});
+
 //------------------------------------
 // 			filtres
 //------------------------------------
