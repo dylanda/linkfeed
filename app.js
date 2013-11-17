@@ -122,17 +122,27 @@ app.get('/delete/:id',requiresLogin,function(req,res){
 //filtrage par tags dans le profil
 app.post('/profil/search',requiresLogin,function(request,response){
 		var tag=request.body.searchfield;
-		db.liens.find({tags:tag},function(err,link){
-			response.render('profil',{links:link});
-		});
+		if (tag != ''){
+			db.liens.find({tags:tag},function(err,link){
+				response.render('profil',{links:link});
+			});
+		}
+		else{
+			response.redirect('/profil');
+		}
 });
 
 //filtrage par tags dans le feed
 app.post('/feed/search',requiresLogin,function(request,response){
 		var tag=request.body.searchfield;
-		db.liens.find({tags:tag},function(err,link){
-			response.render('feed',{links:link});
-		});
+		if (tag !=''){
+			db.liens.find({tags:tag},function(err,link){
+				response.render('feed',{links:link});
+			});
+		}
+		else{
+			response.redirect('/feed');
+		}
 });
 
 
