@@ -56,13 +56,14 @@ html(lang='fr')
 							b.blue #{user}
 							| /
 							p Vous pouvez consulter vos informations et postez des liens.
-						form.form-search.pull-right
+							
+						form.form-search.pull-right(method="POST",action="http://127.0.0.1:8080/profil/search",accept-charset="UTF-8")
 							div.input-append
-								input.search-query(type="text" placeholder="Recherche par tags")
+								input.search-query#searchfield(type="text" name="searchfield" placeholder="Recherche par tags")
 								button.btn.btn-info(type="submit")
 									i.icon-search
 									|  Recherche
-		
+
 		div.container
 			button.btn.btn-info.btn-lg#afficher(onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');")
 				i.icon-share

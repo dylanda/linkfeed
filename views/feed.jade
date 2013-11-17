@@ -51,9 +51,10 @@ html(lang='fr')
 						i.icon-tasks.page-title-icon
 						h2 Découvrez ! / 
 							p  Voici les posts récents de vos amis
-						form.form-search.pull-right
+							
+						form.form-search.pull-right(method="POST",action="http://127.0.0.1:8080/feed/search",accept-charset="UTF-8")
 							div.input-append
-								input.search-query(type="text" placeholder="Recherche par tags")
+								input.search-query#searchfield(type="text" name="searchfield" placeholder="Recherche par tags")
 								button.btn.btn-info(type="submit")
 									i.icon-search
 									|  Recherche
