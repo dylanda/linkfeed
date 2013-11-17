@@ -32,7 +32,7 @@ function requiresLogin(request,response,next) {
     if(request.session.user){
         next();
     } else {
-        response.render('index.jade');
+        response.render('index');
     }
 };
 
@@ -54,6 +54,7 @@ app.post('/user/login', function(request,response){
 		db.users.find({_id:request.body.username},function(error,user){
 				if(user.length==0 || user[0].mdp != request.body.mdp){
 					response.render('index.jade',{messageError:'Mauvais login ou mot de passe'});
+					response.render('index',{messageError:'Mauvais login ou mot de passe'});
 				}
 				else{
 					request.session.user = request.body.username;
@@ -74,6 +75,7 @@ app.post('/user/new', function(request,response){
 				else{
 					response.redirect('/');
 					response.render('index.jade',{messageError2:"L'utilisateur existe déjà"});
+					response.render('index',{messageError2:"L'utilisateur existe déjà"});
 				}
 		});
 });
@@ -81,6 +83,7 @@ app.post('/user/new', function(request,response){
 
 //--------------------------------------
 // 				liens
+// 				partage de liens
 //--------------------------------------
 app.post('/lien/new',requiresLogin,function(request,response){
 		var lien={url:request.body.url, description:request.body.description, tags:request.body.tags, user:request.session.user};
@@ -91,6 +94,7 @@ app.post('/lien/new',requiresLogin,function(request,response){
 });
 
 //filtrage des liens du profil
+//affichage des liens du profil
 app.get('/profil',requiresLogin,function(request,response){
 		var auteur=request.session.user;
 		db.liens.find({user:auteur},function(err,link){
@@ -100,8 +104,10 @@ app.get('/profil',requiresLogin,function(request,response){
 
 //afficher tous les liens dans le feed
 app.get('/feed',requiresLogin,function(req,res){
+app.get('/feed',requiresLogin,function(request,response){
 		db.liens.find({}, function(err, link){
 			res.render('feed', {links: link});
+			response.render('feed', {links: link});
 			});
 });
 
@@ -113,6 +119,24 @@ app.get('/delete/:id',requiresLogin,function(req,res){
 			res.redirect('/profil');
         });
 	
+//------------------------------------
+// 			filtres
+//------------------------------------
+
+//filtrage par tags dans le profil
+app.post('/profil/search',requiresLogin,function(request,response){
+		var tag=request.body.searchfield;
+		db.liens.find({tags:tag},function(err,link){
+			response.render('profil',{links:link});
+		});
+});
+
+//filtrage par tags dans le feed
+app.post('/feed/search',requiresLogin,function(request,response){
+		var tag=request.body.searchfield;
+		db.liens.find({tags:tag},function(err,link){
+			response.render('feed',{links:link});
+		});
 });
 
 
