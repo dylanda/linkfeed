@@ -15,6 +15,7 @@ html(lang='fr')
 			body{
 			padding-top:100px;
 			}
+
 	body
 		div.container
 			div.header.row
@@ -51,7 +52,7 @@ html(lang='fr')
 					div.span12
 						i.icon-tasks.page-title-icon
 						h2
-							| Bienvenue, 
+							| Bienvenue 
 							b.blue #{user}
 							| /
 							p Vous pouvez consulter vos informations et postez des liens.
@@ -63,21 +64,26 @@ html(lang='fr')
 									|  Recherche
 		
 		div.container
-			div.row
-				div.span10.offset1.well
-					h3.blue Partage de lien :
-					br
-					form(method="POST", action="http://127.0.0.1:8080/lien/new", accept-charset="UTF-8")
-						input#url.span4(type="url", name="url", placeholder="URL", required="required")
-						input#description.span4(type="text", name="description", placeholder="Description", required="required")
-						p.blue 
-							i.icon-tags
-							| Tags :
-						select#tags(name="tags", multiple data-role="tagsinput")
-						hr
-						button.btn.btn-info.btn-lg(type="submit")
-							i.icon-share
-							|  Partager !
+			button.btn.btn-info.btn-lg#afficher(onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');")
+				i.icon-share
+				|  Partager un lien
+
+			br
+			br
+			div.hide#partage
+				div.row
+					div.span10.offset1.well
+						button.close(onClick="$('#partage').hide('slow');$('#afficher').show();") ×
+						h3.blue Partage de lien :
+						form(method="POST", action="http://127.0.0.1:8080/lien/new", accept-charset="UTF-8")
+							input#url.span4(type="url", name="url", placeholder="URL", required="required")
+							input#description.span4(type="text", name="description", placeholder="Description", required="required")
+								i.icon-tags
+								| Tags :
+							select#tags(name="tags", multiple data-role="tagsinput")
+							button.btn.btn-info.btn-lg(type="submit")
+								i.icon-share
+								|  Partager !
 		
 		div.container
 			div.row
@@ -100,7 +106,8 @@ html(lang='fr')
 										
 									td #{link.tags}				
 									
-								
+									td
+										a(href="/delete/#{link._id}") Supprimer le lien
 		
 		script(src="/js/jquery-1.8.2.min.js")
 		script(src="/bootstrap/js/bootstrap.min.js")

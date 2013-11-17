@@ -31,6 +31,7 @@ strong { font-weight: bold; }
 
 .header .navbar {
     margin-bottom: 0;
+	border-bottom: solid 3px #1f5575;
 }
 
 .header .navbar-inner {
@@ -46,7 +47,7 @@ strong { font-weight: bold; }
 
 .header h1 {
     float: left;
-    margin: 0;
+    margin-left: 30px;
     text-align: left;
 }
 
@@ -65,7 +66,7 @@ strong { font-weight: bold; }
 }
 
 .header ul.nav li a {
-    padding: 15px 20px 20px 20px;
+    padding: 15px 20px 38px 20px;
     color: #5d5d5d;
     text-shadow: none;
 }
