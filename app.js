@@ -127,8 +127,8 @@ app.post('/delete/:id',requiresLogin,function(req,res){
 app.post('/update/:id',requiresLogin,function(req,res){
 	var ObjectID = require('mongodb').ObjectID;
 	var idString = req.params.id;
-	var lien={url:request.body.url, description:request.body.description, tags:request.body.tags, user:request.session.user};
-	db.liens.save({_id: new ObjectID(idString), lien });
+	var lien={url:req.body.url, description:req.body.description, tags:req.body.tags, user:req.session.user};
+	db.liens.update({_id: new ObjectID(idString)}, lien);
 	res.redirect('/profil');
 });
 
