@@ -119,11 +119,19 @@ app.get('/delete/:id',requiresLogin,function(req,res){
 app.post('/delete/:id',requiresLogin,function(req,res){
 	var ObjectID = require('mongodb').ObjectID;
 	var idString = req.params.id;
-	db.liens.remove({_id: new ObjectID(idString)},function(err,todo){
-			res.redirect('/profil');
-        });
-	
+	db.liens.remove({_id: new ObjectID(idString)});
+	res.redirect('/profil');
 });
+
+//modifier lien
+app.post('/update/:id',requiresLogin,function(req,res){
+	var ObjectID = require('mongodb').ObjectID;
+	var idString = req.params.id;
+	var lien={url:request.body.url, description:request.body.description, tags:request.body.tags, user:request.session.user};
+	db.liens.save({_id: new ObjectID(idString), lien });
+	res.redirect('/profil');
+});
+
 
 //------------------------------------
 // 			filtres
