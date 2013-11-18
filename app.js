@@ -122,8 +122,9 @@ app.get('/delete/:id',requiresLogin,function(req,res){
 //filtrage par tags dans le profil
 app.post('/profil/search',requiresLogin,function(request,response){
 		var tag=request.body.searchfield;
+		var profil=request.session.user;
 		if (tag != ''){
-			db.liens.find({tags:tag},function(err,link){
+			db.liens.find({tags:tag,user:profil},function(err,link){
 				response.render('profil',{links:link});
 			});
 		}
