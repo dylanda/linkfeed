@@ -94,29 +94,51 @@ app.post('/lien/new',requiresLogin,function(request,response){
 app.get('/profil',requiresLogin,function(request,response){
 		var auteur=request.session.user;
 		db.liens.find({user:auteur},function(err,link){
-			response.render('profil',{links: link});
+		
+			// RECUPERATION TAGS dans DATA
+			db.users.find({},function(err,users){
+			
+				var data = new Array();
+				var k = 0;
+				for (var i=0; i<link.length; i++) {
+					for (var j=0; j<link[i].tags.length; j++) {
+						data[k] = "\"#"+link[i].tags[j]+"\"";
+						k = k +1;
+					}
+				}
+			// FIN	
+				response.render('profil',{links: link, data:data, user:request.session.user});
+			});
 		});
 });
 
 //afficher tous les liens dans le feed
 app.get('/feed',requiresLogin,function(request,response){
-		db.liens.find({}, function(err, link){
-			response.render('feed', {links: link});
+		db.liens.find({},function(err,link){
+		
+			// RECUPERATION TAGS et USERS dans DATA
+			db.users.find({},function(err,users){
+			
+				var data = new Array();
+				var k = 0;
+				for (var i=0; i<link.length; i++) {
+					for (var j=0; j<link[i].tags.length; j++) {
+						data[k] = "\"#"+link[i].tags[j]+"\"";
+						k = k +1;
+					}
+				}
+				for (var i=0; i<users.length; i++) {
+					data[k] = "\"@"+users[i]._id+"\"";
+					k = k +1;
+				}
+			// FIN	
+				response.render('feed',{links: link, data:data, user:request.session.user});
 			});
+		});
 });
 
 //supprimer lien
 app.get('/delete/:id',requiresLogin,function(req,res){
-	var ObjectID = require('mongodb').ObjectID;
-	var idString = req.params.id;
-	db.liens.remove({_id: new ObjectID(idString)},function(err,todo){
-			res.redirect('/profil');
-        });
-	
-});
-
-//supprimer lien
-app.post('/delete/:id',requiresLogin,function(req,res){
 	var ObjectID = require('mongodb').ObjectID;
 	var idString = req.params.id;
 	db.liens.remove({_id: new ObjectID(idString)});
@@ -140,10 +162,11 @@ app.post('/update/:id',requiresLogin,function(req,res){
 //filtrage par tags dans le profil
 app.post('/profil/search',requiresLogin,function(request,response){
 		var tag=request.body.searchfield;
+		tag = tag.replace('#','');
 		var profil=request.session.user;
 		if (tag != ''){
 			db.liens.find({tags:tag,user:profil},function(err,link){
-				response.render('profil',{links:link});
+				response.render('profil',{links:link, user:request.session.user});
 			});
 		}
 		else{
@@ -153,11 +176,20 @@ app.post('/profil/search',requiresLogin,function(request,response){
 
 //filtrage par tags dans le feed
 app.post('/feed/search',requiresLogin,function(request,response){
-		var tag=request.body.searchfield;
-		if (tag !=''){
-			db.liens.find({tags:tag},function(err,link){
-				response.render('feed',{links:link});
-			});
+		var data=request.body.searchfield;
+		if (data !=''){
+			if (data.charAt(0)=='#'){
+				data = data.replace('#','');
+				db.liens.find({tags:data},function(err,link){
+					response.render('feed',{links:link});
+				});
+			}
+			else if (data.charAt(0)=='@'){
+				data = data.replace('@','');
+				db.liens.find({user:data},function(err,link){
+					response.render('feed',{links:link});
+				});
+			}
 		}
 		else{
 			response.redirect('/feed');

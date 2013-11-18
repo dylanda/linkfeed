@@ -54,7 +54,7 @@ html(lang='fr')
 							
 						form.form-search.pull-right(method="POST",action="http://127.0.0.1:8080/feed/search",accept-charset="UTF-8")
 							div.input-append
-								input.search-query#searchfield(type="text" name="searchfield" placeholder="Recherche par tags")
+								input.search-query#searchfield(type="text" name="searchfield" placeholder="Recherche" data-provide='typeahead', autocomplete='off', data-items='10', data-source='[#{data}]')
 								button.btn.btn-info(type="submit")
 									i.icon-search
 									|  Recherche
