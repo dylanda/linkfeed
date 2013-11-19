@@ -3,19 +3,17 @@ var express=require('express');
 var environment = process.env.NODE_ENV;
 
 if(environment=='production'){
-//var host="mongodb://dylan.daconceicao@gmail.com:feedlink01@paulo.mongohq.com"; 
-var host=process.env.MONGOHQ_URL; //test
-var port="10000";
-var database="app18715371";
+var databaseUrl=process.env.MONGOHQ_URL; 
 console.log("HEROKU");
 }
 else{
 var host="localhost";
 var port="27017";
 var database="linkfeed";
+var databaseUrl = host+":"+port+"/"+database;
 console.log("LOCAL");
 }
-var databaseUrl = host+":"+port+"/"+database;
+
 var collections = ["users","liens"];
 var db = require("mongojs").connect(databaseUrl, collections);
 var app = express();
