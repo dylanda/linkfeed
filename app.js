@@ -120,9 +120,11 @@ app.get('/profil',requiresLogin,function(request,response){
 				var data = new Array();
 				var k = 0;
 				for (var i=0; i<link.length; i++) {
-					for (var j=0; j<link[i].tags.length; j++) {
-						data[k] = "\"#"+link[i].tags[j]+"\"";
-						k = k +1;
+					if(link[i].tags!=null){
+						for (var j=0; j<link[i].tags.length; j++) {
+							data[k] = "\"#"+link[i].tags[j]+"\"";
+							k = k +1;
+						}
 					}
 				}
 			// FIN	
@@ -141,9 +143,11 @@ app.get('/feed',requiresLogin,function(request,response){
 				var data = new Array();
 				var k = 0;
 				for (var i=0; i<link.length; i++) {
-					for (var j=0; j<link[i].tags.length; j++) {
-						data[k] = "\"#"+link[i].tags[j]+"\"";
-						k = k +1;
+					if(link[i].tags!=null){
+						for (var j=0; j<link[i].tags.length; j++) {
+							data[k] = "\"#"+link[i].tags[j]+"\"";
+							k = k +1;
+						}
 					}
 				}
 				for (var i=0; i<users.length; i++) {
