@@ -220,6 +220,7 @@ app.get("/user/logout", function(request, response){
         response.redirect('/');
 });
 
-app.listen(8080);
-console.log('Express server listening on port 8080');
+var port_express = process.env.PORT || 5000;
+app.listen(port_express);
+console.log('Express server listening on port '+port_express);
 
