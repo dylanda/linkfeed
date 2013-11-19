@@ -1,8 +1,19 @@
 var express=require('express');
 
+var environment = process.env.NODE_ENV;
+
+if(environment=='production'){
+var host="mongodb://dylan.daconceicao@gmail.com:feedlink01@paulo.mongohq.com";
+var port="10000";
+var database="app18715371";
+console.log("HEROKU");
+}
+else{
 var host="localhost";
 var port="27017";
 var database="linkfeed";
+console.log("LOCAL");
+}
 var databaseUrl = host+":"+port+"/"+database;
 var collections = ["users","liens"];
 var db = require("mongojs").connect(databaseUrl, collections);
@@ -23,9 +34,12 @@ app.configure(function(){
         app.use(express.session({ secret: "mysecret" }));
 });
 
+app.get('/test', function(request,response){
+		console.log(test);
+});
 
 //------------------------------
-//			test session
+//			 Test session
 //------------------------------
 
 function requiresLogin(request,response,next) {
