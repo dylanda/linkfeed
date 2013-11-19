@@ -3,7 +3,8 @@ var express=require('express');
 var environment = process.env.NODE_ENV;
 
 if(environment=='production'){
-var host="mongodb://dylan.daconceicao@gmail.com:feedlink01@paulo.mongohq.com";
+//var host="mongodb://dylan.daconceicao@gmail.com:feedlink01@paulo.mongohq.com"; 
+var host=process.env.MONGOHQ_URL; //test
 var port="10000";
 var database="app18715371";
 console.log("HEROKU");
