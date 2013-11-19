@@ -90,44 +90,47 @@ html(lang='fr')
 		div.container
 			div.row
 				div.span12
-					h4.blue Vos liens publiés :
-					br
-					table.table
-						thead
-							tr
-								th URL
-								th Description
-								th Tags
-						tbody
-							each link in links
+					if(typeof links[0] !== "undefined")
+						h4.blue Vos liens publiés :
+						br
+						table.table
+							thead
 								tr
-									td 
-										a(href="#{link.url}" target="_blank") #{link.url}
+									th URL
+									th Description
+									th Tags
+							tbody
+								each link in links
+									tr
+										td 
+											a(href="#{link.url}" target="_blank") #{link.url}
+											
+										td #{link.description}
+											
+										td #{link.tags}	
 										
-									td #{link.description}
-										
-									td #{link.tags}	
-									
-									td
-										- var update = "update" + link._id
-										- var dispmodif = "dispmodif" + link._id
-										- var suppr = "suppr" + link._id
-										button.btn.btn-info.btn-lg(id= dispmodif, onClick="$('##{dispmodif}').hide();$('##{update}').css('visibility','visible').hide().fadeIn().removeClass('hidden');$('##{suppr}').hide();")
-											i.icon-edit
-											|  Modifier
-										div.hide(id= update)
-											button.btn.close(onClick="$('##{update}').hide('slow');$('##{dispmodif}').show('slow');$('##{suppr}').show('slow');") X
-											form(action='/update/#{link._id}', method='post')
-												input#url.span4(type="hidden", name="url", placeholder="URL", value="#{link.url}", required="required")
-												input#description.span4(type="text", name="description", placeholder="Description", value="#{link.description}", required="required")
-												p.blue
-													i.icon-tags
-													| Tags :
-												select#tags(name="tags", multiple data-role="tagsinput")
-												button.btn.btn-success(type='submit') Valider
-									td
-										a(id= suppr, rel='tooltip', href="/delete/#{link._id}", data-original-title='Supprimer le lien')
-											button.btn.btn-danger.btn-mini(type='button', aria-hidden='true') X
+										td
+											- var update = "update" + link._id
+											- var dispmodif = "dispmodif" + link._id
+											- var suppr = "suppr" + link._id
+											button.btn.btn-info.btn-lg(id= dispmodif, onClick="$('##{dispmodif}').hide();$('##{update}').css('visibility','visible').hide().fadeIn().removeClass('hidden');$('##{suppr}').hide();")
+												i.icon-edit
+												|  Modifier
+											div.hide(id= update)
+												button.btn.close(onClick="$('##{update}').hide('slow');$('##{dispmodif}').show('slow');$('##{suppr}').show('slow');") X
+												form(action='/update/#{link._id}', method='post')
+													input#url.span4(type="hidden", name="url", placeholder="URL", value="#{link.url}", required="required")
+													input#description.span4(type="text", name="description", placeholder="Description", value="#{link.description}", required="required")
+													p.blue
+														i.icon-tags
+														| Tags :
+													select#tags(name="tags", multiple data-role="tagsinput")
+													button.btn.btn-success(type='submit') Valider
+										td
+											a(id= suppr, rel='tooltip', href="/delete/#{link._id}", data-original-title='Supprimer le lien')
+												button.btn.btn-danger.btn-mini(type='button', aria-hidden='true') X
+					else
+						h4.blue Vous n'avez aucun lien
 										
 										
 
