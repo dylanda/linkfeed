@@ -3,7 +3,8 @@ var express=require('express');
 var environment = process.env.NODE_ENV;
 
 if(environment=='production'){
-var databaseUrl=process.env.MONGOHQ_URL; 
+//var databaseUrl=process.env.MONGOHQ_URL; 
+var databaseUrl="mongodb://dyl2311:feedlink01@paulo.mongohq.com:10000/app18715371";
 console.log("HEROKU");
 }
 else{
