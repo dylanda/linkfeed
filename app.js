@@ -1,24 +1,14 @@
 var express=require('express');
 
-var environment = process.env.NODE_ENV;
-
-if(environment=='production'){
-//var databaseUrl=process.env.MONGOHQ_URL; 
-var databaseUrl="mongodb://dyl2311:feedlink01@paulo.mongohq.com:10000/app18715371";
-console.log("HEROKU");
-}
-else{
-var host="localhost";
-var port="27017";
-var database="linkfeed";
-var databaseUrl = host+":"+port+"/"+database;
-console.log("LOCAL");
-}
-
-var collections = ["users","liens"];
-var db = require("mongojs").connect(databaseUrl, collections);
 var app = express();
 
+//--------------------------------------
+// 			Définition des routes
+//--------------------------------------
+var connect=require('./routes/connect.js');
+var users=require('./routes/users.js');
+var links=require('./routes/links.js');
+var search=require('./routes/search.js');
 
 
 //------------------------------
@@ -55,180 +45,51 @@ function requiresLogin(request,response,next) {
     }
 };
 
-
 //------------------------------
 //			index
 //------------------------------
-app.get('/',requiresLogin, function(request,response){
-		response.redirect("/feed");
-});
 
-
+app.get('/',requiresLogin, connect.index);
 
 //------------------------------
 //			Users
 //------------------------------
 
-app.post('/user/login', function(request,response){
-		db.users.find({_id:request.body.username},function(error,user){
-				if(user.length==0 || user[0].mdp != request.body.mdp){
-					response.render('index',{messageError:'Mauvais login ou mot de passe'});
-				}
-				else{
-					request.session.user = request.body.username;
-					response.redirect('/feed');
-				}
-		});
-});
-
-			
-app.post('/user/new', function(request,response){
-		db.users.find({_id:request.body.username},function(error,user){
-				if(user.length==0){
-					db.users.insert({_id:request.body.username, mdp:request.body.mdp, email:request.body.email});
-					console.log("Nouvel utilisateur enregistré");
-					request.session.user = request.body.username;
-					response.redirect('/feed');
-				}
-				else{
-					response.redirect('/');
-					response.render('index',{messageError2:"L'utilisateur existe déjà"});
-				}
-		});
-});
-
+app.post('/user/login', users.login);
+app.post('/user/new', users.register);
 
 //--------------------------------------
 // 				partage de liens
 //--------------------------------------
-app.post('/lien/new',requiresLogin,function(request,response){
-		var lien={url:request.body.url, description:request.body.description, tags:request.body.tags, user:request.session.user};
-		db.liens.insert(lien);
-		console.log("Nouveau lien enregistré");
-		response.redirect('/profil');
-		//response.render('profil.jade',request.session);
-});
+
+app.post('/lien/new',requiresLogin, links.newLink);
 
 //affichage des liens du profil
-app.get('/profil',requiresLogin,function(request,response){
-		var auteur=request.session.user;
-		db.liens.find({user:auteur},function(err,link){
-		
-			// RECUPERATION TAGS dans DATA
-			db.users.find({},function(err,users){
-			
-				var data = new Array();
-				var k = 0;
-				for (var i=0; i<link.length; i++) {
-					if(link[i].tags!=null){
-						for (var j=0; j<link[i].tags.length; j++) {
-							data[k] = "\"#"+link[i].tags[j]+"\"";
-							k = k +1;
-						}
-					}
-				}
-			// FIN	
-				response.render('profil',{links: link, data:data, user:request.session.user});
-			});
-		});
-});
+app.get('/profil',requiresLogin, links.profileLinks);
 
 //afficher tous les liens dans le feed
-app.get('/feed',requiresLogin,function(request,response){
-		db.liens.find({},function(err,link){
-		
-			// RECUPERATION TAGS et USERS dans DATA
-			db.users.find({},function(err,users){
-			
-				var data = new Array();
-				var k = 0;
-				for (var i=0; i<link.length; i++) {
-					if(link[i].tags!=null){
-						for (var j=0; j<link[i].tags.length; j++) {
-							data[k] = "\"#"+link[i].tags[j]+"\"";
-							k = k +1;
-						}
-					}
-				}
-				for (var i=0; i<users.length; i++) {
-					data[k] = "\"@"+users[i]._id+"\"";
-					k = k +1;
-				}
-			// FIN	
-				response.render('feed',{links: link, data:data, user:request.session.user});
-			});
-		});
-});
+app.get('/feed',requiresLogin, links.feedLinks);
 
 //supprimer lien
-app.get('/delete/:id',requiresLogin,function(req,res){
-	var ObjectID = require('mongodb').ObjectID;
-	var idString = req.params.id;
-	db.liens.remove({_id: new ObjectID(idString)});
-	res.redirect('/profil');
-});
+app.get('/delete/:id',requiresLogin, links.deleteLink);
 
 //modifier lien
-app.post('/update/:id',requiresLogin,function(req,res){
-	var ObjectID = require('mongodb').ObjectID;
-	var idString = req.params.id;
-	var lien={url:req.body.url, description:req.body.description, tags:req.body.tags, user:req.session.user};
-	db.liens.update({_id: new ObjectID(idString)}, lien);
-	res.redirect('/profil');
-});
-
+app.post('/update/:id',requiresLogin, links.updateLink);
 
 //------------------------------------
 // 			filtres
 //------------------------------------
 
 //filtrage par tags dans le profil
-app.post('/profil/search',requiresLogin,function(request,response){
-		var tag=request.body.searchfield;
-		tag = tag.replace('#','');
-		var profil=request.session.user;
-		if (tag != ''){
-			db.liens.find({tags:tag,user:profil},function(err,link){
-				response.render('profil',{links:link, user:request.session.user});
-			});
-		}
-		else{
-			response.redirect('/profil');
-		}
-});
+app.post('/profil/search',requiresLogin, search.searchInProfile);
 
 //filtrage par tags dans le feed
-app.post('/feed/search',requiresLogin,function(request,response){
-		var data=request.body.searchfield;
-		if (data !=''){
-			if (data.charAt(0)=='#'){
-				data = data.replace('#','');
-				db.liens.find({tags:data},function(err,link){
-					response.render('feed',{links:link});
-				});
-			}
-			else if (data.charAt(0)=='@'){
-				data = data.replace('@','');
-				db.liens.find({user:data},function(err,link){
-					response.render('feed',{links:link});
-				});
-			}
-		}
-		else{
-			response.redirect('/feed');
-		}
-});
-
+app.post('/feed/search',requiresLogin, search.searchInFeed);
 
 //----------------------------------
 //			fermeture session
 //----------------------------------
-app.get("/user/logout", function(request, response){
-        if(request.session.user){
-                request.session.user=undefined;
-        }
-        response.redirect('/');
-});
+app.get("/user/logout", connect.logout);
 
 var port_express = process.env.PORT || 5000;
 app.listen(port_express);
