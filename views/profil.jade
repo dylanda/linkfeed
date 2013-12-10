@@ -99,6 +99,7 @@ html(lang='fr')
 									th URL
 									th Description
 									th Tags
+									th Date
 							tbody
 								each link in links
 									tr
@@ -108,6 +109,9 @@ html(lang='fr')
 										td #{link.description}
 											
 										td #{link.tags}	
+
+										td #{link.date}
+
 										
 										td
 											- var update = "update" + link._id

@@ -20,7 +20,7 @@ var db = require("mongojs").connect(databaseUrl, collections);
 //ajout d'un lien
 
 exports.newLink=function(request,response){
-		var lien={url:request.body.url, description:request.body.description, tags:request.body.tags, user:request.session.user};
+		var lien={url:request.body.url, description:request.body.description, tags:request.body.tags, user:request.session.user, date: new Date()};
 		db.liens.insert(lien);
 		console.log("Nouveau lien enregistré");
 		response.redirect('/profil');
