@@ -39,7 +39,6 @@ exports.register=function(request,response){
 					response.redirect('/feed');
 				}
 				else{
-					response.redirect('/');
 					response.render('index',{messageError2:"L'utilisateur existe déjà"});
 				}
 		});

@@ -25,13 +25,24 @@ html(lang='fr')
 			div.row
 				div.span4.offset2.well
 					legend Identifiez-vous !
-					span #{messageError}
+					- if (typeof(messageError) !== 'undefined'){
+						div.alert.alert-danger.alert-dismissable
+							button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+							strong Erreur!
+							|  #{messageError}
+					-}
 					form(method='POST', action='/user/login', accept-charset='UTF-8')
 						input#username.span4(type='text', name='username', placeholder='Nom d\'utilisateur', required='required')
 						input#mdp.span4(type='password', name='mdp', placeholder='Mot de passe', required='required')
 						button.btn.btn-info.btn-block(type='submit') Se connecter
 				div.span3.well
 					legend Pas encore inscrit ?
+					- if (typeof(messageError2) !== 'undefined'){
+						div.alert.alert-danger.alert-dismissable
+							button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+							strong Erreur!
+							|  #{messageError2}
+					-}
 					a.btn.btn-success.btn-block(data-toggle='modal', href='#myModal') S'inscrire
 					
 		#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
@@ -41,7 +52,6 @@ html(lang='fr')
 						button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
 						h4.modal-title Inscription
 					div.modal-body
-						span #{messageError2}
 						form(method='POST', action='/user/new', accept-charset='UTF-8')
 							input#username.span4(type='text', name='username', placeholder='Nom d\'utilisateur', required='required')
 							input#mdp.span4(type='password', name='mdp', placeholder='Mot de passe', required='required')
