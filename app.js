@@ -57,13 +57,16 @@ app.post('/user/login', users.login);
 app.post('/user/new', users.register);
 
 //--------------------------------------
-// 				partage de liens
+// 				Profils & Liens
 //--------------------------------------
 
 app.post('/lien/new',requiresLogin, links.newLink);
 
 //affichage des liens du profil
 app.get('/profil',requiresLogin, links.profileLinks);
+
+//affichage des liens du profil de qq1
+app.get('/profil/:id',requiresLogin, users.profil);
 
 //afficher tous les liens dans le feed
 app.get('/feed',requiresLogin, links.feedLinks);
@@ -73,6 +76,13 @@ app.get('/delete/:id',requiresLogin, links.deleteLink);
 
 //modifier lien
 app.post('/update/:id',requiresLogin, links.updateLink);
+
+//------------------------------------
+// 			follow system
+//------------------------------------
+
+//suivre un profil
+app.get('/follow/:id',requiresLogin, users.follow);
 
 //------------------------------------
 // 			filtres

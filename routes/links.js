@@ -3,14 +3,14 @@ var environment = process.env.NODE_ENV;
 if(environment=='production'){
 //var databaseUrl=process.env.MONGOHQ_URL; 
 var databaseUrl="mongodb://dyl2311:feedlink01@paulo.mongohq.com:10000/app18715371";
-console.log("HEROKU");
+//console.log("HEROKU");
 }
 else{
 var host="localhost";
 var port="27017";
 var database="linkfeed";
 var databaseUrl = host+":"+port+"/"+database;
-console.log("LOCAL");
+//console.log("LOCAL");
 }
 
 var collections = ["users","liens"];
@@ -45,6 +45,12 @@ exports.profileLinks=function(request,response){
 						}
 					}
 				}
+				for (var i=0; i<users.length; i++) {
+					if (users[i]._id != request.session.user){
+						data[k] = "\"@"+users[i]._id+"\"";
+						k = k +1;
+					}
+				}
 			// FIN	
 				response.render('profil',{links: link, data:data, user:request.session.user});
 			});
@@ -70,8 +76,10 @@ exports.feedLinks=function(request,response){
 					}
 				}
 				for (var i=0; i<users.length; i++) {
-					data[k] = "\"@"+users[i]._id+"\"";
-					k = k +1;
+					if (users[i]._id != request.session.user){
+						data[k] = "\"@"+users[i]._id+"\"";
+						k = k +1;
+					}
 				}
 			// FIN	
 				response.render('feed',{links: link, data:data, user:request.session.user});
