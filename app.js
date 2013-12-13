@@ -84,6 +84,9 @@ app.post('/update/:id',requiresLogin, links.updateLink);
 //suivre un profil
 app.get('/follow/:id',requiresLogin, users.follow);
 
+//voir amis
+app.get('/friends',requiresLogin, users.friends);
+
 //------------------------------------
 // 			filtres
 //------------------------------------

@@ -81,3 +81,13 @@ exports.follow=function(request,response){
 				}
 		});
 };
+
+exports.friends=function(request,response){
+		var user=request.session.user;
+		
+		db.users.find({},function(error,friends){
+
+			response.render('friends',{user:user, friends:friends});
+		
+		});
+};
