@@ -16,6 +16,19 @@ html(lang='fr')
 			padding-top:100px;
 			}
 	body
+	
+		#fb-root
+			script
+				(function(d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) return;
+				js = d.createElement(s); js.id = id;
+				js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
+				fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+				
+				!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+	
 		div.container
 			div.header.row
 				div.span12
@@ -82,6 +95,11 @@ html(lang='fr')
 										td #{link.description}
 											
 										td #{link.tags}
+										
+										td 
+											.fb-share-button(data-href='#{link.url}', data-type='button')
+										td
+											a.twitter-share-button(href='https://twitter.com/share', data-text='Regardez ça!', data-url='#{link.url}', data-lang='fr', data-count='none') Tweeter
 					else
 						h4.blue Il n'y a aucun lien à afficher
 
