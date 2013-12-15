@@ -69,7 +69,14 @@ exports.feedLinks=function(request,response){
 	var currentuser = request.session.user;
 		
 	db.users.find({_id:currentuser},function(err,user){
-		db.liens.find({user: { $in: user[0].friends }},function(err,link){
+		if (user[0].friends){
+			var userfriends = user[0].friends;
+		}
+		else{
+			var userfriends = [];
+		}
+		
+		db.liens.find({user: { $in: userfriends }},function(err,link){
 
 				// RECUPERATION TAGS et USERS dans DATA
 			db.users.find({},function(err,users){
