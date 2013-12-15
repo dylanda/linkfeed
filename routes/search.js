@@ -19,21 +19,26 @@ var db = require("mongojs").connect(databaseUrl, collections);
 //filtrage par tags dans le profil
 exports.searchInProfile=function(request,response){
 
-		var data=request.body.searchfield;
+		var filtre=request.body.searchfield;
 		var profil=request.session.user;
-		if (data !=''){
-			if (data.charAt(0)=='#'){
-				data = data.replace('#','');
-				db.liens.find({tags:data, user:profil},function(err,link){
-					response.render('profil',{links:link, user:profil});
+		if (filtre !=''){
+			if (filtre.charAt(0)=='#'){
+				filtre = filtre.replace('#','');
+				db.liens.find({tags:filtre, user:profil},function(err,link){
+					response.render('profil',{links:link, user:profil, data:request.body.data});
 				});
 			}
-			else if (data.charAt(0)=='@'){
-				data = data.replace('@','');
-				db.users.find({_id:data},function(err,user){
-					db.liens.find({user:data},function(err,link){
+			else if (filtre.charAt(0)=='@'){
+				filtre = filtre.replace('@','');
+				db.users.find({_id:filtre},function(err,user){
+					db.liens.find({user:filtre},function(err,link){
 						response.render('profildisp',{links: link, userdisp:user});
 					});
+				});
+			}
+			else {
+				db.liens.find({tags:filtre, user:profil},function(err,link){
+					response.render('profil',{links:link, user:profil, data:request.body.data});
 				});
 			}
 		}
@@ -44,19 +49,29 @@ exports.searchInProfile=function(request,response){
 
 //filtrage par tags dans le feed
 exports.searchInFeed=function(request,response){
-		var data=request.body.searchfield;
-		if (data !=''){
-			if (data.charAt(0)=='#'){
-				data = data.replace('#','');
-				db.liens.find({tags:data},function(err,link){
-					response.render('feed',{links:link});
+		var filtre=request.body.searchfield;
+		var currentuser = request.session.user;
+		if (filtre !=''){
+			if (filtre.charAt(0)=='#'){
+				filtre = filtre.replace('#','');
+				db.users.find({_id:currentuser},function(err,user){
+					db.liens.find({tags:filtre, user: { $in: user[0].friends }},function(err,link){
+						response.render('feed',{links:link, data:request.body.data});
+					});
 				});
 			}
-			else if (data.charAt(0)=='@'){
-				data = data.replace('@','');
-				db.users.find({_id:data},function(err,user){
-					db.liens.find({user:data},function(err,link){
+			else if (filtre.charAt(0)=='@'){
+				filtre = filtre.replace('@','');
+				db.users.find({_id:filtre},function(err,user){
+					db.liens.find({user:filtre},function(err,link){
 						response.render('profildisp',{links: link, userdisp:user});
+					});
+				});
+			}
+			else {
+				db.users.find({_id:currentuser},function(err,user){
+					db.liens.find({tags:filtre, user: { $in: user[0].friends }},function(err,link){
+						response.render('feed',{links:link, data:request.body.data});
 					});
 				});
 			}

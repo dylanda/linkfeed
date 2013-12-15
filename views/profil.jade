@@ -60,21 +60,24 @@ html(lang='fr')
 						form.form-search.pull-right(method="POST",action="/profil/search",accept-charset="UTF-8")
 							div.input-append
 								input.search-query#searchfield(type="text" name="searchfield" placeholder="Recherche" data-provide='typeahead', autocomplete='off', data-items='10', data-source='[#{data}]')
+								input#data(type="hidden" name="data" value="#{data}")
 								button.btn.btn-info(type="submit")
 									i.icon-search
 									|  Recherche
 
 		div.container
+			button.btn.btn-info.btn-large.pull-left#afficher(onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');")
+				i.icon-share
+				|  Partager un lien
 			a.btn.btn-info.btn-large.pull-right(href="/friends")
 				i.icon-user
 				|  Voir amis
-			button.btn.btn-info.btn-lg#afficher(onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');")
-				i.icon-share
-				|  Partager un lien
 
 			br
 			br
 			div.hide#partage
+				br
+				br
 				div.row
 					div.span10.offset1.well
 						button.close(onClick="$('#partage').hide('slow');$('#afficher').show();") ×

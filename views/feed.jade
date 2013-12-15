@@ -15,20 +15,7 @@ html(lang='fr')
 			body{
 			padding-top:100px;
 			}
-	body
-	
-		#fb-root
-			script
-				(function(d, s, id) {
-				var js, fjs = d.getElementsByTagName(s)[0];
-				if (d.getElementById(id)) return;
-				js = d.createElement(s); js.id = id;
-				js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-				fjs.parentNode.insertBefore(js, fjs);
-				}(document, 'script', 'facebook-jssdk'));
-				
-				!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-	
+	body	
 		div.container
 			div.header.row
 				div.span12
@@ -68,6 +55,7 @@ html(lang='fr')
 						form.form-search.pull-right(method="POST",action="/feed/search",accept-charset="UTF-8")
 							div.input-append
 								input.search-query#searchfield(type="text" name="searchfield" placeholder="Recherche" data-provide='typeahead', autocomplete='off', data-items='10', data-source='[#{data}]')
+								input#data(type="hidden" name="data" value="#{data}")
 								button.btn.btn-info(type="submit")
 									i.icon-search
 									|  Recherche
@@ -75,17 +63,23 @@ html(lang='fr')
 		div.container
 			div.row
 				div.span12
-					if(typeof links[0] !== "undefined")
+					if links
 						table.table
 							thead
 								tr
+									th
 									th URL
 									th User
 									th Description
 									th Tags
+									th Date
+									th
 							tbody
 								each link in links
 									tr
+										td
+											<img src="http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=120&stwymax=90&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}" border=0 />	
+											
 										td 
 											a(href="#{link.url}" target="_blank") #{link.url}
 										
@@ -96,17 +90,31 @@ html(lang='fr')
 											
 										td #{link.tags}
 										
+										td #{link.date}
+										
 										td 
-											.fb-share-button(data-href='#{link.url}', data-type='button')
-										td
-											a.twitter-share-button(href='https://twitter.com/share', data-text='Regardez ça!', data-url='#{link.url}', data-lang='fr', data-count='none') Tweeter
+											div.fb-share-button(data-href='#{link.url}', data-type='button')
+											div
+												a.twitter-share-button(href='https://twitter.com/share', data-text='Regardez ça!', data-url='#{link.url}', data-lang='fr', data-count='none') Tweeter
 					else
 						h4.blue Il n'y a aucun lien à afficher
 
 										
-
+		
 		script(src="/js/jquery-1.8.2.min.js")
 		script(src="/bootstrap/js/bootstrap.min.js")
 		script(src="/bootstrap/js/bootstrap-tagsinput.min.js")
+
+		#fb-root
+			script.
+				(function(d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) return;
+				js = d.createElement(s); js.id = id;
+				js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
+				fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+		script.
+			!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
 
 				

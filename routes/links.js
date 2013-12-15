@@ -16,11 +16,13 @@ var databaseUrl = host+":"+port+"/"+database;
 var collections = ["users","liens"];
 var db = require("mongojs").connect(databaseUrl, collections);
 
+//dateFormat
+var dateFormat = require('dateformat');
 
 //ajout d'un lien
 
 exports.newLink=function(request,response){
-		var lien={url:request.body.url, description:request.body.description, tags:request.body.tags, user:request.session.user, date: new Date()};
+		var lien={url:request.body.url, description:request.body.description, tags:request.body.tags, user:request.session.user, date: dateFormat(new Date(), "dd/mm/yyyy HH:MM:ss")};
 		db.liens.insert(lien);
 		console.log("Nouveau lien enregistré");
 		response.redirect('/profil');
@@ -38,11 +40,15 @@ exports.profileLinks=function(request,response){
 				var data = new Array();
 				var k = 0;
 				for (var i=0; i<link.length; i++) {
-					if(link[i].tags!=null){
+					if(link[i].tags!=null && link[i].tags instanceof Array){
 						for (var j=0; j<link[i].tags.length; j++) {
 							data[k] = "\"#"+link[i].tags[j]+"\"";
 							k = k +1;
 						}
+					}
+					else if (link[i].tags!=null) {
+						data[k] = "\"#"+link[i].tags+"\"";
+						k = k +1;
 					}
 				}
 				for (var i=0; i<users.length; i++) {
@@ -60,19 +66,26 @@ exports.profileLinks=function(request,response){
 // affichage des liens du feed
 
 exports.feedLinks=function(request,response){
-		db.liens.find({},function(err,link){
+	var currentuser = request.session.user;
 		
-			// RECUPERATION TAGS et USERS dans DATA
+	db.users.find({_id:currentuser},function(err,user){
+		db.liens.find({user: { $in: user[0].friends }},function(err,link){
+
+				// RECUPERATION TAGS et USERS dans DATA
 			db.users.find({},function(err,users){
 			
 				var data = new Array();
 				var k = 0;
 				for (var i=0; i<link.length; i++) {
-					if(link[i].tags!=null){
+					if(link[i].tags!=null && link[i].tags instanceof Array){
 						for (var j=0; j<link[i].tags.length; j++) {
 							data[k] = "\"#"+link[i].tags[j]+"\"";
 							k = k +1;
 						}
+					}
+					else if (link[i].tags!=null) {
+						data[k] = "\"#"+link[i].tags+"\"";
+						k = k +1;
 					}
 				}
 				for (var i=0; i<users.length; i++) {
@@ -85,6 +98,7 @@ exports.feedLinks=function(request,response){
 				response.render('feed',{links: link, data:data, user:request.session.user});
 			});
 		});
+	});
 };
 
 //supprimer lien

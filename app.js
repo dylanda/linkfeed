@@ -31,6 +31,7 @@ app.get('/test', function(request,response){
 		console.log(test);
 });
 
+
 //------------------------------
 //			 Test session
 //------------------------------

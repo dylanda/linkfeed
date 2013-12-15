@@ -83,11 +83,15 @@ exports.follow=function(request,response){
 };
 
 exports.friends=function(request,response){
-		var user=request.session.user;
-		
-		db.users.find({},function(error,friends){
+		var currentuser=request.session.user;
 
-			response.render('friends',{user:user, friends:friends});
+		db.users.find({_id: currentuser},function(error,user){
+		
+			db.users.find({_id: { $in: user[0].friends }},function(error,friends){
+				response.render('friends',{user:currentuser, friends:friends});
+			
+			});
 		
 		});
+
 };

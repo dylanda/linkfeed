@@ -60,7 +60,7 @@
 		div.container
 			div.row
 				div.span12
-						if(typeof friends !== "undefined")
+						if friends
 							h4.blue Voici vos amis :
 							br
 							table.table
@@ -69,7 +69,6 @@
 										th Nom d'utilisateur
 										th Email
 								tbody
-
 									each friend in friends
 										tr
 											td 
@@ -81,8 +80,11 @@
 
 						else
 							h4.blue Vous n'avez aucun ami
-										
-										
+		
+		br
+		br
+		br
+		a(href="profil", class="btn btn-large btn-info") Retourner sur votre profil	
 
 		
 		script(src="/js/jquery-1.8.2.min.js")
