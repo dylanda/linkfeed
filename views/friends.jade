@@ -14,7 +14,8 @@
 			body{
 			padding-top:100px;
 			}
-
+		script(src="/js/md5hash.js")
+			
 	body
 		div.container
 			div.header.row
@@ -66,11 +67,14 @@
 							table.table
 								thead
 									tr
+										th
 										th Nom d'utilisateur
 										th Email
 								tbody
 									each friend in friends
 										tr
+											td
+												script(type="text/javascript") email = "#{friend.email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?s=80' />");
 											td 
 												a(href="profil/#{friend._id}", target="_BLANK") #{friend._id}
 												
@@ -89,10 +93,8 @@
 		
 		script(src="/js/jquery-1.8.2.min.js")
 		
-		script.
-			$(function(){$('a#suppr').tooltip({placement:'right'});});
-
 		script(src="/bootstrap/js/bootstrap.min.js")
 		script(src="/bootstrap/js/bootstrap-tagsinput.min.js")
+
 
 		
