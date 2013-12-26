@@ -69,10 +69,10 @@ html(lang='fr')
 								tr
 									th
 									th URL
-									th User
+									th Utilisateur
 									th Description
 									th Tags
-									th Date
+									th Date de publication
 									th
 							tbody
 								each link in links
@@ -84,7 +84,7 @@ html(lang='fr')
 											a(href="#{link.url}" target="_blank") #{link.url}
 										
 										td 
-											a(href="profil/#{link.user}", target="_BLANK") #{link.user}
+											a(href="profil/#{link.user}") #{link.user}
 											
 										td #{link.description}
 											

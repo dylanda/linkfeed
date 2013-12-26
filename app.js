@@ -88,6 +88,9 @@ app.get('/follow/:id',requiresLogin, users.follow);
 //voir amis
 app.get('/friends',requiresLogin, users.friends);
 
+//supprimer un ami
+//app.post('/unfollow/:id',requiresLogin,users.unfollow);
+
 //------------------------------------
 // 			filtres
 //------------------------------------

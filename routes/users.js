@@ -82,6 +82,19 @@ exports.follow=function(request,response){
 		});
 };
 
+/*exports.unfollow=function(request,response){
+	var curuser=request.session.user;
+	var tounfollow=userdisp[0]._id;
+	db.users.find({_id:tounfollow},function(error,user){
+		if(user.length!=0)
+		{
+			db.users.update({"_id":curuser},{"$pull":{"friends":tounfollow}});
+			console.log("Unfollowed");
+			response.redirect('/');
+		}
+	});
+};*/
+
 exports.friends=function(request,response){
 		var currentuser=request.session.user;
 

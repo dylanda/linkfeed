@@ -1,7 +1,9 @@
 ﻿html(lang='fr')
 	head
 		meta(charset='utf-8')
-		title LinkFeed - #{user}
+
+		title LinkFeed - Amis de #{user}
+
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Droid+Sans')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster')
@@ -55,7 +57,7 @@
 							| Bienvenue 
 							b.blue #{user} 
 							| /
-							p Vous pouvez voir votre liste d'amis et consulter leur profils.
+							p Visitez le profil de vos amis !
 
 		
 		div.container
@@ -76,7 +78,7 @@
 											td
 												script(type="text/javascript") email = "#{friend.email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?s=80' />");
 											td 
-												a(href="profil/#{friend._id}", target="_BLANK") #{friend._id}
+												a(href="profil/#{friend._id}") #{friend._id}
 											td 
 												a(href='mailto:#{friend.email}') #{friend.email}
 

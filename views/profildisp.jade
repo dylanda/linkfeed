@@ -2,7 +2,9 @@
 html(lang='fr')
 	head
 		meta(charset='utf-8')
-		title LinkFeed
+
+		title LinkFeed - #{userdisp[0]._id}
+
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Droid+Sans')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster')
@@ -55,10 +57,13 @@ html(lang='fr')
 							| Profil de 
 							b.blue #{userdisp[0]._id} 
 							|  /
-							p Vous pouvez consulter ses informations et liens postés.
+							p Vous pouvez consulter ses informations et ses liens postés.
 						a.btn.btn-info.btn-large.pull-right(href="/follow/#{userdisp[0]._id}")
 							i.icon-user
 							|  Suivre
+						a.btn.btn-danger.btn-large.pull-right(href="#")
+							i.icon-user
+							|  Ne plus suivre 
 		
 		div.container
 			div.row
@@ -89,7 +94,7 @@ html(lang='fr')
 									th URL
 									th Description
 									th Tags
-									th Date
+									th Date de publication
 							tbody
 								each link in links
 									tr
