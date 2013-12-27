@@ -48,15 +48,13 @@ exports.pendingRequests=function(request,response){
 					if (user[0].friends[i].confirmed==false && user[0].friends[i].demandeur!=currentuser) 
 					{
 						dde[j]=user[0].friends[i].demandeur;
-						j++
-						nbddes++;
+						j++;
 					}
 				}
 				if (dde.length!=0) 
 				{
-					nbddes=nbddes.toString();
 					db.users.find({_id:{$in:dde}},function(error,requests){
-						response.render('requests',{user:currentuser,demandes:requests,nbddes:nbddes});
+						response.render('requests',{user:currentuser,demandes:requests});
 					});
 				}
 				else
@@ -87,14 +85,12 @@ exports.friends=function(request,response){
 					{
 						amis[j]=user[0].friends[i].user;
 						j++;
-						nbamis++;
 					}
 				}
 				if(amis.length!=0)
-				{
-					nbamis=nbamis.toString();			
+				{			
 					db.users.find({_id: { $in: amis }},function(error,friends){
-							response.render('friends',{user:currentuser, friends:friends, nbamis:nbamis});
+							response.render('friends',{user:currentuser, friends:friends});
 					});
 				}
 				else

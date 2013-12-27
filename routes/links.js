@@ -32,30 +32,46 @@ exports.newLink=function(request,response){
 //affichage des liens du profil
 
 exports.profileLinks=function(request,response){
-		var auteur=request.session.user;
-		db.liens.find({user:auteur},function(err,link){
-		
-			// RECUPERATION TAGS dans DATA
-			db.users.find({},function(err,users){
-			
-				var data = new Array();
-				var k = 0;
-				for (var i=0; i<link.length; i++) {
-					if(link[i].tags!=null && link[i].tags instanceof Array){
-						for (var j=0; j<link[i].tags.length; j++) {
-							data[k] = "\"#"+link[i].tags[j]+"\"";
-							k = k +1;
-						}
-					}
-					else if (link[i].tags!=null) {
-						data[k] = "\"#"+link[i].tags+"\"";
-						k = k +1;
-					}
-				}
-			// FIN	
-				response.render('profil',{links: link, data:data, user:request.session.user});
-			});
-		});
+                var auteur=request.session.user;
+                db.users.find({_id:auteur},function(error,user){
+                        var dde=new Array;
+                        var j=0;
+                        if (user[0].friends!=undefined)
+                        {        
+                                for(var i=0;i<user[0].friends.length;i++)
+                                {
+                                        if (user[0].friends[i].confirmed==false && user[0].friends[i].demandeur!=auteur) 
+                                        {
+                                                dde[j]=user[0].friends[i].demandeur;
+                                                j++;
+                                        }
+                                }
+                        }
+
+                        db.liens.find({user:auteur},function(err,link){
+                        
+                                // RECUPERATION TAGS dans DATA
+                                db.users.find({},function(err,users){
+                                
+                                        var data = new Array();
+                                        var k = 0;
+                                        for (var i=0; i<link.length; i++) {
+                                                if(link[i].tags!=null && link[i].tags instanceof Array){
+                                                        for (var j=0; j<link[i].tags.length; j++) {
+                                                                data[k] = "\"#"+link[i].tags[j]+"\"";
+                                                                k = k +1;
+                                                        }
+                                                }
+                                                else if (link[i].tags!=null) {
+                                                        data[k] = "\"#"+link[i].tags+"\"";
+                                                        k = k +1;
+                                                }
+                                        }
+                                // FIN        
+                                        response.render('profil',{links: link, data:data, user:request.session.user, nbddes:dde.length});
+                                });
+                        });
+                });
 };
 
 // affichage des liens du feed

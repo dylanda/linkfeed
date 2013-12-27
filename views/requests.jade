@@ -73,6 +73,7 @@ html(lang='fr')
 										th
 										th Nom d'utilisateur
 										th Email
+										th
 								tbody
 									each demande in demandes
 										tr
@@ -82,8 +83,13 @@ html(lang='fr')
 												a(href="profil/#{demande._id}") #{demande._id}
 											td 
 												a(href='mailto:#{demande.email}') #{demande.email}
+											td
+												a.btn.btn-success(href="#")
+													| Confirmer
+												a.btn.btn-danger(href="#")
+													| Refuser
 							br
-							h6.blue Vous avez #{nbddes} demandes en attente 
+							h6.blue Vous avez #{demandes.length} demandes en attente 
 
 
 						else
