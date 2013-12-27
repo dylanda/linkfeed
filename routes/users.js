@@ -19,23 +19,25 @@ var db = require("mongojs").connect(databaseUrl, collections);
 
 
 exports.login=function(request,response){
-		db.users.find({_id:request.body.username},function(error,user){
+		var username = request.body.username.toLowerCase();
+		db.users.find({_id:username},function(error,user){
 				if(user.length==0 || user[0].mdp != request.body.mdp){
 					response.render('index',{messageError:'Mauvais login ou mot de passe'});
 				}
 				else{
-					request.session.user = request.body.username;
+					request.session.user = username;
 					response.redirect('/feed');
 				}
 		});
 };
 
 exports.register=function(request,response){
-		db.users.find({_id:request.body.username},function(error,user){
+		var username = request.body.username.toLowerCase();
+		db.users.find({_id:username},function(error,user){
 				if(user.length==0){
-					db.users.insert({_id:request.body.username, mdp:request.body.mdp, email:request.body.email});
+					db.users.insert({_id:username, mdp:request.body.mdp, email:request.body.email.toLowerCase()});
 					console.log("Nouvel utilisateur enregistré");
-					request.session.user = request.body.username;
+					request.session.user = username;
 					response.redirect('/feed');
 				}
 				else{
@@ -45,7 +47,7 @@ exports.register=function(request,response){
 };
 
 exports.profil=function(request,response){
-		var userdisp=request.params.id;
+		var userdisp=request.params.id.toLowerCase();
 		db.users.find({_id:userdisp},function(error,user){
 				if(user.length!=0 && userdisp!=request.session.user){
 				

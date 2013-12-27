@@ -9,12 +9,70 @@ html(lang='fr')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
 		link(rel='stylesheet', href='/css/font-awesome.css')
 		link(rel='stylesheet', href='/css/style.css')
+		
+		link(href='/select2/select2.css', rel='stylesheet')
+		
 		//if lt IE 9
 		script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
 		style.
 			body{
 			padding-top:100px;
 			}
+			
+
+		script(src="/js/jquery-1.8.2.min.js")
+		script(src="/bootstrap/js/bootstrap.min.js")
+		script(src="/bootstrap/js/bootstrap-tagsinput.min.js")
+		script(src='/select2/select2.js')
+		
+		script.
+			$(function(){$('a.suppr').tooltip({placement:'right'});});
+			
+		script.
+		
+			function fillTags(id, tags){
+				var tagsarray = tags.split(",");
+				$(id).select2('val',[tagsarray]);
+			};
+		
+			$(document).ready(function() { 
+				var myArray="[#{data}]";
+				myArray=myArray.replace(/&quot;/gi,"");
+				myArray=myArray.replace(/\[/gi,"");
+				myArray=myArray.replace(/\]/gi,"");
+				myArray=myArray.split(',');
+			
+				$("#e1").select2({
+					width: 'resolve',
+					tags:myArray,
+					multiple: true,
+					id: function(object) {
+						return object.text.replace("#","");
+					}
+				}); 
+				
+				
+				$(".modtags").select2({
+					width: 'resolve',
+					tags:myArray,
+					multiple: true,
+					id: function(object) {
+						return object.text.replace("#","");
+					}
+				});
+				
+				
+				$("#e2").select2({
+					width: 'resolve',
+					tags:myArray,
+					multiple: true,
+					id: function(object) {
+						return object.text.replace("#","");
+					}
+				}); 
+				
+				
+			});
 
 	body
 		div.container
@@ -58,13 +116,13 @@ html(lang='fr')
 							p Vous pouvez consulter vos informations et postez des liens.
 							
 						form.form-search.pull-right(method="POST",action="/profil/search",accept-charset="UTF-8")
-							div.input-append
-								input.search-query#searchfield(type="text" name="searchfield" placeholder="Recherche" data-provide='typeahead', autocomplete='off', data-items='10', data-source='[#{data}]')
+							div.filtre
 								input#data(type="hidden" name="data" value="#{data}")
-								button.btn.btn-info(type="submit")
+								input#e2(name="searchfield", placeholder="Filtrer par tags", style="margin-right:5px;")
+								button.btn.btn-info(id="searchbtn" type="submit")
 									i.icon-search
 									|  Recherche
-
+								
 		div.container
 			button.btn.btn-info.btn-large.pull-left#afficher(onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');")
 				i.icon-share
@@ -88,15 +146,17 @@ html(lang='fr')
 							p.blue
 								i.icon-tags
 								| Tags :
-							select#tags(name="tags", multiple data-role="tagsinput")
-							button.btn.btn-info.btn-lg(type="submit")
+							p
+								input#e1(name="tags", placeholder="Tags", multiple)
+							button.btn.btn-info(type="submit")
 								i.icon-share
 								|  Partager !
 		
+
 		div.container
 			div.row
 				div.span12
-					if(typeof links[0] !== "undefined")
+					if links.length != 0
 						h4.blue Vos liens publiés :
 						br
 						table.table
@@ -114,11 +174,13 @@ html(lang='fr')
 											<img src="http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=100&stwymax=75&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}" border=0 />	
 
 										td 
-											a(href="#{link.url}" target="_blank") #{link.url}
+											a.url(href="#{link.url}" target="_blank") #{link.url}
 											
 										td #{link.description}
 											
-										td #{link.tags}	
+										td 
+											each ctag in link.tags
+												span.tag #{ctag}
 
 										td #{link.date}
 
@@ -126,8 +188,11 @@ html(lang='fr')
 										td
 											- var update = "update" + link._id
 											- var dispmodif = "dispmodif" + link._id
+											- var tagsmodif = "tagsmodif" + link._id
 											- var suppr = "suppr" + link._id
-											button.btn.btn-info.btn-lg(id= dispmodif, onClick="$('##{dispmodif}').hide();$('##{update}').css('visibility','visible').hide().fadeIn().removeClass('hidden');$('##{suppr}').hide();")
+											
+											
+											button.btn.btn-info.btn-lg(id= dispmodif, onClick="fillTags('##{tagsmodif}','#{link.tags}');$('##{dispmodif}').hide();$('##{update}').css('visibility','visible').hide().fadeIn().removeClass('hidden');$('##{suppr}').hide();")
 												i.icon-edit
 												|  Modifier
 											div.hide(id= update)
@@ -138,23 +203,12 @@ html(lang='fr')
 													p.blue
 														i.icon-tags
 														| Tags :
-													select#tags(name="tags", multiple data-role="tagsinput")
-													button.btn.btn-success(type='submit') Valider
+													p
+														input.modtags(name="tags", id= tagsmodif,  placeholder="Tags", multiple)
+													button.btn.btn-success(type="submit") Valider
+													
 										td
-											a(id= suppr, rel='tooltip', href="/delete/#{link._id}", data-original-title='Supprimer le lien')
+											a(id= suppr, class="suppr", rel='tooltip', href="/delete/#{link._id}", data-original-title='Supprimer le lien')
 												button.btn.btn-danger.btn-mini(type='button', aria-hidden='true') X
 					else
-						h4.blue Vous n'avez aucun lien
-										
-										
-
-		
-		script(src="/js/jquery-1.8.2.min.js")
-		
-		script.
-			$(function(){$('a#suppr').tooltip({placement:'right'});});
-
-		script(src="/bootstrap/js/bootstrap.min.js")
-		script(src="/bootstrap/js/bootstrap-tagsinput.min.js")
-
-		
+						h4.blue Aucun lien

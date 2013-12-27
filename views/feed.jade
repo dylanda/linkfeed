@@ -9,12 +9,55 @@ html(lang='fr')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
 		link(rel='stylesheet', href='/css/font-awesome.css')
 		link(rel='stylesheet', href='/css/style.css')
+		
+		link(href='select2/select2.css', rel='stylesheet')
+		
 		//if lt IE 9
 		script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
 		style.
 			body{
 			padding-top:100px;
 			}
+		
+		script(src="/js/jquery-1.8.2.min.js")
+		script(src="/bootstrap/js/bootstrap.min.js")
+		script(src="/bootstrap/js/bootstrap-tagsinput.min.js")
+		script(src='select2/select2.js')
+		
+		#fb-root
+			script.
+				(function(d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) return;
+				js = d.createElement(s); js.id = id;
+				js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
+				fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+		script.
+			!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+
+		script.
+		
+			$(document).ready(function() { 
+				var myArray="[#{data}]";
+				myArray=myArray.replace(/&quot;/gi,"");
+				myArray=myArray.replace(/\[/gi,"");
+				myArray=myArray.replace(/\]/gi,"");
+				myArray=myArray.split(',');
+				
+				$("#e1").select2({
+					width: 'resolve',
+					tags:myArray,
+					multiple: true,
+					id: function(object) {
+						return object.text.replace("#","");
+					}
+				}); 
+				
+				
+			});
+		
+		
 	body	
 		div.container
 			div.header.row
@@ -53,12 +96,13 @@ html(lang='fr')
 							p  Voici les posts récents de vos amis
 							
 						form.form-search.pull-right(method="POST",action="/feed/search",accept-charset="UTF-8")
-							div.input-append
-								input.search-query#searchfield(type="text" name="searchfield" placeholder="Recherche" data-provide='typeahead', autocomplete='off', data-items='10', data-source='[#{data}]')
+							div.filtre
 								input#data(type="hidden" name="data" value="#{data}")
-								button.btn.btn-info(type="submit")
+								input#e1(name="searchfield", placeholder="Filtrer", style="margin-right:5px;")
+								button.btn.btn-info(id="searchbtn" type="submit")
 									i.icon-search
 									|  Recherche
+									
 
 		div.container
 			div.row
@@ -81,15 +125,17 @@ html(lang='fr')
 											<img src="http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=100&stwymax=75&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}" border=0 />	
 											
 										td 
-											a(href="#{link.url}" target="_blank") #{link.url}
+											a.url(href="#{link.url}" target="_blank") #{link.url}
 										
 										td 
 											a(href="profil/#{link.user}") #{link.user}
 											
 										td #{link.description}
 											
-										td #{link.tags}
-										
+										td
+											each ctag in link.tags
+												span.tag #{ctag}
+												
 										td #{link.date}
 										
 										td 
@@ -97,24 +143,11 @@ html(lang='fr')
 											div
 												a.twitter-share-button(href='https://twitter.com/share', data-text='Regardez ça!', data-url='#{link.url}', data-lang='fr', data-count='none') Tweeter
 					else
-						h4.blue Il n'y a aucun lien à afficher
+						h4.blue Aucun lien
 
 										
 		
-		script(src="/js/jquery-1.8.2.min.js")
-		script(src="/bootstrap/js/bootstrap.min.js")
-		script(src="/bootstrap/js/bootstrap-tagsinput.min.js")
 
-		#fb-root
-			script.
-				(function(d, s, id) {
-				var js, fjs = d.getElementsByTagName(s)[0];
-				if (d.getElementById(id)) return;
-				js = d.createElement(s); js.id = id;
-				js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-				fjs.parentNode.insertBefore(js, fjs);
-				}(document, 'script', 'facebook-jssdk'));
-		script.
-			!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+		
 
-				
+		

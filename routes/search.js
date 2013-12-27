@@ -21,60 +21,25 @@ exports.searchInProfile=function(request,response){
 
 		var filtre=request.body.searchfield;
 		var profil=request.session.user;
-		if (filtre !=''){
-			if (filtre.charAt(0)=='#'){
-				filtre = filtre.replace('#','');
-				db.liens.find({tags:filtre, user:profil},function(err,link){
+		if(filtre){
+				var tagsarray = filtre.split(",");
+				db.liens.find({tags: {$in: tagsarray}, user:profil},function(err,link){
 					response.render('profil',{links:link, user:profil, data:request.body.data});
 				});
-			}
-			else if (filtre.charAt(0)=='@'){
-				filtre = filtre.replace('@','');
-				db.users.find({_id:filtre},function(err,user){
-					db.liens.find({user:filtre},function(err,link){
-						response.render('profildisp',{links: link, userdisp:user});
-					});
-				});
-			}
-			else {
-				db.liens.find({tags:filtre, user:profil},function(err,link){
-					response.render('profil',{links:link, user:profil, data:request.body.data});
-				});
-			}
-		}
-		else{
+		}else{
 			response.redirect('/profil');
 		}
 };
 
-//filtrage par tags dans le feed
+//filtrage dans le feed
 exports.searchInFeed=function(request,response){
 		var filtre=request.body.searchfield;
 		var currentuser = request.session.user;
-		if (filtre !=''){
-			if (filtre.charAt(0)=='#'){
-				filtre = filtre.replace('#','');
-				db.users.find({_id:currentuser},function(err,user){
-					db.liens.find({tags:filtre, user: { $in: user[0].friends }},function(err,link){
-						response.render('feed',{links:link, data:request.body.data});
-					});
-				});
-			}
-			else if (filtre.charAt(0)=='@'){
-				filtre = filtre.replace('@','');
-				db.users.find({_id:filtre},function(err,user){
-					db.liens.find({user:filtre},function(err,link){
-						response.render('profildisp',{links: link, userdisp:user});
-					});
-				});
-			}
-			else {
-				db.users.find({_id:currentuser},function(err,user){
-					db.liens.find({tags:filtre, user: { $in: user[0].friends }},function(err,link){
-						response.render('feed',{links:link, data:request.body.data});
-					});
-				});
-			}
+		if (filtre){
+			var tagsarray = filtre.split(",");
+			db.liens.find({tags: {$in: tagsarray}},function(err,link){
+				response.render('feed',{links:link, user:currentuser, data:request.body.data});
+			});
 		}
 		else{
 			response.redirect('/feed');

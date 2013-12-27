@@ -22,7 +22,8 @@ var dateFormat = require('dateformat');
 //ajout d'un lien
 
 exports.newLink=function(request,response){
-		var lien={url:request.body.url, description:request.body.description, tags:request.body.tags, user:request.session.user, date: dateFormat(new Date(), "dd/mm/yyyy HH:MM:ss")};
+		var tagsarray = request.body.tags.split(",");
+		var lien={url:request.body.url, description:request.body.description, tags:tagsarray, user:request.session.user, date: dateFormat(new Date(), "dd/mm/yyyy HH:MM:ss")};
 		db.liens.insert(lien);
 		console.log("Nouveau lien enregistré");
 		response.redirect('/profil');
@@ -51,12 +52,6 @@ exports.profileLinks=function(request,response){
 						k = k +1;
 					}
 				}
-				for (var i=0; i<users.length; i++) {
-					if (users[i]._id != request.session.user){
-						data[k] = "\"@"+users[i]._id+"\"";
-						k = k +1;
-					}
-				}
 			// FIN	
 				response.render('profil',{links: link, data:data, user:request.session.user});
 			});
@@ -78,7 +73,7 @@ exports.feedLinks=function(request,response){
 		
 		db.liens.find({user: { $in: userfriends }},function(err,link){
 
-				// RECUPERATION TAGS et USERS dans DATA
+				// RECUPERATION TAGS dans DATA
 			db.users.find({},function(err,users){
 			
 				var data = new Array();
@@ -95,12 +90,12 @@ exports.feedLinks=function(request,response){
 						k = k +1;
 					}
 				}
-				for (var i=0; i<users.length; i++) {
+/* 				for (var i=0; i<users.length; i++) {
 					if (users[i]._id != request.session.user){
 						data[k] = "\"@"+users[i]._id+"\"";
 						k = k +1;
 					}
-				}
+				} */
 			// FIN	
 				response.render('feed',{links: link, data:data, user:request.session.user});
 			});
@@ -122,7 +117,8 @@ exports.deleteLink=function(req,res){
 exports.updateLink=function(req,res){
 	var ObjectID = require('mongodb').ObjectID;
 	var idString = req.params.id;
-	var lien={url:req.body.url, description:req.body.description, tags:req.body.tags, user:req.session.user};
+	var tagsarray = req.body.tags.split(",");
+	var lien={url:req.body.url, description:req.body.description, tags:tagsarray, user:req.session.user};
 	db.liens.update({_id: new ObjectID(idString)}, lien);
 	res.redirect('/profil');
 };

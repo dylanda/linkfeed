@@ -131,10 +131,28 @@ strong { font-weight: bold; }
     vertical-align: middle;
 }
 
+input {
+	margin-left: 5px !important;
+}
+
+.select2-input {
+	margin-right: 5px !important;
+}
 
 
+.tag {
+    float:left;
+    margin:0 0 5px 3px; /* make some space for the triangle */
+    font:12px/20px Arial, sans-serif;
+    padding:0 8px;
+    color:#fff;
+    background:#2B8FD9;
+	border-radius: 5px 0 5px 0;
+}
 
-
+.url {
+	font: 18px Arial, sans-serif;
+}
 
 
 
