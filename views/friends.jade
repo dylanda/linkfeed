@@ -16,7 +16,7 @@
 			body{
 			padding-top:100px;
 			}
-			
+
 		script(src="/js/jquery-1.8.2.min.js")
 		script(src="/bootstrap/js/bootstrap.min.js")
 		script(src="/js/md5hash.js")
@@ -57,10 +57,8 @@
 					div.span12
 						i.icon-tasks.page-title-icon
 						h2
-							| Bienvenue 
-							b.blue #{user} 
+							| Visitez le profil de vos amis ! 
 							| /
-							p Visitez le profil de vos amis !
 
 		
 		div.container
@@ -84,6 +82,8 @@
 												a(href="profil/#{friend._id}") #{friend._id}
 											td 
 												a(href='mailto:#{friend.email}') #{friend.email}
+							br
+							h6.blue Vous avez #{nbamis} amis 
 
 
 						else
@@ -93,7 +93,6 @@
 		br
 		br
 		a(href="profil", class="btn btn-large btn-info") Retourner sur votre profil	
-
 
 
 		

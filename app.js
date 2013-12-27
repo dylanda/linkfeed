@@ -9,6 +9,7 @@ var connect=require('./routes/connect.js');
 var users=require('./routes/users.js');
 var links=require('./routes/links.js');
 var search=require('./routes/search.js');
+var friendship=require('./routes/friendship.js');
 
 
 //------------------------------
@@ -79,17 +80,17 @@ app.get('/delete/:id',requiresLogin, links.deleteLink);
 app.post('/update/:id',requiresLogin, links.updateLink);
 
 //------------------------------------
-// 			follow system
+// 			friendship system
 //------------------------------------
 
-//suivre un profil
-app.get('/follow/:id',requiresLogin, users.follow);
-
 //voir amis
-app.get('/friends',requiresLogin, users.friends);
+app.get('/friends',requiresLogin, friendship.friends);
 
-//supprimer un ami
-//app.post('/unfollow/:id',requiresLogin,users.unfollow);
+//ajouter un ami
+app.get('/addFriend/:id',requiresLogin,friendship.addFriend);
+
+//consulter ses demandes en attente
+app.get('/pendingRequests',requiresLogin,friendship.pendingRequests);
 
 //------------------------------------
 // 			filtres

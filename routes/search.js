@@ -22,16 +22,17 @@ exports.searchInProfile=function(request,response){
 		var filtre=request.body.searchfield;
 		var profil=request.session.user;
 		if(filtre){
-				var tagsarray = filtre.split(",");
-				db.liens.find({tags: {$in: tagsarray}, user:profil},function(err,link){
-					response.render('profil',{links:link, user:profil, data:request.body.data});
-				});
-		}else{
+			var tagsarray = filtre.split(",");
+			db.liens.find({tags: {$in: tagsarray}, user:profil},function(err,link){
+				response.render('profil',{links:link, user:profil, data:request.body.data});
+			});
+		}
+		else{
 			response.redirect('/profil');
 		}
 };
 
-//filtrage dans le feed
+//filtrage le feed
 exports.searchInFeed=function(request,response){
 		var filtre=request.body.searchfield;
 		var currentuser = request.session.user;

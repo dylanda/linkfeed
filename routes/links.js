@@ -90,12 +90,12 @@ exports.feedLinks=function(request,response){
 						k = k +1;
 					}
 				}
-/* 				for (var i=0; i<users.length; i++) {
+				/*for (var i=0; i<users.length; i++) {
 					if (users[i]._id != request.session.user){
 						data[k] = "\"@"+users[i]._id+"\"";
 						k = k +1;
 					}
-				} */
+				}*/
 			// FIN	
 				response.render('feed',{links: link, data:data, user:request.session.user});
 			});

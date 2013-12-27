@@ -129,6 +129,9 @@ html(lang='fr')
 					button.btn.btn-info.btn-large.pull-left#afficher(onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');")
 						i.icon-share
 						|  Partager un lien
+					a.btn.btn-info.btn-large.pull-right(href="/pendingRequests")
+						| Demandes en attente 
+						span.badge  0
 					a.btn.btn-info.btn-large.pull-right(href="/friends")
 						i.icon-user
 						|  Voir amis

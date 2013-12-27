@@ -1,9 +1,8 @@
-﻿!!! 5
 html(lang='fr')
 	head
 		meta(charset='utf-8')
 
-		title LinkFeed - #{userdisp[0]._id}
+		title LinkFeed - Demandes en attente de #{user}
 
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Droid+Sans')
@@ -17,12 +16,11 @@ html(lang='fr')
 			body{
 			padding-top:100px;
 			}
-			
+
 		script(src="/js/jquery-1.8.2.min.js")
 		script(src="/bootstrap/js/bootstrap.min.js")
 		script(src="/js/md5hash.js")
-		
-
+			
 	body
 		div.container
 			div.header.row
@@ -59,68 +57,42 @@ html(lang='fr')
 					div.span12
 						i.icon-tasks.page-title-icon
 						h2
-							| Profil de 
-							b.blue #{userdisp[0]._id} 
-							|  /
-							p Vous pouvez consulter ses informations et ses liens postés.
-						a.btn.btn-info.btn-large.pull-right(href="/addFriend/#{userdisp[0]._id}")
-							i.icon-user
-							|  Ajouter à la liste d'amis
+							| Consultez vos demandes en attente
+							| /
+
 		
 		div.container
 			div.row
 				div.span12
-					div.row
-						div.span2.well
-							script(type="text/javascript") email = "#{userdisp[0].email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?s=80' />");
-							p 
-								hr
-								| #{userdisp[0]._id.toUpperCase()}
-						div.span9.well
-							h4.blue Informations :
-							br
-							p
-								span.blue Nom d'utilisateur : 
-								| #{userdisp[0]._id}
-							p 
-								span.blue Adresse email : 
-								| 
-								a(href='mailto:#{userdisp[0].email}') #{userdisp[0].email}
-								
-							p 
-								span.blue Nombre de liens postés : 
-									span.badge.badge-info #{links.length}
-					div.row
-						br
-							
-						if(typeof links[0] !== "undefined")
-							h4.blue Ses liens publiés :
+						if demandes
+							h4.blue Voici vos demandes en attente :
 							br
 							table.table
 								thead
 									tr
 										th
-										th URL
-										th Description
-										th Tags
-										th Date de publication
+										th Nom d'utilisateur
+										th Email
 								tbody
-									each link in links
+									each demande in demandes
 										tr
 											td
-												<img src="http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=100&stwymax=75&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}" border=0 />	
-
+												script(type="text/javascript") email = "#{demande.email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?s=80' />");
 											td 
-												a.url(href="#{link.url}" target="_blank") #{link.url}
-												
-											td #{link.description}
-												
+												a(href="profil/#{demande._id}") #{demande._id}
 											td 
-												each ctag in link.tags
-													span.tag #{ctag}	
+												a(href='mailto:#{demande.email}') #{demande.email}
+							br
+							h6.blue Vous avez #{nbddes} demandes en attente 
 
-											td #{link.date}
 
-														
 						else
-							h4.blue Il n'a posté aucun lien
+							h4.blue Vous n'avez aucune demande
+		
+		br
+		br
+		br
+		a(href="profil", class="btn btn-large btn-info") Retourner sur votre profil	
+
+
+		
