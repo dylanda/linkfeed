@@ -118,7 +118,7 @@ exports.updateLink=function(req,res){
 	var ObjectID = require('mongodb').ObjectID;
 	var idString = req.params.id;
 	var tagsarray = req.body.tags.split(",");
-	var lien={url:req.body.url, description:req.body.description, tags:tagsarray, user:req.session.user};
+	var lien={ $set: {description:req.body.description, tags:tagsarray, user:req.session.user}};
 	db.liens.update({_id: new ObjectID(idString)}, lien);
 	res.redirect('/profil');
 };

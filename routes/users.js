@@ -19,7 +19,7 @@ var db = require("mongojs").connect(databaseUrl, collections);
 
 
 exports.login=function(request,response){
-		var username = request.body.username.toLowerCase();
+		var username = request.body.username.toLowerCase().trim();
 		db.users.find({_id:username},function(error,user){
 				if(user.length==0 || user[0].mdp != request.body.mdp){
 					response.render('index',{messageError:'Mauvais login ou mot de passe'});
@@ -32,10 +32,10 @@ exports.login=function(request,response){
 };
 
 exports.register=function(request,response){
-		var username = request.body.username.toLowerCase();
+		var username = request.body.username.toLowerCase().trim();
 		db.users.find({_id:username},function(error,user){
 				if(user.length==0){
-					db.users.insert({_id:username, mdp:request.body.mdp, email:request.body.email.toLowerCase()});
+					db.users.insert({_id:username, mdp:request.body.mdp, email:request.body.email.toLowerCase().trim()});
 					console.log("Nouvel utilisateur enregistré");
 					request.session.user = username;
 					response.redirect('/feed');
