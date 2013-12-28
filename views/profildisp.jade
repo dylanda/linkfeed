@@ -73,11 +73,14 @@ html(lang='fr')
 							
 						- var ami = false
 						- var pending = false
+						- var pending2 = false
 						- each friend in userdisp[0].friends
 							if friend.user == currentuser && friend.confirmed == true
 								- ami = true
 							else if friend.demandeur == currentuser
 								- pending = true
+							else if friend.demandeur == userdisp[0]._id
+								-pending2 = true
 						if ami == true
 							a.btn.btn-danger.btn-large.pull-right(href="/deleteFriend/#{userdisp[0]._id}")
 								i.icon-user
@@ -86,6 +89,13 @@ html(lang='fr')
 							a.btn.btn-info.btn-large.disabled.pull-right()
 								i.icon-user
 								|  Demande en attente
+						else if pending2 == true
+							a.btn.btn-danger.btn-large.pull-right(style="margin-left:15px", href="/rejectRequest/#{userdisp[0]._id}")
+								i.icon-user
+								|  Refuser la demande
+							a.btn.btn-success.btn-large.pull-right(href="/confirmRequest/#{userdisp[0]._id}")
+								i.icon-user
+								|  Confirmer la demande
 						else
 							a.btn.btn-info.btn-large.pull-right(href="/addFriend/#{userdisp[0]._id}")
 								i.icon-user

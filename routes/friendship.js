@@ -135,7 +135,7 @@ exports.confirmRequest=function(request,response){
 					$push:{"friends":{user:currentuser,confirmed:true}}
 				}
 			);
-			response.redirect('/');
+			response.redirect('/profil/'+demandeur.toString());
 		});
 };
 
@@ -157,7 +157,7 @@ exports.rejectRequest=function(request,response){
 				}
 			);
 			
-			response.redirect('/');
+			response.redirect('/pendingRequests');
 		});
 };
 
@@ -179,7 +179,7 @@ exports.deleteFriend=function(request,response){
 				}
 			);
 			
-			response.redirect('/');
+			response.redirect('/friends');
 		});
 };
 
