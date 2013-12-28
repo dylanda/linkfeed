@@ -84,9 +84,9 @@ html(lang='fr')
 											td 
 												a(href='mailto:#{demande.email}') #{demande.email}
 											td
-												a.btn.btn-success(href="#")
+												a.btn.btn-success(href="/confirmRequest/#{demande._id}")
 													| Confirmer
-												a.btn.btn-danger(href="#")
+												a.btn.btn-danger(style='margin-left:3px', href="/rejectRequest/#{demande._id}")
 													| Refuser
 							br
 							h6.blue Vous avez #{demandes.length} demandes en attente 

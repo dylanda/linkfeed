@@ -34,41 +34,6 @@ exports.addFriend=function(request,response){
 		});
 };
 
-exports.pendingRequests=function(request,response){
-		var currentuser=request.session.user;
-
-		db.users.find({_id:currentuser},function(error,user){
-			var dde=new Array;
-			var j=0;
-			var nbddes=0;
-			if (user[0].friends!=undefined)
-			{	
-				for(var i=0;i<user[0].friends.length;i++)
-				{
-					if (user[0].friends[i].confirmed==false && user[0].friends[i].demandeur!=currentuser) 
-					{
-						dde[j]=user[0].friends[i].demandeur;
-						j++;
-					}
-				}
-				if (dde.length!=0) 
-				{
-					db.users.find({_id:{$in:dde}},function(error,requests){
-						response.render('requests',{user:currentuser,demandes:requests});
-					});
-				}
-				else
-				{
-					response.render('requests',{user:currentuser});
-				}
-			}
-			else
-			{
-				response.render('requests',{user:currentuser});
-			}
-		});
-};
-
 
 exports.friends=function(request,response){
 		var currentuser=request.session.user;
@@ -108,3 +73,117 @@ exports.friends=function(request,response){
 		});
 
 };
+
+exports.pendingRequests=function(request,response){
+		var currentuser=request.session.user;
+
+		db.users.find({_id:currentuser},function(error,user){
+			var dde=new Array;
+			var j=0;
+			var nbddes=0;
+			if (user[0].friends!=undefined)
+			{	
+				for(var i=0;i<user[0].friends.length;i++)
+				{
+					if (user[0].friends[i].confirmed==false && user[0].friends[i].demandeur!=currentuser) 
+					{
+						dde[j]=user[0].friends[i].demandeur;
+						j++;
+					}
+				}
+				if (dde.length!=0) 
+				{
+					db.users.find({_id:{$in:dde}},function(error,requests){
+						response.render('requests',{user:currentuser,demandes:requests});
+					});
+				}
+				else
+				{
+					response.render('requests',{user:currentuser});
+				}
+			}
+			else
+			{
+				response.render('requests',{user:currentuser});
+			}
+		});
+};
+
+exports.confirmRequest=function(request,response){
+		var currentuser=request.session.user;
+		var demandeur=request.params.id.toLowerCase();
+
+		db.users.find({_id:currentuser},function(error,user){
+			db.users.update({"_id":currentuser},
+				{
+					$pull:{"friends":{user:demandeur,confirmed:false}}
+				}
+			);
+			db.users.update({"_id":currentuser},
+				{
+					$push:{"friends":{user:demandeur,confirmed:true}}
+				}
+			);
+
+			db.users.update({"_id":demandeur},
+				{
+					$pull:{"friends":{user:currentuser,confirmed:false}}
+				}
+			);
+			db.users.update({"_id":demandeur},
+				{
+					$push:{"friends":{user:currentuser,confirmed:true}}
+				}
+			);
+			response.redirect('/');
+		});
+};
+
+exports.rejectRequest=function(request,response){
+		var currentuser=request.session.user;
+		var demandeur=request.params.id.toLowerCase();
+
+		db.users.find({_id:currentuser},function(error,user){
+			db.users.update({"_id":currentuser},
+				{
+					$pull:{"friends":{user:demandeur,confirmed:false}}
+				}
+			);
+			
+
+			db.users.update({"_id":demandeur},
+				{
+					$pull:{"friends":{user:currentuser,confirmed:false}}
+				}
+			);
+			
+			response.redirect('/');
+		});
+};
+
+exports.deleteFriend=function(request,response){
+		var currentuser=request.session.user;
+		var toDelete=request.params.id.toLowerCase();
+
+		db.users.find({_id:currentuser},function(error,user){
+			console.log('je vais faire le update');
+			console.log('je pull le toDelete');
+			db.users.update({"_id":currentuser},
+				{
+					$pull:{"friends":{user:toDelete,confirmed:true}}
+				}
+			);
+			console.log('jai fini je commence le deuxieme update');
+			
+			console.log('je pull le currentuser');
+			db.users.update({"_id":toDelete},
+				{
+					$pull:{"friends":{user:currentuser,confirmed:true}}
+				}
+			);
+			console.log('jai fini')
+			
+			response.redirect('/');
+		});
+};
+

@@ -92,6 +92,15 @@ app.get('/addFriend/:id',requiresLogin,friendship.addFriend);
 //consulter ses demandes en attente
 app.get('/pendingRequests',requiresLogin,friendship.pendingRequests);
 
+//accepter une requête
+app.get('/confirmRequest/:id',requiresLogin,friendship.confirmRequest);
+
+//rejeter une requete
+app.get('/rejectRequest/:id',requiresLogin,friendship.rejectRequest);
+
+//supprimer un lien d'amitié
+app.get('/deleteFriend/:id',requiresLogin,friendship.deleteFriend);
+
 //------------------------------------
 // 			filtres
 //------------------------------------

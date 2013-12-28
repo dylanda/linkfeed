@@ -73,6 +73,7 @@
 										th
 										th Nom d'utilisateur
 										th Email
+										th
 								tbody
 									each friend in friends
 										tr
@@ -82,6 +83,9 @@
 												a(href="profil/#{friend._id}") #{friend._id}
 											td 
 												a(href='mailto:#{friend.email}') #{friend.email}
+											td
+												a.btn.btn-danger(href="/deleteFriend/#{friend._id}")
+													| Retirer de la liste d'amis
 							br
 							h6.blue Vous avez #{friends.length} amis 
 
