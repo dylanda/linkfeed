@@ -103,8 +103,6 @@ html(lang='fr')
 			div.row
 				div.span12
 					if links.length != 0
-						h4.blue Vos liens publiés :
-						br
 						.container
 							.row
 								each link in links
@@ -116,7 +114,8 @@ html(lang='fr')
 													//- <img src="http://bootsnipp.com/apple-touch-icon-114x114-precomposed.png" alt="bootsnipp" class="img-rounded img-responsive" />
 												.span9
 													.row-fluid
-														a.url.pull-left(href="#{link.url}" target="_blank") #{link.url.replace("http://www.","").replace("https://www.","").replace("http://","").replace("https://","").toUpperCase()} 
+														a.url.pull-left(href="#{link.url}" target="_blank") #{link.title.toUpperCase()} 
+															i.icon.icon-share
 														div(style="float:right;")
 															span
 																a.twitter-share-button(href='https://twitter.com/share', data-text='Regardez ça!', data-url='#{link.url}', data-lang='fr', data-count='none') Tweeter
@@ -129,17 +128,24 @@ html(lang='fr')
 													.row-fluid
 														p.pull-left
 															| Partagé le #{link.date} par 
-															a(href="profil/#{link.user}") #{link.user}
+															a(href="/profil/#{link.user}") #{link.user}
 											hr.black
 											.row-fluid.rating-desc
 												div.span12
 													each ctag in link.tags
 														span.tag #{ctag.toUpperCase()}
 
-					else
-						h4.blue Aucun lien
+						if filtre
+							a.btn.pull-left(href="/profil") Annuler filtre
 
-										
+					else
+						if filtre
+							h4.blue Désolé, aucun lien ne correspond à votre filtre. 
+							a.btn(href="/feed") Retour
+						else
+							h4.blue Désolé, vous n'avez aucun lien dans votre feed. 
+							a.btn(href="/findFriends") Recherchez des amis!
+								
 		
 
 		

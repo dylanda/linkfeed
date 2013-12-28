@@ -69,14 +69,19 @@ html(lang='fr')
 					}
 				}); 
 				
-				$('.dropdown-toggle').click(function(e) {
-					e.preventDefault();
-					setTimeout($.proxy(function() {
-						if ('ontouchstart' in document.documentElement) {
-							$(this).siblings('.dropdown-backdrop').off().remove();
-						}
-					}, this), 0);
+				$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) {
+					e.stopPropagation(); 
 				});
+				
+				$('#titre').bind('click', function() { 
+					var regUrl = new RegExp('(^([a-z]*://)?(www.)?)', 'gi');
+					var titre = $('#url').val().replace(regUrl,"");
+					if (titre.indexOf(".")!=-1){
+						var titre = titre.substring(0,titre.indexOf("."));
+					}
+					$('#titre').val(titre.charAt(0).toUpperCase()+titre.slice(1));
+				});
+				
 				
 			});
 
@@ -136,9 +141,10 @@ html(lang='fr')
 					a.btn.btn-info.btn-large(style="margin:3px 0 0 15px", href="/friends")
 						i.icon-user
 						|  Voir amis
-					a.btn.btn-info.btn-large(style="margin:3px 0 0 15px", href="/pendingRequests")
-						| Demandes en attente 
-						span.badge  #{nbddes}
+					if !filtre
+						a.btn.btn-info.btn-large(style="margin:3px 0 0 15px", href="/pendingRequests")
+							| Demandes en attente 
+							span.badge  #{nbddes}
 								
 					br
 					br
@@ -150,8 +156,9 @@ html(lang='fr')
 								button.close(onClick="$('#partage').hide('slow');$('#afficher').show();") ×
 								h3.blue Partage de lien :
 								form(method="POST", action="/lien/new", accept-charset="UTF-8")
-									input#url.span4(type="url", name="url", value="http://", required="required")
-									input#description.span4(type="text", name="description", placeholder="Description", required="required")
+									input#url.span4(type="url", name="url", placeholder="URL", required="required")
+									input(id="titre", type="text", maxlength="25" , name="titre", value="http://", placeholder="Titre", required="required")
+									input#description.span4(type="text", maxlength="40", name="description", placeholder="Description", required="required")
 									p.blue
 										i.icon-tags
 										| Tags :
@@ -178,31 +185,33 @@ html(lang='fr')
 													//- <img src="http://bootsnipp.com/apple-touch-icon-114x114-precomposed.png" alt="bootsnipp" class="img-rounded img-responsive" />
 												.span9
 													.row-fluid
-														a.url.pull-left(href="#{link.url}" target="_blank") #{link.url.replace("http://www.","").replace("https://www.","").replace("http://","").replace("https://","").toUpperCase()} 
-														- var update = "update" + link._id
-														- var dispmodif = "dispmodif" + link._id
-														- var tagsmodif = "tagsmodif" + link._id
-														- var suppr = "suppr" + link._id
-														
-														div.btn-group(style="float:right;position:relative;")
-															a.btn.dropdown-toggle(data-toggle='dropdown', href='#')
-																i.icon-cog(style="font-size:21px") 
-																|  
-																span.caret
-															ul.dropdown-menu	
-																li
-																	a(onClick="fillTags('##{tagsmodif}','#{link.tags}');$('##{update}').css('visibility','visible').hide().fadeIn().removeClass('hidden');$('##{suppr}').hide();")
-																		i.icon-edit
-																		|  Modifier
-																		
-																li
-																	a(id= suppr, class="suppr", href="/delete/#{link._id}")
-																		i.icon-remove
-																		|  Supprimer
+														.span9
+															a.url.pull-left(href="#{link.url}" target="_blank") #{link.title.toUpperCase()} 
+
+														.span3
+															- var update = "update" + link._id
+															- var dispmodif = "dispmodif" + link._id
+															- var tagsmodif = "tagsmodif" + link._id
+															- var suppr = "suppr" + link._id
+															
+															div.btn-group(style="float:right;position:relative;")
+																a.btn.dropdown-toggle(data-toggle='dropdown', href='#')
+																	i.icon-cog(style="font-size:21px") 
+																	|  
+																	span.caret
+																ul.dropdown-menu	
+																	li
+																		a(href="#NULL", onClick="fillTags('##{tagsmodif}','#{link.tags}');$('##{update}').css('visibility','visible').hide().fadeIn().removeClass('hidden');$('##{suppr}').hide();")
+																			i.icon-edit
+																			|  Modifier
+																			
+																	li
+																		a(id= suppr, class="suppr", href="/delete/#{link._id}")
+																			i.icon-remove
+																			|  Supprimer
 													.row-fluid
-														p.pull-left
-															span.comment.blue
-																“#{link.description}” 
+														p.pull-left.comment.blue
+															“#{link.description}”
 													.row-fluid
 														p.pull-left
 															| Partagé le #{link.date}
@@ -218,14 +227,21 @@ html(lang='fr')
 												button.btn.close(onClick="$('##{update}').hide();$('##{suppr}').show();") X
 												form(action='/update/#{link._id}', method='post')
 													input#url.span4(type="hidden", name="url", placeholder="URL", value="#{link.url}", required="required")
-													input#description.span4(type="text", name="description", placeholder="Description", value="#{link.description}", required="required")
+													input(id="titre", type="text", maxlength="25" , name="titre", value="#{link.title}", placeholder="Titre", required="required")
+													input#description.span4(type="text", maxlength="40" , name="description", placeholder="Description", value="#{link.description}", required="required")
 													p.blue
 														i.icon-tags
 														| Tags :
 													p
 														input.modtags(name="tags", id= tagsmodif,  placeholder="Tags", multiple)
 													button.btn.btn-success(type="submit") Valider
+						if filtre
+							a.btn.pull-left(href="/profil") Annuler filtre
 
 					else
-						h4.blue Aucun lien
-
+						if filtre
+							h4.blue Désolé, aucun lien ne correspond à votre filtre. 
+							a.btn(href="/profil") Retour
+						else
+							h4.blue Désolé, vous n'avez partagé aucun lien. 
+							a#afficher(href="#null", onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');") Partagez votre premier lien!

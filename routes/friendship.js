@@ -30,7 +30,7 @@ exports.addFriend=function(request,response){
 					"$addToSet":{"friends":{user:currentuser,confirmed:false,demandeur:currentuser}}
 				}
 			);
-			response.redirect('/');
+			response.redirect('/profil/'+toAdd);
 		});
 };
 
@@ -166,22 +166,18 @@ exports.deleteFriend=function(request,response){
 		var toDelete=request.params.id.toLowerCase();
 
 		db.users.find({_id:currentuser},function(error,user){
-			console.log('je vais faire le update');
-			console.log('je pull le toDelete');
+
 			db.users.update({"_id":currentuser},
 				{
 					$pull:{"friends":{user:toDelete,confirmed:true}}
 				}
 			);
-			console.log('jai fini je commence le deuxieme update');
-			
-			console.log('je pull le currentuser');
+
 			db.users.update({"_id":toDelete},
 				{
 					$pull:{"friends":{user:currentuser,confirmed:true}}
 				}
 			);
-			console.log('jai fini')
 			
 			response.redirect('/');
 		});

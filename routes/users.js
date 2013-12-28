@@ -53,7 +53,7 @@ exports.profil=function(request,response){
 				
 					db.liens.find({user:userdisp},function(err,link){
 						console.log("Profil consulté");
-						response.render('profildisp',{links: link, userdisp:user});
+						response.render('profildisp',{links: link, userdisp:user, currentuser:request.session.user});
 					});
 				}
 				else{

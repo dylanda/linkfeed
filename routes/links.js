@@ -23,7 +23,7 @@ var dateFormat = require('dateformat');
 
 exports.newLink=function(request,response){
 		var tagsarray = request.body.tags.split(",");
-		var lien={url:request.body.url, description:request.body.description, tags:tagsarray, user:request.session.user, date: dateFormat(new Date(), "dd/mm/yyyy HH:MM:ss")};
+		var lien={url:request.body.url, title:request.body.titre, description:request.body.description, tags:tagsarray, user:request.session.user, date: dateFormat(new Date(), "dd/mm/yyyy HH:MM:ss")};
 		db.liens.insert(lien);
 		console.log("Nouveau lien enregistré");
 		response.redirect('/profil');
@@ -134,7 +134,7 @@ exports.updateLink=function(req,res){
 	var ObjectID = require('mongodb').ObjectID;
 	var idString = req.params.id;
 	var tagsarray = req.body.tags.split(",");
-	var lien={ $set: {description:req.body.description, tags:tagsarray, user:req.session.user}};
+	var lien={ $set: {title:req.body.titre, description:req.body.description, tags:tagsarray, user:req.session.user}};
 	db.liens.update({_id: new ObjectID(idString)}, lien);
 	res.redirect('/profil');
 };

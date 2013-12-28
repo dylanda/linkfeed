@@ -64,64 +64,84 @@ html(lang='fr')
 							b.blue #{userdisp[0]._id} 
 							|  /
 							p Vous pouvez consulter ses informations et ses liens postés.
-						a.btn.btn-info.btn-large.pull-right(href="/addFriend/#{userdisp[0]._id}")
-							i.icon-user
-							|  Ajouter à la liste d'amis
+							
+						- var nbamis = 0
+						- each friend in userdisp[0].friends
+							if friend.confrmed = true
+								- nbamis++
+							
+							
+						- var ami = false
+						- var pending = false
+						- each friend in userdisp[0].friends
+							if friend.user == currentuser && friend.confirmed == true
+								- ami = true
+							else if friend.demandeur == currentuser
+								- pending = true
+						if ami == true
+							a.btn.btn-danger.btn-large.pull-right(href="/deleteFriend/#{userdisp[0]._id}")
+								i.icon-user
+								|  Retirer de la liste d'amis
+						else if pending == true
+							a.btn.btn-info.btn-large.disabled.pull-right()
+								i.icon-user
+								|  Demande en attente
+						else
+							a.btn.btn-info.btn-large.pull-right(href="/addFriend/#{userdisp[0]._id}")
+								i.icon-user
+								|  Ajouter à la liste d'amis
 		
+		div.container.well
+			div.row-fluid
+				div.span12
+					div.row-fluid
+						div.span3
+							script(type="text/javascript") email = "#{userdisp[0].email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=180' />");
+						div.span9
+							h4.blue Informations :
+							br
+							p.blue Nom d'utilisateur : 
+								| #{userdisp[0]._id}
+							p.blue Adresse email : 
+								a(href='mailto:#{userdisp[0].email}') #{userdisp[0].email}
+								
+							p.blue Nombre de liens postés : 
+								span.badge.badge-info #{links.length}
+							
+							p.blue Nombre d'amis : 
+								span.badge.badge-info #{nbamis}
+								
 		div.container
 			div.row
 				div.span12
-					div.row
-						div.span2.well
-							script(type="text/javascript") email = "#{userdisp[0].email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?s=80' />");
-							p 
-								hr
-								| #{userdisp[0]._id.toUpperCase()}
-						div.span9.well
-							h4.blue Informations :
-							br
-							p
-								span.blue Nom d'utilisateur : 
-								| #{userdisp[0]._id}
-							p 
-								span.blue Adresse email : 
-								| 
-								a(href='mailto:#{userdisp[0].email}') #{userdisp[0].email}
-								
-							p 
-								span.blue Nombre de liens postés : 
-									span.badge.badge-info #{links.length}
-					div.row
-						br
-							
-						if(typeof links[0] !== "undefined")
-							h4.blue Ses liens publiés :
-							br
-							table.table
-								thead
-									tr
-										th
-										th URL
-										th Description
-										th Tags
-										th Date de publication
-								tbody
-									each link in links
-										tr
-											td
-												<img src="http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=100&stwymax=75&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}" border=0 />	
+					if links.length != 0
+						.container
+							.row
+								each link in links
+									.span6
+										.well
+											.row-fluid
+												.span3
+													img.img-rounded(src='http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=120&stwymax=90&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}', border='0')
+													//- <img src="http://bootsnipp.com/apple-touch-icon-114x114-precomposed.png" alt="bootsnipp" class="img-rounded img-responsive" />
+												.span9
+													.row-fluid
+														a.url.pull-left(href="#{link.url}" target="_blank") #{link.title.toUpperCase()} 
+															i.icon.icon-share
+													.row-fluid
+														p.pull-left(style="margin-top:5px")
+															span.comment.blue
+																“#{link.description}” 
+													.row-fluid
+														p.pull-left
+															| Partagé le #{link.date} par 
+															a(href="/profil/#{link.user}") #{link.user}
+											hr.black
+											.row-fluid.tags-bar
+												div.span12
+													each ctag in link.tags
+														span.tag #{ctag.toUpperCase()}
 
-											td 
-												a.url(href="#{link.url}" target="_blank") #{link.url}
 												
-											td #{link.description}
-												
-											td 
-												each ctag in link.tags
-													span.tag #{ctag}	
-
-											td #{link.date}
-
-														
-						else
-							h4.blue Il n'a posté aucun lien
+					else
+						h4.blue Il n'a posté aucun lien

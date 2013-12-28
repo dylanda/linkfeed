@@ -24,7 +24,7 @@ exports.searchInProfile=function(request,response){
 		if(filtre){
 			var tagsarray = filtre.split(",");
 			db.liens.find({tags: {$in: tagsarray}, user:profil},function(err,link){
-				response.render('profil',{links:link, user:profil, data:request.body.data});
+				response.render('profil',{links:link, user:profil, data:request.body.data, filtre:true});
 			});
 		}
 		else{
@@ -39,7 +39,7 @@ exports.searchInFeed=function(request,response){
 		if (filtre){
 			var tagsarray = filtre.split(",");
 			db.liens.find({tags: {$in: tagsarray}},function(err,link){
-				response.render('feed',{links:link, user:currentuser, data:request.body.data});
+				response.render('feed',{links:link, user:currentuser, data:request.body.data, filtre:true});
 			});
 		}
 		else{
