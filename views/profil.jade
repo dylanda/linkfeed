@@ -156,8 +156,8 @@ html(lang='fr')
 								button.close(onClick="$('#partage').hide('slow');$('#afficher').show();") ×
 								h3.blue Partage de lien :
 								form(method="POST", action="/lien/new", accept-charset="UTF-8")
-									input#url.span4(type="url", name="url", placeholder="URL", required="required")
-									input(id="titre", type="text", maxlength="25" , name="titre", value="http://", placeholder="Titre", required="required")
+									input#url.span4(type="url", value="http://", name="url", placeholder="URL", required="required")
+									input(id="titre", type="text", maxlength="25" , name="titre", placeholder="Titre", required="required")
 									input#description.span4(type="text", maxlength="40", name="description", placeholder="Description", required="required")
 									p.blue
 										i.icon-tags

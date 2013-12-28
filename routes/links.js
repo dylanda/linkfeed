@@ -80,14 +80,25 @@ exports.feedLinks=function(request,response){
 	var currentuser = request.session.user;
 		
 	db.users.find({_id:currentuser},function(err,user){
+		
 		if (user[0].friends){
 			var userfriends = user[0].friends;
 		}
 		else{
-			var userfriends = [];
+			var userfriends = new Array();
 		}
 		
-		db.liens.find({user: { $in: userfriends }},function(err,link){
+		var confirmedfriends = new Array();
+		var nb = 0;
+		for (var i=0; i<userfriends.length; i++) {
+			if (userfriends[i].confirmed == true) {
+				confirmedfriends[nb]=userfriends[i].user;
+				nb++;
+			}
+		}
+		
+		
+		db.liens.find({user: { $in: confirmedfriends }},function(err,link){
 
 				// RECUPERATION TAGS dans DATA
 			db.users.find({},function(err,users){
