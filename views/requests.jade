@@ -8,6 +8,7 @@ html(lang='fr')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Droid+Sans')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
 		link(rel='stylesheet', href='/css/font-awesome.css')
 		link(rel='stylesheet', href='/css/style.css')
 		//if lt IE 9
@@ -86,7 +87,11 @@ html(lang='fr')
 											td
 												a.btn.btn-success(href="/confirmRequest/#{demande._id}")
 													| Confirmer
+<<<<<<< HEAD
 												a.btn.btn-danger(style='margin-left:3px', href="/rejectRequest/#{demande._id}")
+=======
+												a.btn.btn-danger(style="margin-left:3px", href="#")
+>>>>>>> d210d6cad7fd70bdcec8a5e2ba1e5fe40cca0a86
 													| Refuser
 							br
 							h6.blue Vous avez #{demandes.length} demandes en attente 

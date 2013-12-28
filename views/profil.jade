@@ -2,11 +2,13 @@
 html(lang='fr')
 	head
 		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
 		title LinkFeed - #{user}
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Droid+Sans')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
 		link(rel='stylesheet', href='/css/font-awesome.css')
 		link(rel='stylesheet', href='/css/style.css')
 		
@@ -71,6 +73,14 @@ html(lang='fr')
 					}
 				}); 
 				
+				$('.dropdown-toggle').click(function(e) {
+					e.preventDefault();
+					setTimeout($.proxy(function() {
+						if ('ontouchstart' in document.documentElement) {
+							$(this).siblings('.dropdown-backdrop').off().remove();
+						}
+					}, this), 0);
+				});
 				
 			});
 
@@ -129,7 +139,7 @@ html(lang='fr')
 					button.btn.btn-info.btn-large.pull-left#afficher(onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');")
 						i.icon-share
 						|  Partager un lien
-					a.btn.btn-info.btn-large.pull-right(href="/pendingRequests")
+					a.btn.btn-info.btn-large.pull-right(style="margin-left:3px", href="/pendingRequests")
 						| Demandes en attente 
 						span.badge  #{nbddes}
 					a.btn.btn-info.btn-large.pull-right(href="/friends")
@@ -170,44 +180,57 @@ html(lang='fr')
 										.well
 											.row-fluid
 												.span3
-													img.img-rounded(src='http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=100&stwymax=75&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}', border='0')
-												.span9.section-box
-													a.url(href="#{link.url}" target="_blank") #{link.url.replace("http://www.","").replace("http://","").toUpperCase()} 
-														span.icon.icon-share
-													p
-														span.comment.blue
-															“#{link.description}” 
-															p
-																| Partagé le #{link.date}
-													hr
-													.row-fluid.rating-desc
-														div.span12
-															each ctag in link.tags
-																span.tag #{ctag.toUpperCase()}
-											.row-fluid
+													img.img-rounded(src='http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=120&stwymax=90&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}', border='0')
+													//- <img src="http://bootsnipp.com/apple-touch-icon-114x114-precomposed.png" alt="bootsnipp" class="img-rounded img-responsive" />
+												.span9
+													.row-fluid
+														a.url.pull-left(href="#{link.url}" target="_blank") #{link.url.replace("http://www.","").replace("https://www.","").replace("http://","").replace("https://","").toUpperCase()} 
+														- var update = "update" + link._id
+														- var dispmodif = "dispmodif" + link._id
+														- var tagsmodif = "tagsmodif" + link._id
+														- var suppr = "suppr" + link._id
+														
+														div.btn-group(style="float:right;position:relative;")
+															a.btn.dropdown-toggle(data-toggle='dropdown', href='#')
+																i.icon-cog(style="font-size:21px") 
+																|  
+																span.caret
+															ul.dropdown-menu	
+																li
+																	a(onClick="fillTags('##{tagsmodif}','#{link.tags}');$('##{update}').css('visibility','visible').hide().fadeIn().removeClass('hidden');$('##{suppr}').hide();")
+																		i.icon-edit
+																		|  Modifier
+																		
+																li
+																	a(id= suppr, class="suppr", href="/delete/#{link._id}")
+																		i.icon-remove
+																		|  Supprimer
+													.row-fluid
+														p.pull-left
+															span.comment.blue
+																“#{link.description}” 
+													.row-fluid
+														p.pull-left
+															| Partagé le #{link.date}
+
+											hr.black
+											.row-fluid.rating-desc
 												div.span12
-													- var update = "update" + link._id
-													- var dispmodif = "dispmodif" + link._id
-													- var tagsmodif = "tagsmodif" + link._id
-													- var suppr = "suppr" + link._id
-													
-													a(id= suppr, class="suppr", rel='tooltip', href="/delete/#{link._id}", data-original-title='Supprimer le lien')
-														button.btn.btn-danger.pull-right(style='margin-left:5px', type='button', aria-hidden='true') X
-													
-													button.btn.btn-info.btn-lg.pull-right(id= dispmodif, onClick="fillTags('##{tagsmodif}','#{link.tags}');$('##{dispmodif}').hide();$('##{update}').css('visibility','visible').hide().fadeIn().removeClass('hidden');$('##{suppr}').hide();")
-														i.icon-edit
-														|  Modifier
-													div.hide(id= update)
-														button.btn.close(onClick="$('##{update}').hide();$('##{dispmodif}').show();$('##{suppr}').show();") X
-														form(action='/update/#{link._id}', method='post')
-															input#url.span4(type="hidden", name="url", placeholder="URL", value="#{link.url}", required="required")
-															input#description.span4(type="text", name="description", placeholder="Description", value="#{link.description}", required="required")
-															p.blue
-																i.icon-tags
-																| Tags :
-															p
-																input.modtags(name="tags", id= tagsmodif,  placeholder="Tags", multiple)
-															button.btn.btn-success(type="submit") Valider
+													each ctag in link.tags
+														span.tag #{ctag.toUpperCase()}
+
+											div.hide(id= update)
+												br
+												button.btn.close(onClick="$('##{update}').hide();$('##{suppr}').show();") X
+												form(action='/update/#{link._id}', method='post')
+													input#url.span4(type="hidden", name="url", placeholder="URL", value="#{link.url}", required="required")
+													input#description.span4(type="text", name="description", placeholder="Description", value="#{link.description}", required="required")
+													p.blue
+														i.icon-tags
+														| Tags :
+													p
+														input.modtags(name="tags", id= tagsmodif,  placeholder="Tags", multiple)
+													button.btn.btn-success(type="submit") Valider
 
 					else
 						h4.blue Aucun lien
