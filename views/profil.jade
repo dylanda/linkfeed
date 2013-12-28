@@ -72,7 +72,6 @@ html(lang='fr')
 					}
 				}); 
 				
-				
 			});
 
 	body
@@ -187,12 +186,12 @@ html(lang='fr')
 																|  
 																span.caret
 															ul.dropdown-menu	
-																li
+																li.dropdown
 																	a(onClick="fillTags('##{tagsmodif}','#{link.tags}');$('##{update}').css('visibility','visible').hide().fadeIn().removeClass('hidden');$('##{suppr}').hide();")
 																		i.icon-edit
 																		|  Modifier
 																		
-																li
+																li.dropdown
 																	a(id= suppr, class="suppr", href="/delete/#{link._id}")
 																		i.icon-remove
 																		|  Supprimer

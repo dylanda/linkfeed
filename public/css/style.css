@@ -167,5 +167,7 @@ input {
 .icon-tags { color:#27ae60;}
 .black {margin-top: 7px;margin-bottom: 7px;border: 0;border-top: 1px solid rgb(199, 199, 199);}
 
-
+.dropdown-backdrop{
+    position: static;
+}
 
