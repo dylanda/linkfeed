@@ -28,6 +28,11 @@ a:hover { color: #0099FF; text-decoration: none; }
 
 strong { font-weight: bold; }
 
+.btn.btn-navbar {
+	margin-top:18px;
+	position: absolute;
+	left: 260px;
+}
 
 .header .navbar {
     margin-bottom: 0;
@@ -47,16 +52,15 @@ strong { font-weight: bold; }
 
 .header h1 {
     float: left;
-    margin-left: 30px;
     text-align: left;
+	margin:20px 0 0 20px;
 }
 
 .header a.brand {
    display: inline-block;
     text-indent: -9999px;
-    width: 280px;
+    width: 200px;
     height: 30px;
-    padding: 30px 0;
    background: url(../img/logo.png) 20px center no-repeat; 
 }
 
@@ -92,7 +96,7 @@ strong { font-weight: bold; }
 
 .page-title {
     margin: 0 auto 30px;
-    padding: 30px 0 15px 0;
+    padding: 30px 10px 15px 10px;
     background: #f8f8f8 url(../img/pattern.jpg) left top repeat;
     -moz-box-shadow:
         0 5px 15px 0 rgba(0,0,0,.05) inset,

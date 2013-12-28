@@ -15,10 +15,6 @@ html(lang='fr')
 		
 		//if lt IE 9
 		script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
-		style.
-			body{
-			padding-top:100px;
-			}
 		
 		script(src="/js/jquery-1.8.2.min.js")
 		script(src="/bootstrap/js/bootstrap.min.js")
@@ -60,10 +56,9 @@ html(lang='fr')
 		
 		
 	body	
-		div.container
 			div.header.row
-				div.span12
-					div.navbar.navbar-fixed-top
+				div
+					div.navbar.navbar-top
 						div.navbar-inner
 							a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
 								span.icon-bar
@@ -102,47 +97,45 @@ html(lang='fr')
 								input#e1(name="searchfield", placeholder="Filtrer", style="margin-right:5px;")
 								button.btn.btn-info(id="searchbtn" type="submit")
 									i.icon-search
-									|  Recherche
 									
 
 		div.container
 			div.row
 				div.span12
 					if links.length != 0
-						table.table
-							thead
-								tr
-									th
-									th URL
-									th Utilisateur
-									th Description
-									th Tags
-									th Date de publication
-									th
-							tbody
+						h4.blue Vos liens publiés :
+						br
+						.container
+							.row
 								each link in links
-									tr
-										td
-											<img src="http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=100&stwymax=75&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}" border=0 />	
-											
-										td 
-											a.url(href="#{link.url}" target="_blank") #{link.url}
-										
-										td 
-											a(href="profil/#{link.user}") #{link.user}
-											
-										td #{link.description}
-											
-										td
-											each ctag in link.tags
-												span.tag #{ctag.toUpperCase()}
-												
-										td #{link.date}
-										
-										td 
-											div.fb-share-button(data-href='#{link.url}', data-type='button')
-											div
-												a.twitter-share-button(href='https://twitter.com/share', data-text='Regardez ça!', data-url='#{link.url}', data-lang='fr', data-count='none') Tweeter
+									.span6
+										.well
+											.row-fluid
+												.span3
+													img.img-rounded(src='http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=120&stwymax=90&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}', border='0')
+													//- <img src="http://bootsnipp.com/apple-touch-icon-114x114-precomposed.png" alt="bootsnipp" class="img-rounded img-responsive" />
+												.span9
+													.row-fluid
+														a.url.pull-left(href="#{link.url}" target="_blank") #{link.url.replace("http://www.","").replace("https://www.","").replace("http://","").replace("https://","").toUpperCase()} 
+														div(style="float:right;")
+															span
+																a.twitter-share-button(href='https://twitter.com/share', data-text='Regardez ça!', data-url='#{link.url}', data-lang='fr', data-count='none') Tweeter
+														.row-fluid
+														p.pull-left
+															span.comment.blue
+																“#{link.description}” 
+															div(style="float:right;")
+																.fb-share-button(data-href='#{link.url}', data-type='button')
+													.row-fluid
+														p.pull-left
+															| Partagé le #{link.date} par 
+															a(href="profil/#{link.user}") #{link.user}
+											hr.black
+											.row-fluid.rating-desc
+												div.span12
+													each ctag in link.tags
+														span.tag #{ctag.toUpperCase()}
+
 					else
 						h4.blue Aucun lien
 

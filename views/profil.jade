@@ -16,10 +16,6 @@ html(lang='fr')
 		
 		//if lt IE 9
 		script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
-		style.
-			body{
-			padding-top:100px;
-			}
 			
 
 		script(src="/js/jquery-1.8.2.min.js")
@@ -85,10 +81,9 @@ html(lang='fr')
 			});
 
 	body
-		div.container
 			div.header.row
-				div.span12
-					div.navbar.navbar-fixed-top
+				div
+					div.navbar.navbar-top
 						div.navbar-inner
 							a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
 								span.icon-bar
@@ -131,20 +126,19 @@ html(lang='fr')
 								input#e2(name="searchfield", placeholder="Filtrer par tags", style="margin-right:5px;")
 								button.btn.btn-info(id="searchbtn" type="submit")
 									i.icon-search
-									|  Recherche
 								
 		div.container
 			div.row-fluid
 				div.span12
-					button.btn.btn-info.btn-large.pull-left#afficher(onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');")
+					a.btn.btn-info.btn-large#afficher(onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');")
 						i.icon-share
 						|  Partager un lien
-					a.btn.btn-info.btn-large.pull-right(style="margin-left:3px", href="/pendingRequests")
-						| Demandes en attente 
-						span.badge  #{nbddes}
-					a.btn.btn-info.btn-large.pull-right(href="/friends")
+					a.btn.btn-info.btn-large(style="margin:3px 0 0 15px", href="/friends")
 						i.icon-user
 						|  Voir amis
+					a.btn.btn-info.btn-large(style="margin:3px 0 0 15px", href="/pendingRequests")
+						| Demandes en attente 
+						span.badge  #{nbddes}
 								
 					br
 					br
