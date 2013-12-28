@@ -157,7 +157,7 @@ exports.rejectRequest=function(request,response){
 				}
 			);
 			
-			response.redirect('/pendingRequests');
+			response.redirect('/profil/'+demandeur.toString());
 		});
 };
 

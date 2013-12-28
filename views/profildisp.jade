@@ -86,6 +86,9 @@ html(lang='fr')
 								i.icon-user
 								|  Retirer de la liste d'amis
 						else if pending == true
+							a.btn.btn-danger.btn-large.pull-right(style="margin-left:15px", href="/rejectRequest/#{userdisp[0]._id}")
+								i.icon-remove
+								|  Annuler
 							a.btn.btn-info.btn-large.disabled.pull-right()
 								i.icon-user
 								|  Demande en attente
@@ -98,7 +101,7 @@ html(lang='fr')
 								|  Confirmer la demande
 						else
 							a.btn.btn-info.btn-large.pull-right(href="/addFriend/#{userdisp[0]._id}")
-								i.icon-user
+								i.icon-plus
 								|  Ajouter à la liste d'amis
 		
 		div.container.well
