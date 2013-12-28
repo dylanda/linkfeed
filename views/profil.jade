@@ -2,6 +2,7 @@
 html(lang='fr')
 	head
 		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
 		title LinkFeed - #{user}
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Droid+Sans')
@@ -195,12 +196,12 @@ html(lang='fr')
 																|  
 																span.caret
 															ul.dropdown-menu	
-																li.dropdown
+																li
 																	a(onClick="fillTags('##{tagsmodif}','#{link.tags}');$('##{update}').css('visibility','visible').hide().fadeIn().removeClass('hidden');$('##{suppr}').hide();")
 																		i.icon-edit
 																		|  Modifier
 																		
-																li.dropdown
+																li
 																	a(id= suppr, class="suppr", href="/delete/#{link._id}")
 																		i.icon-remove
 																		|  Supprimer
