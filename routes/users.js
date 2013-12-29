@@ -27,7 +27,7 @@ exports.login=function(request,response){
 						response.render('index',{messageError:'Mauvais login ou mot de passe'});
 					}
 					else{
-						request.session.user = username;
+						request.session.user = data;
 						response.redirect('/feed');
 					}
 			});
@@ -39,7 +39,7 @@ exports.login=function(request,response){
 						response.render('index',{messageError:'Mauvais login ou mot de passe'});
 					}
 					else{
-						request.session.user = username;
+						request.session.user = data;
 						response.redirect('/feed');
 					}
 			});
