@@ -79,7 +79,7 @@ html(lang='fr')
 							- each friend in userdisp[0].friends
 								if friend.user == currentuser && friend.confirmed == true
 									- ami = true
-								else if friend.demandeur 
+								else if friend.demandeur && friend.user == currentuser
 									if friend.demandeur == currentuser
 										- pending = true
 									if friend.demandeur == userdisp[0]._id
