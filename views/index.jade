@@ -1,3 +1,4 @@
+!!! 5
 html(lang='fr')
 	head
 		meta(charset='utf-8')
@@ -15,59 +16,111 @@ html(lang='fr')
 		script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
 		
 		script(src='/js/jquery-1.8.2.min.js')
+
 		script(src='/bootstrap/js/bootstrap.min.js')
 		
+		script.
+			$(document).ready(function() { 
+				$('#passError').hide();
+				
+				$('#mdp_reg').bind('input',function () {
+					if ($('#mdp_reg').val()!="" && $('#mdp_again').val()!=""){
+						check();
+					}
+				});
+				
+				
+				$('#mdp_again').bind('input',function () {
+					if ($('#mdp_reg').val()!="" && $('#mdp_again').val()!=""){
+						check();
+					}
+				});
+				
+			});
+			
+			function check(){
+				if ($('#mdp_reg').val()!=$('#mdp_again').val()) 
+				{
+					$('#passError').hide();
+					$('#passError').show();
+					return false;
+				}
+				else
+				{
+					$('#passError').hide();
+				}
+			}
+			
+
+		
 	body
-		div.page-title
+		div.fullscreen_bg#fullscreen_bg
+			div.page-title
+				div.container
+					div.row
+						div.span12
+							i.icon-tasks.page-title-icon
+								h2 Share ! /
+									p Bienvenue sur LinkFeed
+								
+			img.img-rounded(src='/linkfeed.png', width='750', style="margin-bottom:30px")
+			
 			div.container
 				div.row
-					div.span12
-						i.icon-tasks.page-title-icon
-							h2 Share ! /
-								p Bienvenue sur LinkFeed
-							
-		img.img-rounded(src='/linkfeed.jpg', width='750')
-		
-		div.container
-			div.row
-				div.span4.offset2.well
-					legend Identifiez-vous !
-					- if (typeof(messageError) !== 'undefined'){
-						div.alert.alert-danger.alert-dismissable
-							button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
-							strong Erreur!
-							|  #{messageError}
-					-}
-					form(method='POST', action='/user/login', accept-charset='UTF-8')
-						input#username.span4(type='text', name='username', placeholder='Nom d\'utilisateur', required='required')
-						input#mdp.span4(type='password', name='mdp', placeholder='Mot de passe', required='required')
-						button.btn.btn-info.btn-block(type='submit') Se connecter
-				div.span3.well
-					legend Pas encore inscrit ?
-					- if (typeof(messageError2) !== 'undefined'){
-						div.alert.alert-danger.alert-dismissable
-							button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
-							strong Erreur!
-							|  #{messageError2}
-					-}
-					a.btn.btn-success.btn-block(data-toggle='modal', href='#myModal') S'inscrire
-					
-		#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-			div.modal-dialog
-				div.modal-content
-					div.modal-header
-						button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-						h4.modal-title Inscription
-					div.modal-body
-						form(method='POST', action='/user/new', accept-charset='UTF-8')
-							input#username.span4(type='text', name='username', placeholder='Nom d\'utilisateur', required='required')
-							input#mdp.span4(type='password', name='mdp', placeholder='Mot de passe', required='required')
-							input#email.span4(type='email', name='email', placeholder='Email', required='required')
-							br
-							button.btn.btn-success(style='width: 30%;', type='submit') Valider
-					div.modal-footer
-						button.btn.btn-danger(type='button', data-dismiss='modal') Annuler		
-		div#footer
-			div.container
-				p  © LinkFeed 2013 - Metz
-				p DA CONCEICAO Dylan - HAZAN Raphaël - MANDICA Simon - SZYMANSKI Loïc
+					div.span4.offset2.well
+						div.row-fluid
+							legend Identifiez-vous !
+							- if (typeof(messageError) !== 'undefined'){
+								div.alert.alert-danger.alert-dismissable
+									button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+									strong Erreur!
+									|  #{messageError}
+							-}
+							form(method='POST', action='/user/login', accept-charset='UTF-8')
+								div.left-inner-addon
+									i.icon.icon-user
+									input#username.span4(style="width:100%;", type='text', name='username', placeholder='Nom d\'utilisateur', required='required')
+								div.left-inner-addon
+									i.icon.icon-lock
+									input#mdp.span4(style="width:100%;",type='password', name='mdp', placeholder='Mot de passe', required='required')
+								button.btn.btn-info.btn-block(type='submit') Se connecter
+							p.blue  © LinkFeed 2013 - Metz
+							p.blue DA CONCEICAO Dylan - HAZAN Raphaël - MANDICA Simon - SZYMANSKI Loïc
+								
+					div.span3.well
+						div.row-fluid
+							legend Pas encore inscrit ?
+							- if (typeof(messageError2) !== 'undefined'){
+								div.alert.alert-danger.alert-dismissable
+									button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+									strong Erreur!
+									|  #{messageError2}
+								if messageError2
+									script.
+										$(document).ready(function() { 
+											$('#registerbtn').click();
+										});
+							-}
+							div.register-collapse.collapse
+								form#registerForm(method='POST', action='/user/new', accept-charset='UTF-8')
+									div.left-inner-addon
+										i.icon.icon-user
+										input#username(type='text', name='username', placeholder='Nom d\'utilisateur', required='required')
+									div.left-inner-addon
+										i.icon.icon-lock
+										input#mdp_reg(type='password', name='mdp', placeholder='Mot de passe')
+									div.left-inner-addon
+										i.icon.icon-lock
+										input#mdp_again(type='password', name='mdp_again', placeholder='Mot de passe \(confirmation\)')
+									#passError.alert.alert-danger
+										| Les mots de passe ne correspondent pas
+									div.left-inner-addon
+										i.icon.icon-envelope
+										input#email(type='email', name='email', placeholder='Email', required='required')
+									br
+									button.btn.btn-info(type="submit", onClick="return check();") Valider
+									a.btn.btn-danger(onClick="$('#registerbtn').show()", style="margin-left:15px", data-toggle='collapse', data-target='.register-collapse') Annuler	
+							a.btn.btn-success.btn-block(id="registerbtn", onClick="$('#registerbtn').hide()", data-toggle='collapse', data-target='.register-collapse')
+								| S'inscrire
+
+			

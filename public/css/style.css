@@ -176,3 +176,26 @@ input {
 	color:white;
 	padding: 3px 3px 3px 3px;
 }
+
+.left-inner-addon {
+    position: relative;
+}
+.left-inner-addon input {
+    padding-left: 30px;    
+}
+.left-inner-addon i {
+    position: absolute;
+    padding: 5px 5px 0 15px;
+    pointer-events: none;
+}
+
+.fullscreen_bg {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-size: cover;
+	background-position: 50% 50%;
+	background-image: url('/background.jpg');
+}

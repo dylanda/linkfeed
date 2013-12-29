@@ -36,7 +36,7 @@ exports.profileLinks=function(request,response){
                 db.users.find({_id:auteur},function(error,user){
                         var dde=new Array;
                         var j=0;
-                        if (user[0].friends!=undefined)
+                        if (user[0].friends != undefined)
                         {        
                                 for(var i=0;i<user[0].friends.length;i++)
                                 {

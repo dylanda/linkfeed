@@ -19,21 +19,36 @@ var db = require("mongojs").connect(databaseUrl, collections);
 
 
 exports.login=function(request,response){
-		var username = request.body.username.toLowerCase().trim();
-		db.users.find({_id:username},function(error,user){
-				if(user.length==0 || user[0].mdp != request.body.mdp){
-					response.render('index',{messageError:'Mauvais login ou mot de passe'});
-				}
-				else{
-					request.session.user = username;
-					response.redirect('/feed');
-				}
-		});
+		var data = request.body.username.toLowerCase().trim();
+		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		if (re.test(data)){
+			db.users.find({email:data},function(error,user){
+					if(user.length==0 || user[0].mdp != request.body.mdp){
+						response.render('index',{messageError:'Mauvais login ou mot de passe'});
+					}
+					else{
+						request.session.user = username;
+						response.redirect('/feed');
+					}
+			});
+		}
+		else
+		{
+			db.users.find({_id:data},function(error,user){
+					if(user.length==0 || user[0].mdp != request.body.mdp){
+						response.render('index',{messageError:'Mauvais login ou mot de passe'});
+					}
+					else{
+						request.session.user = username;
+						response.redirect('/feed');
+					}
+			});
+		}
 };
 
 exports.register=function(request,response){
 		var username = request.body.username.toLowerCase().trim();
-		db.users.find({_id:username},function(error,user){
+		db.users.find({$or :[{_id:username},{email:request.body.email.toLowerCase().trim()}]},function(error,user){
 				if(user.length==0){
 					db.users.insert({_id:username, mdp:request.body.mdp, email:request.body.email.toLowerCase().trim()});
 					console.log("Nouvel utilisateur enregistré");
@@ -41,7 +56,7 @@ exports.register=function(request,response){
 					response.redirect('/feed');
 				}
 				else{
-					response.render('index',{messageError2:"L'utilisateur existe déjà"});
+					response.render('index',{messageError2:"Le nom d'utilisateur ou l'adresse email est déjà utilisé."});
 				}
 		});
 };
