@@ -57,6 +57,7 @@ app.get('/',requiresLogin, connect.index);
 
 app.post('/user/login', users.login);
 app.post('/user/new', users.register);
+app.get('/users',requiresLogin, users.usersList);
 
 //--------------------------------------
 // 				Profils & Liens
@@ -110,6 +111,9 @@ app.post('/profil/search',requiresLogin, search.searchInProfile);
 
 //filtrage par tags dans le feed
 app.post('/feed/search',requiresLogin, search.searchInFeed);
+
+//filtrage par utilisateurs dans la liste d'utilisateurs
+app.post('/users/search',requiresLogin, search.searchInUsers);
 
 //----------------------------------
 //			fermeture session

@@ -20,7 +20,6 @@ html(lang='fr')
 
 		script(src="/js/jquery-1.8.2.min.js")
 		script(src="/bootstrap/js/bootstrap.min.js")
-		script(src="/bootstrap/js/bootstrap-tagsinput.min.js")
 		script(src='/select2/select2.js')
 		
 		script.
@@ -46,7 +45,8 @@ html(lang='fr')
 					multiple: true,
 					id: function(object) {
 						return object.text.replace("#","");
-					}
+					},
+					closeOnSelect: true
 				}); 
 				
 				
@@ -56,7 +56,8 @@ html(lang='fr')
 					multiple: true,
 					id: function(object) {
 						return object.text.replace("#","");
-					}
+					},
+					closeOnSelect: true
 				});
 				
 				
@@ -66,7 +67,8 @@ html(lang='fr')
 					multiple: true,
 					id: function(object) {
 						return object.text.replace("#","");
-					}
+					},
+					closeOnSelect: true
 				}); 
 				
 				$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) {
@@ -138,6 +140,9 @@ html(lang='fr')
 					a.btn.btn-info.btn-large#afficher(onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');")
 						i.icon-share
 						|  Partager un lien
+					a.btn.btn-info.btn-large(style="margin:3px 0 0 15px", href="/users")
+						i.icon-search
+						|  Rechercher des contacts
 					a.btn.btn-info.btn-large(style="margin:3px 0 0 15px", href="/friends")
 						i.icon-user
 						|  Voir amis

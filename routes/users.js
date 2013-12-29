@@ -61,3 +61,29 @@ exports.profil=function(request,response){
 				}
 		});
 };
+
+exports.usersList=function(request,response){
+		var user=request.session.user;
+		db.users.find({ _id: { $ne: user } },function(error,users){
+			db.liens.find({ user: { $ne: user } },function(error,liens){
+			
+					// RECUPERATION USERS dans DATA
+				db.users.find({},function(err,datausers){
+				
+					var data = new Array();
+					var k = 0;
+
+					for (var i=0; i<datausers.length; i++) {
+						if (datausers[i]._id != request.session.user){
+							data[k] = "\"@"+datausers[i]._id+"\"";
+							k = k +1;
+						}
+					}
+					
+				// FIN	
+					response.render('users',{users: users, currentuser:user, links:liens, data:data});
+				});
+			});
+		});
+
+};

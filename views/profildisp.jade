@@ -20,7 +20,6 @@ html(lang='fr')
 			}
 			
 		script(src="/js/jquery-1.8.2.min.js")
-		script(src="/bootstrap/js/bootstrap.min.js")
 		script(src="/js/md5hash.js")
 		
 
@@ -66,21 +65,27 @@ html(lang='fr')
 							p Vous pouvez consulter ses informations et ses liens postés.
 							
 						- var nbamis = 0
-						- each friend in userdisp[0].friends
-							if friend.confrmed = true
-								- nbamis++
+						if userdisp[0].friends
+							- each friend in userdisp[0].friends
+								if friend.confrmed = true
+									- nbamis++
 							
 							
 						- var ami = false
 						- var pending = false
 						- var pending2 = false
-						- each friend in userdisp[0].friends
-							if friend.user == currentuser && friend.confirmed == true
-								- ami = true
-							else if friend.demandeur == currentuser
-								- pending = true
-							else if friend.demandeur == userdisp[0]._id
-								-pending2 = true
+						
+						if userdisp[0].friends
+							- each friend in userdisp[0].friends
+								if friend.user == currentuser && friend.confirmed == true
+									- ami = true
+								else if friend.demandeur 
+									if friend.demandeur == currentuser
+										- pending = true
+									if friend.demandeur == userdisp[0]._id
+										-pending2 = true
+										
+										
 						if ami == true
 							a.btn.btn-danger.btn-large.pull-right(href="/deleteFriend/#{userdisp[0]._id}")
 								i.icon-user

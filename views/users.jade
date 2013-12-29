@@ -1,0 +1,148 @@
+﻿!!! 5
+html(lang='fr')
+	head
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		title LinkFeed - Recherche de contacts
+		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400')
+		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Droid+Sans')
+		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster')
+		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
+		link(rel='stylesheet', href='/css/font-awesome.css')
+		link(rel='stylesheet', href='/css/style.css')
+		
+		link(href='/select2/select2.css', rel='stylesheet')
+		
+		//if lt IE 9
+		script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
+			
+
+		script(src="/js/jquery-1.8.2.min.js")
+		script(src="/bootstrap/js/bootstrap.min.js")
+		script(src='/select2/select2.js')
+		script(src="/js/md5hash.js")
+		
+		script.
+		
+
+		
+			$(document).ready(function() { 
+				var myArray="[#{data}]";
+				myArray=myArray.replace(/&quot;/gi,"");
+				myArray=myArray.replace(/\[/gi,"");
+				myArray=myArray.replace(/\]/gi,"");
+				myArray=myArray.split(',');
+			
+				$("#e1").select2({
+					width: 'resolve',
+					tags:myArray,
+					multiple: true,
+					id: function(object) {
+						return object.text.replace("@","");
+					},
+					closeOnSelect: true
+				}); 
+
+				
+			});
+
+	body
+			div.header.row
+				div
+					div.navbar.navbar-top
+						div.navbar-inner
+							a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+								span.icon-bar
+								span.icon-bar
+								span.icon-bar
+							h1
+								a.brand LinkFeed
+							div.nav-collapse.collapse
+								ul.nav.pull-right
+									li
+										a(href='/feed')
+											i.icon-comments
+											br
+											| Mon Feed
+									li
+										a(href='/profil')
+											i.icon-user
+											br
+											| Mon Profil
+									li
+										a(href='/user/logout')
+											i.icon-off
+											br
+											| Déconnexion
+
+		div.page-title
+			div.container
+				div.row
+					div.span12
+						i.icon-tasks.page-title-icon
+						h2
+							| Faites-vous des amis 
+							
+						form.form-search.pull-right(method="POST",action="/users/search",accept-charset="UTF-8")
+							div.filtre
+								input#data(type="hidden" name="data" value="#{data}")
+								input#e1(name="searchfield", placeholder="Filtre par nom d'utilisateur", style="margin-right:5px;")
+								button.btn.btn-info(id="searchbtn" type="submit")
+									i.icon-search
+
+		div.container
+			div.row
+				div.span12
+					if users.length != 0
+						.container
+							.row
+								each user in users
+										.span3
+											.well
+												.row-fluid
+													.span4
+														script(type="text/javascript") email = "#{user.email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=60' />");
+													.span8
+														.row-fluid
+															.span12
+																a.username.pull-left(href="/profil/#{user._id}")
+																	i.icon.icon-user
+																	| #{user._id.toUpperCase()} 
+														.row-fluid
+															p.pull-left.comment.blue
+																a(href='mailto:#{user.email}') #{user.email}
+												.row-fluid
+													p.pull-left(style="margin:10px 0 0 10px")
+														| Inscrit depuis le 
+
+												hr.black
+												.row-fluid.tags-bar
+													div.span12
+														span.tag
+															if user.friends
+																| #{user.friends.length} amis
+															else
+																| 0 ami
+															
+														- var nblinks = 0
+														- each link in links
+															if link.user == user._id
+																- nblinks++
+														
+														span.tag
+															if nblinks == 0
+																| #{nblinks} lien partagé
+															else
+																| #{nblinks} liens partagés
+											
+						if filtre
+							a.btn.pull-left(href="/users") Annuler filtre											
+
+					else
+						if filtre
+							h4.blue Désolé, aucun utilisateur ne correspond à votre filtre. 
+							a.btn(href="/users") Retour
+						else
+							h4.blue Désolé, il n'y a aucun utilisateur sur LinkFeed
+							h5.blue Invitez vos amis!
