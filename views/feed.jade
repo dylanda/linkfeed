@@ -132,7 +132,7 @@ html(lang='fr')
 											.row-fluid.rating-desc
 												div.span12
 													each ctag in link.tags
-														span.tag #{ctag.toUpperCase()}
+														span.tag ##{ctag.toUpperCase()}
 
 						if filtre
 							a.btn.pull-left(href="/profil") Annuler filtre
@@ -143,7 +143,7 @@ html(lang='fr')
 							a.btn(href="/feed") Retour
 						else
 							h4.blue Désolé, vous n'avez aucun lien dans votre feed. 
-							a.username.(href="/users") Rechercher des contacts
+							a.username(href="/users") Rechercher des contacts
 								
 		
 

@@ -221,7 +221,7 @@ html(lang='fr')
 											.row-fluid.rating-desc
 												div.span12
 													each ctag in link.tags
-														span.tag #{ctag.toUpperCase()}
+														span.tag ##{ctag.toUpperCase()}
 
 											div.hide(id= update)
 												br
@@ -245,4 +245,4 @@ html(lang='fr')
 							a.btn(href="/profil") Retour
 						else
 							h4.blue Désolé, vous n'avez partagé aucun lien. 
-							a#afficher(href="#null", onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');") Partagez votre premier lien!
+							a.username#afficher(href="#null", onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');") Partagez votre premier lien!
