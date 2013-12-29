@@ -81,7 +81,7 @@ exports.feedLinks=function(request,response){
 		
 	db.users.find({_id:currentuser},function(err,user){
 		
-		if (user[0].friends){
+		if (user[0].friends != undefined){
 			var userfriends = user[0].friends;
 		}
 		else{
