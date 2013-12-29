@@ -47,3 +47,18 @@ exports.searchInFeed=function(request,response){
 		}
 };
 
+exports.searchInUsers=function(request,response){
+		var filtre=request.body.searchfield;
+		var currentuser = request.session.user;
+		if (filtre){
+			var usersarray = filtre.split(",");
+			db.users.find({$and: [{ _id: {$in: usersarray}} , { _id: {$ne: currentuser}}]},function(err,users){
+				db.liens.find({},function(err,links){
+					response.render('users',{links:links, users:users, currentuser:currentuser, filtre:true});
+				});
+			});
+		}
+		else{
+			response.redirect('/users');
+		}
+};
