@@ -16,7 +16,8 @@ var databaseUrl = host+":"+port+"/"+database;
 var collections = ["users","liens"];
 var db = require("mongojs").connect(databaseUrl, collections);
 
-
+//dateFormat
+var dateFormat = require('dateformat');
 
 exports.login=function(request,response){
 		var data = request.body.username.toLowerCase().trim();
@@ -50,7 +51,7 @@ exports.register=function(request,response){
 		var username = request.body.username.toLowerCase().trim();
 		db.users.find({$or :[{_id:username},{email:request.body.email.toLowerCase().trim()}]},function(error,user){
 				if(user.length==0){
-					db.users.insert({_id:username, mdp:request.body.mdp, email:request.body.email.toLowerCase().trim()});
+					db.users.insert({_id:username, mdp:request.body.mdp, date_ins: dateFormat(new Date(), "dd/mm/yyyy HH:MM:ss"), email:request.body.email.toLowerCase().trim()});
 					console.log("Nouvel utilisateur enregistré");
 					request.session.user = username;
 					response.redirect('/feed');
