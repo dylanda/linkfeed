@@ -2,6 +2,7 @@
 html(lang='fr')
 	head
 		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
 		title LinkFeed - Share what you Care
 		link(rel='shortcut icon',href='/img/favicon.ico')
 		link(rel='icon',href='/img/favicon.ico')
@@ -21,18 +22,6 @@ html(lang='fr')
 		script(src="/js/jquery-1.8.2.min.js")
 		script(src="/bootstrap/js/bootstrap.min.js")
 		script(src='select2/select2.js')
-		
-		#fb-root
-			script.
-				(function(d, s, id) {
-				var js, fjs = d.getElementsByTagName(s)[0];
-				if (d.getElementById(id)) return;
-				js = d.createElement(s); js.id = id;
-				js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-				fjs.parentNode.insertBefore(js, fjs);
-				}(document, 'script', 'facebook-jssdk'));
-		script.
-			!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
 
 		script.
 		
@@ -55,7 +44,7 @@ html(lang='fr')
 				
 				
 			});
-		
+			
 		
 	body	
 			div.header.row
@@ -118,14 +107,14 @@ html(lang='fr')
 														a.url.pull-left(href="#{link.url}" target="_blank") #{link.title.toUpperCase()} 
 															i.icon.icon-share
 														div(style="float:right;")
-															span
-																a.twitter-share-button(href='https://twitter.com/share', data-text='Regardez ça!', data-url='#{link.url}', data-lang='fr', data-count='none') Tweeter
+															a.btn-social(style="background-image: url('/img/twitter.png');", href='http://twitter.com/home?status=Regardez ça! #{link.url}', target="_blank")
+
 														.row-fluid
 														p.pull-left
 															span.comment.blue
 																“#{link.description}” 
 															div(style="float:right;")
-																.fb-share-button(data-href='#{link.url}', data-type='button')
+																a.btn-social(style="background-image: url('/img/fb.png');",href='http://www.facebook.com/sharer.php?u=#{link.url}&t=#{link.title}', target="_blank")
 													.row-fluid
 														p.pull-left
 															| Partagé le #{link.date} par 

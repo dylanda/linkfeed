@@ -196,3 +196,7 @@ input {
   -o-background-size: cover;
   background-size: cover;
 }
+
+.btn-social {
+	padding: 3px 30px 2px 30px;
+}
