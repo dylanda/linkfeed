@@ -20,17 +20,24 @@ exports.addFriend=function(request,response){
 		var currentuser=request.session.user;
 		var toAdd=request.params.id.toLowerCase();
 		db.users.find({_id:currentuser},function(error,user){
-			db.users.update({"_id":currentuser},
-				{
-					"$addToSet":{"friends":{user:toAdd,confirmed:false,demandeur:currentuser}}
-				}
-			);
-			db.users.update({"_id":toAdd},
-				{
-					"$addToSet":{"friends":{user:currentuser,confirmed:false,demandeur:currentuser}}
-				}
-			);
-			response.redirect('/profil/'+toAdd);
+			if(currentuser!=toAdd)
+			{
+				db.users.update({"_id":currentuser},
+					{
+						"$addToSet":{"friends":{user:toAdd,confirmed:false,demandeur:currentuser}}
+					}
+				);
+				db.users.update({"_id":toAdd},
+					{
+						"$addToSet":{"friends":{user:currentuser,confirmed:false,demandeur:currentuser}}
+					}
+				);
+				response.redirect('/profil/'+toAdd);
+			}
+			else
+			{
+				response.redirect('/profil/'+currentuser.toString());
+			}
 		});
 };
 
@@ -112,29 +119,37 @@ exports.pendingRequests=function(request,response){
 exports.confirmRequest=function(request,response){
 		var currentuser=request.session.user;
 		var demandeur=request.params.id.toLowerCase();
+		var possible=false;
 
 		db.users.find({_id:currentuser},function(error,user){
-			db.users.update({"_id":currentuser},
+			for(var i=0;i<user[0].friends.length;i++)
+			{
+				if(user[0].friends[i].user==demandeur && user[0].friends[i].demandeur!=currentuser)
+				{
+					possible=true;
+				}
+			}
+			if(possible)
+			{
+
+				db.users.update({"_id":currentuser},
 				{
 					$pull:{"friends":{user:demandeur,confirmed:false}}
-				}
-			);
-			db.users.update({"_id":currentuser},
+				});
+				db.users.update({"_id":currentuser},
 				{
 					$push:{"friends":{user:demandeur,confirmed:true}}
-				}
-			);
+				});
 
-			db.users.update({"_id":demandeur},
+				db.users.update({"_id":demandeur},
 				{
 					$pull:{"friends":{user:currentuser,confirmed:false}}
-				}
-			);
-			db.users.update({"_id":demandeur},
+				});
+				db.users.update({"_id":demandeur},
 				{
 					$push:{"friends":{user:currentuser,confirmed:true}}
-				}
-			);
+				});
+			}
 			response.redirect('/profil/'+demandeur.toString());
 		});
 };
@@ -149,14 +164,14 @@ exports.rejectRequest=function(request,response){
 					$pull:{"friends":{user:demandeur,confirmed:false}}
 				}
 			);
-			
+				
 
 			db.users.update({"_id":demandeur},
 				{
 					$pull:{"friends":{user:currentuser,confirmed:false}}
 				}
 			);
-			
+				
 			response.redirect('/profil/'+demandeur.toString());
 		});
 };
@@ -166,20 +181,26 @@ exports.deleteFriend=function(request,response){
 		var toDelete=request.params.id.toLowerCase();
 
 		db.users.find({_id:currentuser},function(error,user){
+			if(currentuser!=toDelete)
+			{
+				db.users.update({"_id":currentuser},
+					{
+						$pull:{"friends":{user:toDelete,confirmed:true}}
+					}
+				);
 
-			db.users.update({"_id":currentuser},
-				{
-					$pull:{"friends":{user:toDelete,confirmed:true}}
-				}
-			);
-
-			db.users.update({"_id":toDelete},
-				{
-					$pull:{"friends":{user:currentuser,confirmed:true}}
-				}
-			);
-			
-			response.redirect('/friends');
+				db.users.update({"_id":toDelete},
+					{
+						$pull:{"friends":{user:currentuser,confirmed:true}}
+					}
+				);
+				
+				response.redirect('/friends');
+			}
+			else
+			{
+				response.redirect('/friends');
+			}
 		});
 };
 
