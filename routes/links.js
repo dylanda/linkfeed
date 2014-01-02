@@ -68,7 +68,7 @@ exports.profileLinks=function(request,response){
                                                 }
                                         }
                                 // FIN        
-                                        response.render('profil',{links: link, data:data, user:request.session.user, nbddes:dde.length});
+                                        response.render('profil',{links: link, data:data, user:user, nbddes:dde.length});
                                 });
                         });
                 });

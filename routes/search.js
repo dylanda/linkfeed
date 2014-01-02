@@ -21,15 +21,17 @@ exports.searchInProfile=function(request,response){
 
 		var filtre=request.body.searchfield;
 		var profil=request.session.user;
-		if(filtre){
-			var tagsarray = filtre.split(",");
-			db.liens.find({tags: {$in: tagsarray}, user:profil},function(err,link){
-				response.render('profil',{links:link, user:profil, data:request.body.data, filtre:true});
-			});
-		}
-		else{
-			response.redirect('/profil');
-		}
+		db.users.find({_id:profil},function(error,user){
+			if(filtre){
+				var tagsarray = filtre.split(",");
+				db.liens.find({tags: {$in: tagsarray}, user:profil},function(err,link){
+					response.render('profil',{links:link, user:user, data:request.body.data, filtre:true});
+				});
+			}
+			else{
+				response.redirect('/profil');
+			}
+		});
 };
 
 //filtrage le feed
