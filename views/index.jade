@@ -84,9 +84,12 @@ html(lang='fr')
 							div.left-inner-addon
 								i.fa.fa-lock
 								input#mdp.span4(style="width:100%;",type='password', name='mdp', placeholder='Mot de passe', required='required')
-							button.btn.btn-info.btn-block(type='submit') Se connecter
+							button.btn.btn-info.btn-block(type='submit') 
+								i.fa.fa-sign-in
+								|  Se connecter
 						p.blue  © LinkFeed 2013 - Metz
-						p.blue DA CONCEICAO Dylan - HAZAN Raphaël - MANDICA Simon - SZYMANSKI Loïc
+						p.blue DA CONCEICAO Dylan - HAZAN Raphaël
+						p.blue MANDICA Simon - SZYMANSKI Loïc
 							
 				div.span3.well
 					div.row-fluid
@@ -119,7 +122,7 @@ html(lang='fr')
 									i.fa.fa-envelope
 									input#email(type='email', name='email', placeholder='Email', required='required')
 								br
-								button.btn.btn-info(type="submit", onClick="return check();") Valider
+								button.btn.btn-success(type="submit", onClick="return check();") Valider
 								a.btn.btn-danger(onClick="$('#registerbtn').show()", style="margin-left:15px", data-toggle='collapse', data-target='.register-collapse') Annuler	
 						a.btn.btn-info.btn-block(id="registerbtn", onClick="$('#registerbtn').hide()", data-toggle='collapse', data-target='.register-collapse')
 							| S'inscrire
