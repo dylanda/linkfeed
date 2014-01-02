@@ -11,7 +11,7 @@ html(lang='fr')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
-		link(rel='stylesheet', href='/css/font-awesome.css')
+		link(rel='stylesheet', href='/font-awesome-4.0.3/css/font-awesome.css')
 		link(rel='stylesheet', href='/css/style.css')
 		//if lt IE 9
 		script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
@@ -40,17 +40,17 @@ html(lang='fr')
 								ul.nav.pull-right
 									li
 										a(href='/feed')
-											i.icon-comments
+											i.fa.fa-comments
 											br
 											| Mon Feed
 									li
 										a(href='/profil')
-											i.icon-user
+											i.fa.fa-user
 											br
 											| Mon Profil
 									li
 										a(href='/user/logout')
-											i.icon-off
+											i.fa.fa-power-off
 											br
 											| Déconnexion
 
@@ -58,17 +58,17 @@ html(lang='fr')
 			div.container
 				div.row
 					div.span12
-						i.icon-tasks.page-title-icon
+						i.fa.fa-tasks.page-title-icon
 						h2
 							| Profil de 
-							b.blue #{userdisp[0]._id} 
+							b.blue #{userdisp[0]._id.charAt(0).toUpperCase()}#{userdisp[0]._id.slice(1)}
 							|  /
 							p Vous pouvez consulter ses informations et ses liens postés.
 							
 						- var nbamis = 0
 						if userdisp[0].friends
 							- each friend in userdisp[0].friends
-								if friend.confrmed = true
+								if friend.confirmed == true
 									- nbamis++
 							
 							
@@ -89,25 +89,25 @@ html(lang='fr')
 										
 						if ami == true
 							a.btn.btn-danger.btn-large.pull-right(href="/deleteFriend/#{userdisp[0]._id}")
-								i.icon-user
+								i.fa.fa-user
 								|  Retirer de la liste d'amis
 						else if pending == true
 							a.btn.btn-danger.btn-large.pull-right(style="margin-left:15px", href="/rejectRequest/#{userdisp[0]._id}")
-								i.icon-remove
+								i.fa.fa-times
 								|  Annuler
 							a.btn.btn-info.btn-large.disabled.pull-right()
-								i.icon-user
+								i.fa.fa-ellipsis-h
 								|  Demande en attente
 						else if pending2 == true
 							a.btn.btn-danger.btn-large.pull-right(style="margin-left:15px", href="/rejectRequest/#{userdisp[0]._id}")
-								i.icon-user
+								i.fa.fa-times
 								|  Refuser la demande
 							a.btn.btn-success.btn-large.pull-right(href="/confirmRequest/#{userdisp[0]._id}")
-								i.icon-user
+								i.fa.fa-check
 								|  Confirmer la demande
 						else
 							a.btn.btn-info.btn-large.pull-right(href="/addFriend/#{userdisp[0]._id}")
-								i.icon-plus
+								i.fa.fa-plus
 								|  Ajouter à la liste d'amis
 		
 		div.container.well
@@ -147,7 +147,7 @@ html(lang='fr')
 												.span9
 													.row-fluid
 														a.url.pull-left(href="#{link.url}" target="_blank") #{link.title.toUpperCase()} 
-															i.icon.icon-share
+															i.fa.fa-share
 													.row-fluid
 														p.pull-left(style="margin-top:5px")
 															span.comment.blue

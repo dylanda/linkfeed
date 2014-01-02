@@ -11,7 +11,7 @@ html(lang='fr')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
-		link(rel='stylesheet', href='/css/font-awesome.css')
+		link(rel='stylesheet', href='/font-awesome-4.0.3/css/font-awesome.css')
 		link(rel='stylesheet', href='/css/style.css')
 		
 		link(href='select2/select2.css', rel='stylesheet')
@@ -61,24 +61,24 @@ html(lang='fr')
 								ul.nav.pull-right
 									li.current-page
 										a(href='/feed')
-											i.icon-comments
+											i.fa.fa-comments
 											br
 											| Mon Feed
 									li
 										a(href='/profil')
-											i.icon-user
+											i.fa.fa-user
 											br
 											| Mon Profil
 									li
 										a(href='/user/logout')
-											i.icon-off
+											i.fa.fa-power-off
 											br
 											| Déconnexion
 		div.page-title
 			div.container
 				div.row
 					div.span12
-						i.icon-tasks.page-title-icon
+						i.fa.fa-tasks.page-title-icon
 						h2 Découvrez ! / 
 							p  Voici les posts récents de vos amis
 							
@@ -87,7 +87,7 @@ html(lang='fr')
 								input#data(type="hidden" name="data" value="#{data}")
 								input#e1(name="searchfield", placeholder="Filtrer", style="margin-right:5px;")
 								button.btn.btn-info(id="searchbtn" type="submit")
-									i.icon-search
+									i.fa.fa-search
 									
 
 		div.container
@@ -105,7 +105,7 @@ html(lang='fr')
 												.span9
 													.row-fluid
 														a.url.pull-left(href="#{link.url}" target="_blank") #{link.title.toUpperCase()} 
-															i.icon.icon-share
+															i.fa.fa-share
 														div(style="float:right;")
 															a.btn-social(style="background-image: url('/img/twitter.png');", href='http://twitter.com/home?status=Regardez ça! #{link.url}', target="_blank")
 

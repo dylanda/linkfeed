@@ -11,7 +11,7 @@ html(lang='fr')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
-		link(rel='stylesheet', href='/css/font-awesome.css')
+		link(rel='stylesheet', href='/font-awesome-4.0.3/css/font-awesome.css')
 		link(rel='stylesheet', href='/css/style.css')
 		
 		link(href='/select2/select2.css', rel='stylesheet')
@@ -102,17 +102,17 @@ html(lang='fr')
 								ul.nav.pull-right
 									li
 										a(href='/feed')
-											i.icon-comments
+											i.fa.fa-comments
 											br
 											| Mon Feed
 									li.current-page
 										a(href='/profil')
-											i.icon-user
+											i.fa.fa-user
 											br
 											| Mon Profil
 									li
 										a(href='/user/logout')
-											i.icon-off
+											i.fa.fa-power-off
 											br
 											| Déconnexion
 
@@ -120,7 +120,7 @@ html(lang='fr')
 			div.container
 				div.row
 					div.span12
-						i.icon-tasks.page-title-icon
+						i.fa.fa-tasks.page-title-icon
 						h2
 							| Bienvenue 
 							b.blue #{user[0]._id.charAt(0).toUpperCase()}#{user[0]._id.slice(1)} 
@@ -132,12 +132,14 @@ html(lang='fr')
 								input#data(type="hidden" name="data" value="#{data}")
 								input#e2(name="searchfield", placeholder="Filtrer par tags", style="margin-right:5px;")
 								button.btn.btn-info(id="searchbtn" type="submit")
-									i.icon-search
+									i.fa.fa-search
 								
 		div.container.well
 			div.row-fluid
 				div.span12
 					div.row-fluid
+
+
 						div.span3
 							script(type="text/javascript") email = "#{user[0].email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=110' />")
 							p.blue
@@ -158,18 +160,31 @@ html(lang='fr')
 			div.row-fluid
 				div.span12
 					a.btn.btn-info.btn-large#afficher(onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');")
-						i.icon-share
+						i.fa.fa-share
 						|  Partager un lien
 					a.btn.btn-info.btn-large(style="margin:3px 0 0 15px", href="/users")
-						i.icon-search
+						i.fa.fa-search
 						|  Rechercher des contacts
+						
+						- var nbamis = 0
+						if user[0].friends
+							- each friend in user[0].friends
+								if friend.confirmed == true
+									- nbamis++
+
 					a.btn.btn-info.btn-large(style="margin:3px 0 0 15px", href="/friends")
-						i.icon-user
-						|  Voir amis
+						i.fa.fa-user
+						|  Voir amis 
+						span.badge.badge-info  #{nbamis}
 					if !filtre
-						a.btn.btn-info.btn-large(style="margin:3px 0 0 15px", href="/pendingRequests")
-							| Demandes en attente 
-							span.badge  #{nbddes}
+						if nbddes == 0
+							a.btn.btn-success.btn-large(style="margin:3px 0 0 15px", href="/pendingRequests")
+								| Demandes en attente 
+								span.badge.badge-success  #{nbddes}
+						else
+							a.btn.btn-danger.btn-large(style="margin:3px 0 0 15px", href="/pendingRequests")
+								| Demandes en attente 
+								span.badge.badge-important  #{nbddes}
 								
 					br
 					br
@@ -185,12 +200,12 @@ html(lang='fr')
 									input(id="titre", type="text", maxlength="25" , name="titre", placeholder="Titre", required="required")
 									input#description.span4(type="text", maxlength="40", name="description", placeholder="Description", required="required")
 									p.blue
-										i.icon-tags
+										i.fa.fa-tags
 										| Tags :
 									p
 										input#e1(name="tags", placeholder="Tags", multiple)
 									button.btn.btn-info(type="submit")
-										i.icon-share
+										i.fa.fa-share
 										|  Partager !
 			
 		div.container
@@ -211,7 +226,7 @@ html(lang='fr')
 													.row-fluid
 														.span9
 															a.url.pull-left(href="#{link.url}" target="_blank") #{link.title.toUpperCase()} 
-																i.icon.icon-share
+																i.fa.fa-share
 														.span3
 															- var update = "update" + link._id
 															- var dispmodif = "dispmodif" + link._id
@@ -220,18 +235,18 @@ html(lang='fr')
 															
 															div.btn-group(style="float:right;position:relative;")
 																a.btn.dropdown-toggle(data-toggle='dropdown', href='#')
-																	i.icon-cog(style="font-size:21px") 
+																	i.fa.fa-cog(style="font-size:21px") 
 																	|  
 																	span.caret
 																ul.dropdown-menu(style="right: 0; left: auto;")
 																	li
 																		a(href="#NULL", onClick="fillTags('##{tagsmodif}','#{link.tags}');$('##{update}').css('visibility','visible').hide().fadeIn().removeClass('hidden');$('##{suppr}').hide();")
-																			i.icon-edit
+																			i.fa.fa-edit
 																			|  Modifier
 																			
 																	li
 																		a(id= suppr, class="suppr", href="/delete/#{link._id}")
-																			i.icon-remove
+																			i.fa.fa-times
 																			|  Supprimer
 													.row-fluid
 														p.pull-left.comment.blue
@@ -254,7 +269,7 @@ html(lang='fr')
 													input(id="titre", type="text", maxlength="25" , name="titre", value="#{link.title}", placeholder="Titre", required="required")
 													input#description.span4(type="text", maxlength="40" , name="description", placeholder="Description", value="#{link.description}", required="required")
 													p.blue
-														i.icon-tags
+														i.fa.fa-tags
 														| Tags :
 													p
 														input.modtags(name="tags", id= tagsmodif,  placeholder="Tags", multiple)

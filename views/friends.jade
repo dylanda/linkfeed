@@ -11,7 +11,7 @@ html(lang='fr')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
-		link(rel='stylesheet', href='/css/font-awesome.css')
+		link(rel='stylesheet', href='/font-awesome-4.0.3/css/font-awesome.css')
 		link(rel='stylesheet', href='/css/style.css')
 		//if lt IE 9
 		script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
@@ -39,17 +39,17 @@ html(lang='fr')
 								ul.nav.pull-right
 									li
 										a(href='/feed')
-											i.icon-comments
+											i.fa.fa-comments
 											br
 											| Mon Feed
 									li
 										a(href='/profil')
-											i.icon-user
+											i.fa.fa-user
 											br
 											| Mon Profil
 									li
 										a(href='/user/logout')
-											i.icon-off
+											i.fa.fa-power-off
 											br
 											| Déconnexion
 
@@ -57,7 +57,7 @@ html(lang='fr')
 			div.container
 				div.row
 					div.span12
-						i.icon-tasks.page-title-icon
+						i.fa.fa-tasks.page-title-icon
 						h2
 							| Visitez le profil de vos amis ! 
 							| /
@@ -87,7 +87,8 @@ html(lang='fr')
 												a(href='mailto:#{friend.email}') #{friend.email}
 											td
 												a.btn.btn-danger(href="/deleteFriend/#{friend._id}")
-													| Retirer de la liste d'amis
+													i.fa.fa-times-circle
+													|  Retirer de la liste d'amis
 							br
 							h6.blue Vous avez #{friends.length} amis 
 
@@ -98,7 +99,9 @@ html(lang='fr')
 		br
 		br
 		br
-		a(href="profil", class="btn btn-large btn-info") Retourner sur votre profil	
+		a(href="profil", class="btn btn-large btn-info") 
+			i.fa.fa-reply
+			|  Retourner sur votre profil	
 
 
 		

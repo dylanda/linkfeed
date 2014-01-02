@@ -11,7 +11,7 @@ html(lang='fr')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
-		link(rel='stylesheet', href='/css/font-awesome.css')
+		link(rel='stylesheet', href='/font-awesome-4.0.3/css/font-awesome.css')
 		link(rel='stylesheet', href='/css/style.css')
 		
 		link(href='/select2/select2.css', rel='stylesheet')
@@ -64,17 +64,17 @@ html(lang='fr')
 								ul.nav.pull-right
 									li
 										a(href='/feed')
-											i.icon-comments
+											i.fa.fa-comments
 											br
 											| Mon Feed
 									li
 										a(href='/profil')
-											i.icon-user
+											i.fa.fa-user
 											br
 											| Mon Profil
 									li
 										a(href='/user/logout')
-											i.icon-off
+											i.fa.fa-power-off
 											br
 											| Déconnexion
 
@@ -82,7 +82,7 @@ html(lang='fr')
 			div.container
 				div.row
 					div.span12
-						i.icon-tasks.page-title-icon
+						i.fa.fa-tasks.page-title-icon
 						h2
 							| Faites-vous des amis 
 							
@@ -91,7 +91,7 @@ html(lang='fr')
 								input#data(type="hidden" name="data" value="#{data}")
 								input#e1(name="searchfield", placeholder="Filtre par nom d'utilisateur", style="margin-right:5px;")
 								button.btn.btn-info(id="searchbtn" type="submit")
-									i.icon-search
+									i.fa.fa-search
 
 		div.container
 			div.row
@@ -109,8 +109,8 @@ html(lang='fr')
 														.row-fluid
 															.span12
 																a.username.pull-left(href="/profil/#{user._id.toLowerCase()}")
-																	i.icon.icon-user
-																	| #{user._id.toUpperCase()} 
+																	i.fa.fa-user
+																	|  #{user._id.toUpperCase()} 
 														.row-fluid
 															p.pull-left.comment.blue
 																a(href='mailto:#{user.email}') #{user.email}

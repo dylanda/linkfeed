@@ -11,7 +11,7 @@ html(lang='fr')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
-		link(rel='stylesheet', href='/css/font-awesome.css')
+		link(rel='stylesheet', href='/font-awesome-4.0.3/css/font-awesome.css')
 		link(rel='stylesheet', href='/css/style.css')
 		
 		//if lt IE 9
@@ -60,7 +60,7 @@ html(lang='fr')
 			div.container
 				div.row
 					div.span12
-						i.icon-tasks.page-title-icon
+						i.fa.fa-tasks.page-title-icon
 							h2 Share ! /
 								p Bienvenue sur LinkFeed
 							
@@ -79,10 +79,10 @@ html(lang='fr')
 						-}
 						form(method='POST', action='/user/login', accept-charset='UTF-8')
 							div.left-inner-addon
-								i.icon.icon-user
+								i.fa.fa-user
 								input#username.span4(style="width:100%;", type='text', name='username', placeholder='Nom d\'utilisateur ou E-mail', required='required')
 							div.left-inner-addon
-								i.icon.icon-lock
+								i.fa.fa-lock
 								input#mdp.span4(style="width:100%;",type='password', name='mdp', placeholder='Mot de passe', required='required')
 							button.btn.btn-info.btn-block(type='submit') Se connecter
 						p.blue  © LinkFeed 2013 - Metz
@@ -105,18 +105,18 @@ html(lang='fr')
 						div.register-collapse.collapse
 							form#registerForm(method='POST', action='/user/new', accept-charset='UTF-8')
 								div.left-inner-addon
-									i.icon.icon-user
+									i.fa.fa-user
 									input#username(type='text', name='username', placeholder='Nom d\'utilisateur', required='required')
 								div.left-inner-addon
-									i.icon.icon-lock
+									i.fa.fa-lock
 									input#mdp_reg(type='password', name='mdp', placeholder='Mot de passe', required='required')
 								div.left-inner-addon
-									i.icon.icon-lock
+									i.fa.fa-lock
 									input#mdp_again(type='password', name='mdp_again', placeholder='Mot de passe \(confirmation\)', required='required')
 								#passError.alert.alert-danger
 									| Les mots de passe ne correspondent pas
 								div.left-inner-addon
-									i.icon.icon-envelope
+									i.fa.fa-envelope
 									input#email(type='email', name='email', placeholder='Email', required='required')
 								br
 								button.btn.btn-info(type="submit", onClick="return check();") Valider
