@@ -20,7 +20,12 @@ html(lang='fr')
 			padding-top:100px;
 			}
 
-		script(src="/js/jquery-1.8.2.min.js")
+		script(src="../js/jquery-1.8.2.min.js")
+		script(src="../bootstrap/js/bootstrap.min.js")	
+		script
+			$(function(){
+				$('a').tooltip();
+			});	
 		script(src="/js/md5hash.js")
 			
 	body
@@ -86,12 +91,10 @@ html(lang='fr')
 											td 
 												a(href='mailto:#{demande.email}') #{demande.email}
 											td
-												a.btn.btn-success(href="/confirmRequest/#{demande._id}")
+												a.btn.btn-success(rel="tooltip",data-original-title="Confirmer la demande",href="/confirmRequest/#{demande._id}")
 													i.fa.fa-check
-													|  Confirmer
-												a.btn.btn-danger(style='margin-left:3px', href="/rejectRequest/#{demande._id}")
+												a.btn.btn-danger(style='margin-left:3px',rel="tooltip",data-original-title="Refuser la demande", href="/rejectRequest/#{demande._id}")
 													i.fa.fa-times
-													|  Refuser
 							br
 							h6.blue Vous avez #{demandes.length} demandes en attente 
 
@@ -104,7 +107,9 @@ html(lang='fr')
 		br
 		a(href="profil", class="btn btn-large btn-info") 
 			i.fa.fa-reply
-			|  Retourner sur votre profil	
+			|  Retourner sur votre profil
+
+
 
 
 		
