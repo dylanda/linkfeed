@@ -3,7 +3,7 @@ html(lang='fr')
 	head
 		meta(charset='utf-8')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
-		title LinkFeed - #{user}
+		title LinkFeed - #{user[0]._id}
 		link(rel='shortcut icon',href='/img/favicon.ico')
 		link(rel='icon',href='/img/favicon.ico')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400')
@@ -23,6 +23,7 @@ html(lang='fr')
 		script(src="/js/jquery-1.8.2.min.js")
 		script(src="/bootstrap/js/bootstrap.min.js")
 		script(src='/select2/select2.js')
+		script(src="/js/md5hash.js")
 			
 		script.
 		
@@ -122,9 +123,9 @@ html(lang='fr')
 						i.icon-tasks.page-title-icon
 						h2
 							| Bienvenue 
-							b.blue #{user.charAt(0).toUpperCase()}#{user.slice(1)} 
+							b.blue #{user[0]._id.charAt(0).toUpperCase()}#{user[0]._id.slice(1)} 
 							| /
-							p Vous pouvez consulter vos informations et postez des liens.
+							p Vous pouvez consulter vos informations et poster des liens.
 							
 						form.form-search.pull-right(method="POST",action="/profil/search",accept-charset="UTF-8")
 							div.filtre
@@ -133,6 +134,26 @@ html(lang='fr')
 								button.btn.btn-info(id="searchbtn" type="submit")
 									i.icon-search
 								
+		div.container.well
+			div.row-fluid
+				div.span12
+					div.row-fluid
+						div.span3
+							script(type="text/javascript") email = "#{user[0].email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=110' />")
+							p.blue
+								| Inscrit depuis le 
+								b
+									| #{user[0].date_ins.slice(0,10)} 
+						div.span9
+							h4.blue À propos :
+							br
+							p.blue Adresse email : 
+								a(href='mailto:#{user[0].email}') #{user[0].email}
+							p.blue Nombre de liens postés : 
+								span.badge.badge-info #{links.length}								
+							
+
+
 		div.container
 			div.row-fluid
 				div.span12

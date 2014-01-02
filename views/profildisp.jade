@@ -115,16 +115,14 @@ html(lang='fr')
 				div.span12
 					div.row-fluid
 						div.span3
-							script(type="text/javascript") email = "#{userdisp[0].email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=160' />")
+							script(type="text/javascript") email = "#{userdisp[0].email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=140' />")
 							p.blue
 								| Inscrit depuis le 
 								b
 									| #{userdisp[0].date_ins.slice(0,10)} 
 						div.span9
-							h4.blue Informations :
+							h4.blue À propos :
 							br
-							p.blue Nom d'utilisateur : 
-								| #{userdisp[0]._id}
 							p.blue Adresse email : 
 								a(href='mailto:#{userdisp[0].email}') #{userdisp[0].email}
 								
