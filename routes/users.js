@@ -28,7 +28,7 @@ exports.login=function(request,response){
 						response.render('index',{messageError:'Mauvais login ou mot de passe'});
 					}
 					else{
-						request.session.user = data;
+						request.session.user = user[0]._id;
 						response.redirect('/feed');
 					}
 			});
