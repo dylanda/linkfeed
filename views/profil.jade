@@ -37,11 +37,13 @@ html(lang='fr')
 			};
 		
 			$(document).ready(function() { 
-				var myArray="[#{data}]";
-				myArray=myArray.replace(/&quot;/gi,"");
-				myArray=myArray.replace(/\[/gi,"");
-				myArray=myArray.replace(/\]/gi,"");
+				var myArray="#{data}";
 				myArray=myArray.split(',');
+				
+				var filtresTab="#{filtresTab}";
+				filtresTab=filtresTab.split(',');
+			
+		
 			
 				$("#e1").select2({
 					width: 'resolve',
@@ -74,6 +76,8 @@ html(lang='fr')
 					},
 					closeOnSelect: true
 				}); 
+				
+				$("#e2").select2('val',[filtresTab]);
 				
 				$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) {
 					e.stopPropagation(); 
@@ -286,4 +290,4 @@ html(lang='fr')
 							a.btn(href="/profil") Retour
 						else
 							h4.blue Désolé, vous n'avez partagé aucun lien. 
-							a.username#afficher(href="#null", onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');") Partagez votre premier lien!
+							a.link#afficher(href="#null", onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');") Partagez votre premier lien!

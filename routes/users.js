@@ -91,7 +91,7 @@ exports.usersList=function(request,response){
 
 					for (var i=0; i<datausers.length; i++) {
 						if (datausers[i]._id != request.session.user){
-							data[k] = "\"@"+datausers[i]._id+"\"";
+							data[k] = "@"+datausers[i]._id;
 							k = k +1;
 						}
 					}

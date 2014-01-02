@@ -15,44 +15,38 @@ html(lang='fr')
 		link(rel='stylesheet', href='/css/style.css')
 		//if lt IE 9
 		script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
-		style.
-			body{
-			padding-top:100px;
-			}
 
 		script(src="/js/jquery-1.8.2.min.js")
 		script(src="/js/md5hash.js")
 			
 	body
-		div.container
-			div.header.row
-				div.span12
-					div.navbar.navbar-fixed-top
-						div.navbar-inner
-							a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
-								span.icon-bar
-								span.icon-bar
-								span.icon-bar
-							h1
-								a.brand LinkFeed
-							div.nav-collapse.collapse
-								ul.nav.pull-right
-									li
-										a(href='/feed')
-											i.fa.fa-comments
-											br
-											| Mon Feed
-									li
-										a(href='/profil')
-											i.fa.fa-user
-											br
-											| Mon Profil
-									li
-										a(href='/user/logout')
-											i.fa.fa-power-off
-											br
-											| Déconnexion
-
+		div.header.row
+			div
+				div.navbar.navbar-top
+					div.navbar-inner
+						a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						h1
+							a.brand LinkFeed
+						div.nav-collapse.collapse
+							ul.nav.pull-right
+								li
+									a(href='/feed')
+										i.fa.fa-comments
+										br
+										| Mon Feed
+								li
+									a(href='/profil')
+										i.fa.fa-user
+										br
+										| Mon Profil
+								li
+									a(href='/user/logout')
+										i.fa.fa-power-off
+										br
+										| Déconnexion
 		div.page-title
 			div.container
 				div.row

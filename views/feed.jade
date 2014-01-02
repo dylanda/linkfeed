@@ -14,23 +14,23 @@ html(lang='fr')
 		link(rel='stylesheet', href='/font-awesome-4.0.3/css/font-awesome.css')
 		link(rel='stylesheet', href='/css/style.css')
 		
-		link(href='select2/select2.css', rel='stylesheet')
+		link(href='/select2/select2.css', rel='stylesheet')
 		
 		//if lt IE 9
 		script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
 		
 		script(src="/js/jquery-1.8.2.min.js")
 		script(src="/bootstrap/js/bootstrap.min.js")
-		script(src='select2/select2.js')
+		script(src='/select2/select2.js')
 
 		script.
 		
 			$(document).ready(function() { 
-				var myArray="[#{data}]";
-				myArray=myArray.replace(/&quot;/gi,"");
-				myArray=myArray.replace(/\[/gi,"");
-				myArray=myArray.replace(/\]/gi,"");
+				var myArray="#{data}";
 				myArray=myArray.split(',');
+
+				var filtresTab="#{filtresTab}";
+				filtresTab=filtresTab.split(',');
 				
 				$("#e1").select2({
 					width: 'resolve',
@@ -41,6 +41,8 @@ html(lang='fr')
 					},
 					closeOnSelect: true
 				}); 
+				
+				$("#e1").select2('val',[filtresTab]);
 				
 				
 			});
@@ -101,24 +103,25 @@ html(lang='fr')
 										.well
 											.row-fluid
 												.span3
-													img.img-rounded(src='http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=120&stwymax=90&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}', border='0')
+													img.img-rounded(style="margin-bottom:15px", src='http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=120&stwymax=90&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}', border='0')
 												.span9
 													.row-fluid
-														a.url.pull-left(href="#{link.url}" target="_blank") #{link.title.toUpperCase()} 
+														a.link.url.pull-left(href="#{link.url}" target="_blank")  #{link.title.toUpperCase()} 
 															i.fa.fa-share
-														div(style="float:right;")
-															a.btn-social(style="background-image: url('/img/twitter.png');", href='http://twitter.com/home?status=Regardez ça! #{link.url}', target="_blank")
-
 														.row-fluid
 														p.pull-left
 															span.comment.blue
 																“#{link.description}” 
 															div(style="float:right;")
-																a.btn-social(style="background-image: url('/img/fb.png');",href='http://www.facebook.com/sharer.php?u=#{link.url}&t=#{link.title}', target="_blank")
+																//- a.btn-social(style="background-image: url('/img/fb.png');",href='http://www.facebook.com/sharer.php?u=#{link.url}&t=#{link.title}', target="_blank")
 													.row-fluid
 														p.pull-left
 															| Partagé le #{link.date} par 
-															a(href="/profil/#{link.user}") #{link.user}
+															a.link(href="/profil/#{link.user}") #{link.user}
+														div(style="float:right;")
+															a.btn-social(style="background-image: url('/img/twitter.png');", href='http://twitter.com/home?status=Regardez ça! #{link.url}', target="_blank")
+															a.btn-social(style="background-image: url('/img/fb.png');",href='http://www.facebook.com/sharer.php?u=#{link.url}&t=#{link.title}', target="_blank")
+
 											hr.black
 											.row-fluid.rating-desc
 												div.span12
@@ -126,7 +129,7 @@ html(lang='fr')
 														span.tag ##{ctag.toUpperCase()}
 
 						if filtre
-							a.btn.pull-left(href="/profil") Annuler filtre
+							a.btn.pull-left(href="/feed") Annuler filtre
 
 					else
 						if filtre
@@ -134,7 +137,7 @@ html(lang='fr')
 							a.btn(href="/feed") Retour
 						else
 							h4.blue Désolé, vous n'avez aucun lien dans votre feed. 
-							a.username(href="/users") Rechercher des contacts
+							a.link(href="/users") Rechercher des contacts
 								
 		
 

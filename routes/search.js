@@ -25,7 +25,7 @@ exports.searchInProfile=function(request,response){
 			if(filtre){
 				var tagsarray = filtre.split(",");
 				db.liens.find({tags: {$in: tagsarray}, user:profil},function(err,link){
-					response.render('profil',{links:link, user:user, data:request.body.data, filtre:true});
+					response.render('profil',{links:link, user:user, data:request.body.data, filtre:true,  filtresTab:filtre});
 				});
 			}
 			else{
@@ -38,15 +38,36 @@ exports.searchInProfile=function(request,response){
 exports.searchInFeed=function(request,response){
 		var filtre=request.body.searchfield;
 		var currentuser = request.session.user;
+		
+	db.users.find({_id:currentuser},function(err,user){
+		
+		if (user[0].friends != undefined){
+			var userfriends = user[0].friends;
+		}
+		else{
+			var userfriends = new Array();
+		}
+		
+		var confirmedfriends = new Array();
+		var nb = 0;
+		for (var i=0; i<userfriends.length; i++) {
+			if (userfriends[i].confirmed == true) {
+				confirmedfriends[nb]=userfriends[i].user;
+				nb++;
+			}
+		}
+		
 		if (filtre){
 			var tagsarray = filtre.split(",");
-			db.liens.find({tags: {$in: tagsarray}},function(err,link){
-				response.render('feed',{links:link, user:currentuser, data:request.body.data, filtre:true});
+			db.liens.find({tags: {$in: tagsarray}, user: {$in: confirmedfriends}},function(err,link){
+				response.render('feed',{links:link, user:currentuser, data:request.body.data, filtre:true,  filtresTab:filtre });
 			});
 		}
 		else{
 			response.redirect('/feed');
 		}
+		
+	});
 };
 
 exports.searchInUsers=function(request,response){
@@ -56,7 +77,7 @@ exports.searchInUsers=function(request,response){
 			var usersarray = filtre.split(",");
 			db.users.find({$and: [{ _id: {$in: usersarray}} , { _id: {$ne: currentuser}}]},function(err,users){
 				db.liens.find({},function(err,links){
-					response.render('users',{links:links, users:users, currentuser:currentuser, filtre:true});
+					response.render('users',{links:links, users:users, currentuser:currentuser, data:request.body.data, filtre:true,  filtresTab:filtre});
 				});
 			});
 		}

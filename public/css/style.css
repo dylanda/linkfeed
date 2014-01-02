@@ -146,7 +146,7 @@ input {
 
 .tag {
     float:left;
-    margin:0 0 5px 3px; /* make some space for the triangle */
+    margin:0 0 5px 3px;
     font:12px/20px Arial, sans-serif;
     padding:0 8px;
     color:#fff;
@@ -171,10 +171,10 @@ input {
 .icon-tags { color:#27ae60;}
 .black {margin-top: 7px;margin-bottom: 7px;border: 0;border-top: 1px solid rgb(199, 199, 199);}
 
-.username:hover {
+.link:hover {
 	background: #2B8FD9;
 	color:white;
-	padding: 3px 3px 3px 3px;
+	padding: 0px 3px 0px 3px;
 }
 
 .left-inner-addon {
@@ -185,7 +185,7 @@ input {
 }
 .left-inner-addon i {
     position: absolute;
-    padding: 5px 5px 0 15px;
+    padding: 9px 5px 0 15px;
     pointer-events: none;
 }
 
@@ -198,5 +198,6 @@ input {
 }
 
 .btn-social {
-	padding: 3px 30px 2px 30px;
+	padding: 0px 30px 5px 30px;
+	margin-left:5px;
 }

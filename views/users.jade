@@ -30,11 +30,11 @@ html(lang='fr')
 
 		
 			$(document).ready(function() { 
-				var myArray="[#{data}]";
-				myArray=myArray.replace(/&quot;/gi,"");
-				myArray=myArray.replace(/\[/gi,"");
-				myArray=myArray.replace(/\]/gi,"");
+				var myArray="#{data}";
 				myArray=myArray.split(',');
+				
+				var filtresTab="#{filtresTab}";
+				filtresTab=filtresTab.split(',');
 			
 				$("#e1").select2({
 					width: 'resolve',
@@ -45,6 +45,8 @@ html(lang='fr')
 					},
 					closeOnSelect: true
 				}); 
+				
+				$("#e1").select2('val',[filtresTab]);
 
 				
 			});
@@ -108,7 +110,7 @@ html(lang='fr')
 													.span8
 														.row-fluid
 															.span12
-																a.username.pull-left(href="/profil/#{user._id.toLowerCase()}")
+																a.link.pull-left(href="/profil/#{user._id.toLowerCase()}")
 																	i.fa.fa-user
 																	|  #{user._id.toUpperCase()} 
 														.row-fluid

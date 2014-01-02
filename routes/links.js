@@ -56,15 +56,11 @@ exports.profileLinks=function(request,response){
                                         var data = new Array();
                                         var k = 0;
                                         for (var i=0; i<link.length; i++) {
-                                                if(link[i].tags!=null && link[i].tags instanceof Array){
+                                                if(link[i].tags!=null){
                                                         for (var j=0; j<link[i].tags.length; j++) {
-                                                                data[k] = "\"#"+link[i].tags[j]+"\"";
+                                                                data[k] = "#"+link[i].tags[j];
                                                                 k = k +1;
                                                         }
-                                                }
-                                                else if (link[i].tags!=null) {
-                                                        data[k] = "\"#"+link[i].tags+"\"";
-                                                        k = k +1;
                                                 }
                                         }
                                 // FIN        
@@ -108,13 +104,9 @@ exports.feedLinks=function(request,response){
 				for (var i=0; i<link.length; i++) {
 					if(link[i].tags!=null && link[i].tags instanceof Array){
 						for (var j=0; j<link[i].tags.length; j++) {
-							data[k] = "\"#"+link[i].tags[j]+"\"";
+							data[k] = "#"+link[i].tags[j];
 							k = k +1;
 						}
-					}
-					else if (link[i].tags!=null) {
-						data[k] = "\"#"+link[i].tags+"\"";
-						k = k +1;
 					}
 				}
 				/*for (var i=0; i<users.length; i++) {
