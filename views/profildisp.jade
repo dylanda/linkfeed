@@ -130,7 +130,8 @@ html(lang='fr')
 		div.container
 			div.row
 				div.span12
-					if links.length != 0
+				
+					if links.length != 0 && ami == true
 						.container
 							.row
 								each link in links
@@ -157,5 +158,7 @@ html(lang='fr')
 														span.tag ##{ctag.toUpperCase()}
 
 												
-					else
+					else if ami == false
+						h4.blue Vous n'avez pas accès à ses liens
+					else 
 						h4.blue Il n'a posté aucun lien
