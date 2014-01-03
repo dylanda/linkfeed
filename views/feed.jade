@@ -26,6 +26,9 @@ html(lang='fr')
 		script.
 		
 			$(document).ready(function() { 
+			
+				$("[rel='tooltip']").tooltip();
+				
 				var myArray="#{data}";
 				myArray=myArray.split(',');
 
@@ -110,29 +113,30 @@ html(lang='fr')
 													.row-fluid
 														a.link.url.pull-left(href="#{link.url}" target="_blank")  #{link.title.toUpperCase()} 
 															i.fa.fa-share
+														a.btn-flat-green.pull-right(rel="tooltip",data-original-title="Ajouter à mes liens",style="padding:3px 6px 3px 6px;", href='/reshare/#{link._id}')
+															i.fa.fa-share
+															|  Reshare
 														.row-fluid
 														p.pull-left
 															span.comment.blue
 																“#{link.description}” 
-															div(style="float:right;")
-																//- a.btn-social(style="background-image: url('/img/fb.png');",href='http://www.facebook.com/sharer.php?u=#{link.url}&t=#{link.title}', target="_blank")
-																a.btn.btn-mini.btn-success.pull-right(href='/reshare/#{link._id}')
-																	i.fa.fa-share
-																	|  Reshare
 													.row-fluid
 														p.pull-left
 															| Partagé le #{link.date} par 
 															a.link(href="/profil/#{link.user}") #{link.user}
 														div(style="float:right;")
-															a.btn-social(style="background-image: url('/img/twitter.png');", href='http://twitter.com/home?status=Regardez ça! #{link.url}', target="_blank")
-															a.btn-social(style="background-image: url('/img/fb.png');",href='http://www.facebook.com/sharer.php?u=#{link.url}&t=#{link.title}', target="_blank")
+															a.btn-social(rel="tooltip",data-original-title="Partager sur Twitter",style="background-image: url('/img/twitter.png');", href='http://twitter.com/home?status=Regardez ça! #{link.url}', target="_blank")
+															a.btn-social(rel="tooltip",data-original-title="Paratager sur Facebook",style="background-image: url('/img/fb.png');",href='http://www.facebook.com/sharer.php?u=#{link.url}&t=#{link.title}', target="_blank")
 
 
 											hr.black
 											.row-fluid.rating-desc
 												div.span12
-													each ctag in link.tags
-														span.tag ##{ctag.toUpperCase()}
+													if link.tags.length != 0
+														each ctag in link.tags
+															span.tag ##{ctag.toUpperCase()}
+													else
+														span.tag AUCUN TAGS
 
 						if filtre
 							a.btn-flat-green.pull-left(href="/feed") Annuler filtre

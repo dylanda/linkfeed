@@ -154,8 +154,11 @@ html(lang='fr')
 											hr.black
 											.row-fluid.tags-bar
 												div.span12
-													each ctag in link.tags
-														span.tag ##{ctag.toUpperCase()}
+													if link.tags.length != 0
+														each ctag in link.tags
+															span.tag ##{ctag.toUpperCase()}
+													else
+														span.tag AUCUN TAGS
 
 												
 					else if ami == false
