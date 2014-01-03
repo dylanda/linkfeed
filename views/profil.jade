@@ -180,7 +180,7 @@ html(lang='fr')
 									| #{user[0].date_ins.slice(0,10)} 
 						div.span9
 							div.edit-collapse.collapse
-								form#editForm(method='POST',action='/updateUser/#{user[0]._id}',accept-charset='UTF-8')
+								form#editForm(method='POST',action='/updateUser',accept-charset='UTF-8')
 									div.left-inner-addon
 										i.fa.fa-envelope
 										input#email(type='email', name='email', placeholder='Email',value="#{user[0].email}")

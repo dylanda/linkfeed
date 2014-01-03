@@ -72,7 +72,7 @@ app.get('/profil',requiresLogin, links.profileLinks);
 app.get('/profil/:id',requiresLogin, users.profil);
 
 //modifier ses informations
-app.post('/updateUser/:id',requiresLogin,users.updateUser);
+app.post('/updateUser',requiresLogin,users.updateUser);
 
 //afficher tous les liens dans le feed
 app.get('/feed',requiresLogin, links.feedLinks);
