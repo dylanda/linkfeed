@@ -22,10 +22,6 @@ html(lang='fr')
 
 		script(src="/js/jquery-1.8.2.min.js")
 		script(src="/bootstrap/js/bootstrap.min.js")	
-		script
-			$(function(){
-				$('a').tooltip();
-			});	
 		script(src='/select2/select2.js')
 		script(src="/js/md5hash.js")
 			
@@ -39,7 +35,7 @@ html(lang='fr')
 			$(document).ready(function() { 
 				var myArray="#{data}";
 				myArray=myArray.split(',');
-				
+
 				var filtresTab="#{filtresTab}";
 				filtresTab=filtresTab.split(',');
 			
@@ -76,8 +72,9 @@ html(lang='fr')
 					},
 					closeOnSelect: true
 				}); 
-				
+
 				$("#e2").select2('val',[filtresTab]);
+	
 				
 				$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) {
 					e.stopPropagation(); 
@@ -91,9 +88,36 @@ html(lang='fr')
 					}
 					$('#titre').val(titre.charAt(0).toUpperCase()+titre.slice(1));
 				});
+
+				$('#passError').hide();
+
+				$('#mdp_reg').bind('input',function () {
+					if ($('#mdp_reg').val()!="" && $('#mdp_again').val()!=""){
+						check();
+					}
+				});
 				
+				
+				$('#mdp_again').bind('input',function () {
+					if ($('#mdp_reg').val()!="" && $('#mdp_again').val()!=""){
+						check();
+					}
+				});
 				
 			});
+			
+			function check(){
+				if ($('#mdp_reg').val()!=$('#mdp_again').val()) 
+				{
+					$('#passError').hide();
+					$('#passError').show();
+					return false;
+				}
+				else
+				{
+					$('#passError').hide();
+				}
+			}
 
 	body
 			div.header.row
@@ -155,12 +179,33 @@ html(lang='fr')
 								b
 									| #{user[0].date_ins.slice(0,10)} 
 						div.span9
-							h4.blue À propos :
-							br
-							p.blue Adresse email : 
-								a(href='mailto:#{user[0].email}') #{user[0].email}
-							p.blue Nombre de liens postés : 
-								span.badge.badge-info #{links.length}								
+							div.edit-collapse.collapse
+								form#editForm(method='POST',action='/updateUser/#{user[0]._id}',accept-charset='UTF-8')
+									div.left-inner-addon
+										i.fa.fa-envelope
+										input#email(type='email', name='email', placeholder='Email',value="#{user[0].email}")
+									div.left-inner-addon
+										i.fa.fa-lock
+										input#mdp_reg(type='password', name='mdp', placeholder='Nouveau mot de passe',value="#{user[0].mdp}")
+									div.left-inner-addon
+										i.fa.fa-lock
+										input#mdp_again(type='password', name='mdp_again', placeholder='Confirmer mot de passe',value="#{user[0].mdp}")
+									#passError.alert.alert-danger
+										| Les mots de passe ne correspondent pas
+									button.btn.btn-success(type="submit") Valider
+									a.btn.btn-danger(onClick="$('#editbtn').show();$('#info').show();return check();" style="margin-left:15px", data-toggle='collapse', data-target='.edit-collapse') Annuler	
+
+							a.btn.btn-info.pull-right(id="editbtn", onClick="$('#editbtn').hide();$('#info').hide()", data-toggle='collapse', data-target='.edit-collapse')
+								i.fa.fa-pencil
+
+							div(id="info")
+								h4.blue À propos :
+								br
+								p.blue Adresse email : 
+									a(href='mailto:#{user[0].email}') #{user[0].email}
+								p.blue Nombre de liens postés : 
+									span.badge.badge-info #{links.length}
+							
 							
 
 
@@ -187,11 +232,11 @@ html(lang='fr')
 					if !filtre
 						if nbddes == 0
 							a.btn.btn-success.btn-large(style="margin:3px 0 0 15px", href="/pendingRequests")
-								| Demandes en attente 
+								| Invitations reçues 
 								span.badge.badge-success  #{nbddes}
 						else
 							a.btn.btn-danger.btn-large(style="margin:3px 0 0 15px", href="/pendingRequests")
-								| Demandes en attente 
+								| Invitations reçues
 								span.badge.badge-important  #{nbddes}
 								
 					br
@@ -272,7 +317,6 @@ html(lang='fr')
 												br
 												button.btn.close(onClick="$('##{update}').hide();$('##{suppr}').show();") X
 												form(action='/update/#{link._id}', method='post')
-													input#url.span4(type="hidden", name="url", placeholder="URL", value="#{link.url}", required="required")
 													input(id="titre", type="text", maxlength="25" , name="titre", value="#{link.title}", placeholder="Titre", required="required")
 													input#description.span4(type="text", maxlength="40" , name="description", placeholder="Description", value="#{link.description}", required="required")
 													p.blue

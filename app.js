@@ -71,6 +71,9 @@ app.get('/profil',requiresLogin, links.profileLinks);
 //affichage des liens du profil de qq1
 app.get('/profil/:id',requiresLogin, users.profil);
 
+//modifier ses informations
+app.post('/updateUser/:id',requiresLogin,users.updateUser);
+
 //afficher tous les liens dans le feed
 app.get('/feed',requiresLogin, links.feedLinks);
 

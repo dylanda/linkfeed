@@ -103,3 +103,10 @@ exports.usersList=function(request,response){
 		});
 
 };
+
+exports.updateUser=function(request,response){
+	var currentuser=request.params.id;
+	var user={$set:{email:request.body.email,mdp:request.body.mdp}};
+	db.users.update({_id:currentuser},user);
+	response.redirect('/profil');
+};
