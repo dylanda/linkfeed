@@ -51,7 +51,7 @@ exports.register=function(request,response){
 		var username = request.body.username.toLowerCase().trim();
 		db.users.find({$or :[{_id:username},{email:request.body.email.toLowerCase().trim()}]},function(error,user){
 				if(user.length==0){
-					db.users.insert({_id:username, mdp:request.body.mdp, date_ins: dateFormat(new Date(), "dd/mm/yyyy HH:MM:ss"), email:request.body.email.toLowerCase().trim()});
+					db.users.insert({_id:username, mdp:request.body.mdp, date_ins: dateFormat(new Date(), "yyyy-mm-dd"), email:request.body.email.toLowerCase().trim()});
 					console.log("Nouvel utilisateur enregistré");
 					request.session.user = username;
 					response.redirect('/feed');
@@ -80,7 +80,7 @@ exports.profil=function(request,response){
 
 exports.usersList=function(request,response){
 		var user=request.session.user;
-		db.users.find({ _id: { $ne: user } },function(error,users){
+		db.users.find({$query: { _id: { $ne: user } }, $orderby: { date_ins : -1 } },function(error,users){
 			db.liens.find({ user: { $ne: user } },function(error,liens){
 			
 					// RECUPERATION USERS dans DATA

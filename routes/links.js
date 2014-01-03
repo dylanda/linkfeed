@@ -23,7 +23,8 @@ var dateFormat = require('dateformat');
 
 exports.newLink=function(request,response){
 		var tagsarray = request.body.tags.split(",");
-		var lien={url:request.body.url, title:request.body.titre, description:request.body.description, tags:tagsarray, user:request.session.user, date: dateFormat(new Date(), "dd/mm/yyyy HH:MM:ss")};
+		dateFormat.masks.fr_time = 'yyyy-mm-dd "à" HH"h"MM';
+		var lien={url:request.body.url, title:request.body.titre, description:request.body.description, tags:tagsarray, user:request.session.user, date: dateFormat(new Date(), "fr_time")};
 		db.liens.insert(lien);
 		console.log("Nouveau lien enregistré");
 		response.redirect('/profil');
@@ -48,7 +49,7 @@ exports.profileLinks=function(request,response){
                                 }
                         }
 
-                        db.liens.find({user:auteur},function(err,link){
+                        db.liens.find( { $query: {user:auteur}, $orderby: { date : -1 } } ,function(err,link){
                         
                                 // RECUPERATION TAGS dans DATA
                                 db.users.find({},function(err,users){
@@ -94,7 +95,7 @@ exports.feedLinks=function(request,response){
 		}
 		
 		
-		db.liens.find({user: { $in: confirmedfriends }},function(err,link){
+		db.liens.find({ $query: {user: { $in: confirmedfriends }}, $orderby: { date : -1 } },function(err,link){
 
 				// RECUPERATION TAGS dans DATA
 			db.users.find({_id: { $in: confirmedfriends }},function(err,users){
@@ -127,7 +128,7 @@ exports.feedLinks=function(request,response){
 exports.deleteLink=function(req,res){
 	var ObjectID = require('mongodb').ObjectID;
 	var idString = req.params.id;
-	db.liens.remove({_id: new ObjectID(idString)});
+	db.liens.remove({_id: new ObjectID(idString), user: req.session.user});
 	res.redirect('/profil');
 };
 

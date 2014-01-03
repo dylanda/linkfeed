@@ -174,7 +174,7 @@ html(lang='fr')
 
 						div.span3
 							script(type="text/javascript") email = "#{user[0].email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=110' />")
-							p.blue
+							p.blue(style="margin-top:15px")
 								| Inscrit depuis le 
 								b
 									| #{user[0].date_ins.slice(0,10)} 
@@ -202,7 +202,7 @@ html(lang='fr')
 								h4.blue À propos :
 								br
 								p.blue Adresse email : 
-									a(href='mailto:#{user[0].email}') #{user[0].email}
+									a.link(href='mailto:#{user[0].email}') #{user[0].email}
 								p.blue Nombre de liens postés : 
 									span.badge.badge-info #{links.length}
 							
@@ -213,7 +213,7 @@ html(lang='fr')
 			div.row-fluid
 				div.span12
 					a.btn.btn-info.btn-large#afficher(onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');")
-						i.fa.fa-share
+						i.fa.fa-plus
 						|  Partager un lien
 					a.btn.btn-info.btn-large(style="margin:3px 0 0 15px", href="/users")
 						i.fa.fa-search
@@ -226,17 +226,19 @@ html(lang='fr')
 									- nbamis++
 
 					a.btn.btn-info.btn-large(style="margin:3px 0 0 15px", href="/friends")
-						i.fa.fa-user
+						i.fa.fa-user 
 						|  Voir amis 
 						span.badge.badge-info  #{nbamis}
 					if !filtre
 						if nbddes == 0
 							a.btn.btn-success.btn-large(style="margin:3px 0 0 15px", href="/pendingRequests")
-								| Invitations reçues 
+								i.fa.fa-bell-o 
+								|  Invitation reçue  
 								span.badge.badge-success  #{nbddes}
 						else
 							a.btn.btn-danger.btn-large(style="margin:3px 0 0 15px", href="/pendingRequests")
-								| Invitations reçues
+								i.fa.fa-bell
+								|  Invitations reçues  
 								span.badge.badge-important  #{nbddes}
 								
 					br
@@ -274,11 +276,11 @@ html(lang='fr')
 										.well
 											.row-fluid
 												.span3
-													img.img-rounded(style="margin-bottom:15px", src='http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=120&stwymax=90&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}', border='0')
+													img.img-rounded(src='http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=120&stwymax=90&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}', border='0')
 												.span9
 													.row-fluid
 														.span9
-															a.url.pull-left(href="#{link.url}" target="_blank") #{link.title.toUpperCase()} 
+															a.link.url.pull-left(href="#{link.url}" target="_blank") #{link.title.toUpperCase()} 
 																i.fa.fa-share
 														.span3
 															- var update = "update" + link._id

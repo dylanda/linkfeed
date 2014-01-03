@@ -24,7 +24,7 @@ exports.searchInProfile=function(request,response){
 		db.users.find({_id:profil},function(error,user){
 			if(filtre){
 				var tagsarray = filtre.split(",");
-				db.liens.find({tags: {$in: tagsarray}, user:profil},function(err,link){
+				db.liens.find({ $query: {tags: {$in: tagsarray}, user:profil}, $orderby: { date : -1 } }   ,function(err,link){
 					response.render('profil',{links:link, user:user, data:request.body.data, filtre:true,  filtresTab:filtre});
 				});
 			}
@@ -77,15 +77,15 @@ exports.searchInFeed=function(request,response){
 			
 
 			if ((j!=0) &&  (k!=0)) {
-				db.liens.find({$and: [{ user: {$in: confirmedfriends}} , { user: {$in: usersArray}}], tags: {$in: tagsarray}  },function(err,link){
+				db.liens.find({ $query: {$and: [{ user: {$in: confirmedfriends}} , { user: {$in: usersArray}}], tags: {$in: tagsarray}  }, $orderby: { date : -1 } }     ,function(err,link){
 					response.render('feed',{links:link, user:currentuser, data:request.body.data, filtre:true,  filtresTab:filtre });
 				});
 			}else if ((j!=0) && (k==0)) {
-				db.liens.find({$and: [{ user: {$in: confirmedfriends}} , { user: {$in: usersArray}}]  },function(err,link){
+				db.liens.find({ $query: {$and: [{ user: {$in: confirmedfriends}} , { user: {$in: usersArray}}]  }, $orderby: { date : -1 } },function(err,link){
 					response.render('feed',{links:link, user:currentuser, data:request.body.data, filtre:true,  filtresTab:filtre });
 				});
 			}else if ((j==0) && (k!=0)){
-				db.liens.find({user: {$in: confirmedfriends}, tags: {$in: tagsarray}  },function(err,link){
+				db.liens.find({ $query: {user: {$in: confirmedfriends}, tags: {$in: tagsarray}  }, $orderby: { date : -1 } },function(err,link){
 					response.render('feed',{links:link, user:currentuser, data:request.body.data, filtre:true,  filtresTab:filtre });
 				});
 			}
@@ -102,7 +102,7 @@ exports.searchInUsers=function(request,response){
 		var currentuser = request.session.user;
 		if (filtre){
 			var usersarray = filtre.split(",");
-			db.users.find({$and: [{ _id: {$in: usersarray}} , { _id: {$ne: currentuser}}]},function(err,users){
+			db.users.find({ $query: {$and: [{ _id: {$in: usersarray}} , { _id: {$ne: currentuser}}]}, $orderby: { date_ins : -1 } },function(err,users){
 				db.liens.find({},function(err,links){
 					response.render('users',{links:links, users:users, currentuser:currentuser, data:request.body.data, filtre:true,  filtresTab:filtre});
 				});

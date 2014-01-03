@@ -114,12 +114,12 @@ html(lang='fr')
 							p.blue
 								| Inscrit depuis le 
 								b
-									| #{userdisp[0].date_ins.slice(0,10)} 
+									| #{userdisp[0].date_ins} 
 						div.span9
 							h4.blue À propos :
 							br
 							p.blue Adresse email : 
-								a(href='mailto:#{userdisp[0].email}') #{userdisp[0].email}
+								a.link(href='mailto:#{userdisp[0].email}') #{userdisp[0].email}
 								
 							p.blue Nombre de liens postés : 
 								span.badge.badge-info #{links.length}
@@ -141,7 +141,7 @@ html(lang='fr')
 													img.img-rounded(src='http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=120&stwymax=90&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}', border='0')
 												.span9
 													.row-fluid
-														a.url.pull-left(href="#{link.url}" target="_blank") #{link.title.toUpperCase()} 
+														a.link.url.pull-left(href="#{link.url}" target="_blank") #{link.title.toUpperCase()} 
 															i.fa.fa-share
 													.row-fluid
 														p.pull-left(style="margin-top:5px")
@@ -149,8 +149,7 @@ html(lang='fr')
 																“#{link.description}” 
 													.row-fluid
 														p.pull-left
-															| Partagé le #{link.date} par 
-															a(href="/profil/#{link.user}") #{link.user}
+															| Partagé le #{link.date}
 											hr.black
 											.row-fluid.tags-bar
 												div.span12
