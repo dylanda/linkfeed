@@ -42,6 +42,16 @@ html(lang='fr')
 					closeOnSelect: true
 				}); 
 				
+				$("#e2").select2({
+					width: 'resolve',
+					tags:myArray,
+					multiple: true,
+					id: function(object) {
+						return object.text.replace("#","");
+					},
+					closeOnSelect: true
+				}); 
+				
 				$("#e1").select2('val',[filtresTab]);
 				
 				
@@ -87,10 +97,9 @@ html(lang='fr')
 						form.form-search.pull-right(method="POST",action="/feed/search",accept-charset="UTF-8")
 							div.filtre
 								input#data(type="hidden" name="data" value="#{data}")
-								input#e1(name="searchfield", placeholder="Filtrer", style="margin-right:5px;")
+								input#e1(name="searchfield", placeholder="Filtrer par tags et/ou personnes", style="margin-right:5px;")
 								button.btn.btn-info(id="searchbtn" type="submit")
 									i.fa.fa-search
-									
 
 		div.container
 			div.row

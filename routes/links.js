@@ -97,7 +97,7 @@ exports.feedLinks=function(request,response){
 		db.liens.find({user: { $in: confirmedfriends }},function(err,link){
 
 				// RECUPERATION TAGS dans DATA
-			db.users.find({},function(err,users){
+			db.users.find({_id: { $in: confirmedfriends }},function(err,users){
 			
 				var data = new Array();
 				var k = 0;
@@ -109,12 +109,12 @@ exports.feedLinks=function(request,response){
 						}
 					}
 				}
-				/*for (var i=0; i<users.length; i++) {
+				for (var i=0; i<users.length; i++) {
 					if (users[i]._id != request.session.user){
-						data[k] = "\"@"+users[i]._id+"\"";
+						data[k] = "@"+users[i]._id;
 						k = k +1;
 					}
-				}*/
+				}
 			// FIN	
 				response.render('feed',{links: link, data:data, user:request.session.user});
 			});

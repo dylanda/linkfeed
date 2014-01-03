@@ -58,10 +58,37 @@ exports.searchInFeed=function(request,response){
 		}
 		
 		if (filtre){
-			var tagsarray = filtre.split(",");
-			db.liens.find({tags: {$in: tagsarray}, user: {$in: confirmedfriends}},function(err,link){
-				response.render('feed',{links:link, user:currentuser, data:request.body.data, filtre:true,  filtresTab:filtre });
-			});
+			var dataTab = filtre.split(",");
+			var tagsarray = new Array();
+			var usersArray = new Array();
+			
+			var k = 0;
+			var j = 0;
+			for (var i=0; i<dataTab.length; i++) {
+				if (dataTab[i].charAt(0) != "@"){
+					tagsarray[k] = dataTab[i];
+					k = k +1;
+				}
+				else {
+					usersArray[j] = dataTab[i].slice(1);
+					j = j +1;
+				}
+			}
+			
+
+			if ((j!=0) &&  (k!=0)) {
+				db.liens.find({$and: [{ user: {$in: confirmedfriends}} , { user: {$in: usersArray}}], tags: {$in: tagsarray}  },function(err,link){
+					response.render('feed',{links:link, user:currentuser, data:request.body.data, filtre:true,  filtresTab:filtre });
+				});
+			}else if ((j!=0) && (k==0)) {
+				db.liens.find({$and: [{ user: {$in: confirmedfriends}} , { user: {$in: usersArray}}]  },function(err,link){
+					response.render('feed',{links:link, user:currentuser, data:request.body.data, filtre:true,  filtresTab:filtre });
+				});
+			}else if ((j==0) && (k!=0)){
+				db.liens.find({user: {$in: confirmedfriends}, tags: {$in: tagsarray}  },function(err,link){
+					response.render('feed',{links:link, user:currentuser, data:request.body.data, filtre:true,  filtresTab:filtre });
+				});
+			}
 		}
 		else{
 			response.redirect('/feed');
