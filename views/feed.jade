@@ -85,12 +85,12 @@ html(lang='fr')
 							p  Voici les posts récents de vos amis
 							
 						form.form-search.pull-right(method="POST",action="/feed/search",accept-charset="UTF-8")
-							div.filtre
+							div.filtre(style="margin-left:15px;")
 								input#data(type="hidden" name="data" value="#{data}")
-								input#e1(name="searchfield", placeholder="Filtrer par tags et/ou personnes", style="margin-right:5px;")
-								button.btn.btn-info(id="searchbtn" type="submit")
+								input#e1(name="searchfield", placeholder="Filtrer par tags et/ou personnes")
+								button.btn-flat-blue(id="searchbtn" type="submit")
 									i.fa.fa-search
-						a.btn.btn-info.btn-small.pull-right(style="margin:5px 30px 0 0", href="/users")
+						a.btn-flat-blue.pull-right(style="top:-2px;", href="/users")
 							i.fa.fa-search
 							|  Rechercher des contacts
 

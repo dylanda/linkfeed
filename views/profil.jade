@@ -33,6 +33,9 @@ html(lang='fr')
 			};
 		
 			$(document).ready(function() { 
+			
+				$("[rel='tooltip']").tooltip();
+			
 				var myArray="#{data}";
 				myArray=myArray.split(',');
 
@@ -162,8 +165,8 @@ html(lang='fr')
 						form.form-search.pull-right(method="POST",action="/profil/search",accept-charset="UTF-8")
 							div.filtre
 								input#data(type="hidden" name="data" value="#{data}")
-								input#e2(name="searchfield", placeholder="Filtrer par tags", style="margin-right:5px;")
-								button.btn.btn-info(id="searchbtn" type="submit")
+								input#e2(name="searchfield", placeholder="Filtrer par tags")
+								button.btn-flat-blue(id="searchbtn" type="submit")
 									i.fa.fa-search
 								
 		div.container.well
@@ -192,10 +195,10 @@ html(lang='fr')
 										input#mdp_again(type='password', name='mdp_again', placeholder='Confirmer nouveau mdp')
 									#passError.alert.alert-danger
 										| Les mots de passe ne correspondent pas
-									button.btn.btn-success(type="submit") Valider
-									a.btn.btn-danger(onClick="$('#editbtn').show();$('#info').show();return check();" style="margin-left:15px", data-toggle='collapse', data-target='.edit-collapse') Annuler	
+									button.btn-flat-green(type="submit") Valider
+									a.btn-flat-red(onClick="$('#editbtn').show();$('#info').show();return check();" style="margin-left:15px", data-toggle='collapse', data-target='.edit-collapse') Annuler	
 
-							a.btn.btn-info.pull-right(id="editbtn", onClick="$('#editbtn').hide();$('#info').hide()", data-toggle='collapse', data-target='.edit-collapse')
+							a.btn-flat-blue.pull-right(id="editbtn", onClick="$('#editbtn').hide();$('#info').hide()", data-toggle='collapse', data-target='.edit-collapse')
 								i.fa.fa-pencil
 
 							div(id="info")
@@ -212,10 +215,10 @@ html(lang='fr')
 		div.container
 			div.row-fluid
 				div.span12
-					a.btn.btn-info.btn-large#afficher(onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');")
+					a.btn-flat-blue#afficher(style="width:218px", onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');")
 						i.fa.fa-plus
 						|  Partager un lien
-					a.btn.btn-info.btn-large(style="margin:3px 0 0 15px", href="/users")
+					a.btn-flat-blue(style="width:218px", href="/users")
 						i.fa.fa-search
 						|  Rechercher des contacts
 						
@@ -225,21 +228,21 @@ html(lang='fr')
 								if friend.confirmed == true
 									- nbamis++
 
-					a.btn.btn-info.btn-large(style="margin:3px 0 0 15px", href="/friends")
+					a.btn-flat-blue(style="width:218px", href="/friends")
 						i.fa.fa-user 
 						|  Voir amis 
 						span.badge.badge-info  #{nbamis}
 					if !filtre
 						if nbddes == 0
-							a.btn.btn-success.btn-large(style="margin:3px 0 0 15px", href="/pendingRequests")
+							a.btn-flat-green(style="width:218px", href="/pendingRequests")
 								i.fa.fa-bell-o 
 								|  Invitation reçue  
 								span.badge.badge-success  #{nbddes}
 						else
-							a.btn.btn-danger.btn-large(style="margin:3px 0 0 15px", href="/pendingRequests")
+							a.btn-flat-red(style="width:218px", href="/pendingRequests")
 								i.fa.fa-bell
 								|  Invitations reçues  
-								span.badge.badge-important  #{nbddes}
+								span.badge.badge-important #{nbddes}
 								
 					br
 					br
@@ -259,7 +262,7 @@ html(lang='fr')
 										| Tags :
 									p
 										input#e1(name="tags", placeholder="Tags", multiple)
-									button.btn.btn-info(type="submit")
+									button.btn-flat-blue(type="submit")
 										i.fa.fa-share
 										|  Partager !
 			
@@ -326,14 +329,14 @@ html(lang='fr')
 														| Tags :
 													p
 														input.modtags(name="tags", id= tagsmodif,  placeholder="Tags", multiple)
-													button.btn.btn-success(type="submit") Valider
+													button.btn-flat-green(type="submit") Valider
 						if filtre
-							a.btn.pull-left(href="/profil") Annuler filtre
+							a.btn-flat-green.pull-left(href="/profil") Annuler filtre
 
 					else
 						if filtre
 							h4.blue Désolé, aucun lien ne correspond à votre filtre. 
-							a.btn(href="/profil") Retour
+							a.btn-flat-green(href="/profil") Retour
 						else
 							h4.blue Désolé, vous n'avez partagé aucun lien. 
-							a.link#afficher(href="#null", onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');") Partagez votre premier lien!
+							a.btn-flat-blue#afficher(href="#null", onClick="$('#afficher').hide();$('#partage').css('visibility','visible').hide().fadeIn().removeClass('hidden');") Partagez votre premier lien!

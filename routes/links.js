@@ -26,7 +26,6 @@ exports.newLink=function(request,response){
 		dateFormat.masks.fr_time = 'yyyy-mm-dd "à" HH"h"MM';
 		var lien={url:request.body.url, title:request.body.titre, description:request.body.description, tags:tagsarray, user:request.session.user, date: dateFormat(new Date(), "fr_time")};
 		db.liens.insert(lien);
-		console.log("Nouveau lien enregistré");
 		response.redirect('/profil');
 };
 

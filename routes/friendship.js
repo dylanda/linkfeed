@@ -46,36 +46,37 @@ exports.friends=function(request,response){
 		var currentuser=request.session.user;
 
 		db.users.find({_id: currentuser},function(error,user){
-			var amis=new Array;
-			var j=0;
-			var nbamis=0;
-			if (user[0].friends!=undefined)
-			{
-				for (var i= 0; i<user[0].friends.length; i++)
-				{ 
-					if (user[0].friends[i].confirmed==true)
-					{
-						amis[j]=user[0].friends[i].user;
-						j++;
+			db.liens.find({},function(error,links){
+				var amis=new Array;
+				var j=0;
+				var nbamis=0;
+				if (user[0].friends!=undefined)
+				{
+					for (var i= 0; i<user[0].friends.length; i++)
+					{ 
+						if (user[0].friends[i].confirmed==true)
+						{
+							amis[j]=user[0].friends[i].user;
+							j++;
+						}
 					}
-				}
-				if(amis.length!=0)
-				{			
-					db.users.find({_id: { $in: amis }},function(error,friends){
-							response.render('friends',{user:currentuser, friends:friends});
-					});
+					if(amis.length!=0)
+					{			
+						db.users.find({_id: { $in: amis }},function(error,friends){
+								response.render('friends',{user:user[0], friends:friends, links:links});
+						});
+					}
+					else
+					{
+						response.render('friends',{user:user[0]});
+					}
 				}
 				else
 				{
-					response.render('friends',{user:currentuser});
+					response.render('friends',{user:user[0]});
 				}
-			}
-			else
-			{
-				response.render('friends',{user:currentuser});
-			}
 
-
+			});
 		
 		});
 
@@ -85,34 +86,36 @@ exports.pendingRequests=function(request,response){
 		var currentuser=request.session.user;
 
 		db.users.find({_id:currentuser},function(error,user){
-			var dde=new Array;
-			var j=0;
-			var nbddes=0;
-			if (user[0].friends!=undefined)
-			{	
-				for(var i=0;i<user[0].friends.length;i++)
-				{
-					if (user[0].friends[i].confirmed==false && user[0].friends[i].demandeur!=currentuser) 
+			db.liens.find({},function(error,links){
+				var dde=new Array;
+				var j=0;
+				var nbddes=0;
+				if (user[0].friends!=undefined)
+				{	
+					for(var i=0;i<user[0].friends.length;i++)
 					{
-						dde[j]=user[0].friends[i].demandeur;
-						j++;
+						if (user[0].friends[i].confirmed==false && user[0].friends[i].demandeur!=currentuser) 
+						{
+							dde[j]=user[0].friends[i].demandeur;
+							j++;
+						}
 					}
-				}
-				if (dde.length!=0) 
-				{
-					db.users.find({_id:{$in:dde}},function(error,requests){
-						response.render('requests',{user:currentuser,demandes:requests});
-					});
+					if (dde.length!=0) 
+					{
+						db.users.find({_id:{$in:dde}},function(error,requests){
+							response.render('requests',{user:user[0],demandes:requests, links:links});
+						});
+					}
+					else
+					{
+						response.render('requests',{user:user[0]});
+					}
 				}
 				else
 				{
-					response.render('requests',{user:currentuser});
+					response.render('requests',{user:user[0]});
 				}
-			}
-			else
-			{
-				response.render('requests',{user:currentuser});
-			}
+			});
 		});
 };
 

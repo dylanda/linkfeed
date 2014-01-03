@@ -84,7 +84,7 @@ html(lang='fr')
 							div.left-inner-addon
 								i.fa.fa-lock
 								input#mdp.span4(style="width:100%;",type='password', name='mdp', placeholder='Mot de passe', required='required')
-							button.btn.btn-info.btn-block(type='submit') 
+							button.btn-flat-blue(type='submit') 
 								i.fa.fa-sign-in
 								|  Se connecter
 						p.blue  © LinkFeed 2013 - Metz
@@ -122,9 +122,9 @@ html(lang='fr')
 									i.fa.fa-envelope
 									input#email(type='email', name='email', placeholder='Email', required='required')
 								br
-								button.btn.btn-success(type="submit", onClick="return check();") Valider
-								a.btn.btn-danger(onClick="$('#registerbtn').show()", style="margin-left:15px", data-toggle='collapse', data-target='.register-collapse') Annuler	
-						a.btn.btn-info.btn-block(id="registerbtn", onClick="$('#registerbtn').hide()", data-toggle='collapse', data-target='.register-collapse')
+								button.btn-flat-blue(type="submit", onClick="return check();") Valider
+								button.btn-flat-red(type="button", onClick="$('#registerbtn').show()", style="margin-left:15px", data-toggle='collapse', data-target='.register-collapse') Annuler	
+						a.btn-flat-blue(id="registerbtn", onClick="$('#registerbtn').hide()", data-toggle='collapse', data-target='.register-collapse')
 							| S'inscrire
 
 			

@@ -30,6 +30,9 @@ html(lang='fr')
 
 		
 			$(document).ready(function() { 
+			
+				$("[rel='tooltip']").tooltip();
+			
 				var myArray="#{data}";
 				myArray=myArray.split(',');
 				
@@ -91,8 +94,8 @@ html(lang='fr')
 						form.form-search.pull-right(method="POST",action="/users/search",accept-charset="UTF-8")
 							div.filtre
 								input#data(type="hidden" name="data" value="#{data}")
-								input#e1(name="searchfield", placeholder="Filtre par nom d'utilisateur", style="margin-right:5px;")
-								button.btn.btn-info(id="searchbtn" type="submit")
+								input#e1(name="searchfield", placeholder="Filtre par nom d'utilisateur")
+								button.btn-flat-blue(id="searchbtn" type="submit")
 									i.fa.fa-search
 
 		div.container
@@ -113,8 +116,36 @@ html(lang='fr')
 																a.link.pull-left(href="/profil/#{user._id.toLowerCase()}")
 																	i.fa.fa-user
 																	|  #{user._id.toUpperCase()} 
+																	
+																- var pending = false
+																- var pending2 = false
+																
+																if user.friends
+																	- each friend in user.friends
+																		if friend.confirmed == false && friend.demandeur && friend.user == currentuser
+																			if friend.demandeur == currentuser
+																				- pending = true
+																			if friend.demandeur == user._id
+																				-pending2 = true
+																				
+																				
+																if pending == true
+																	a.btn-flat-red.pull-right(rel="tooltip", data-toggle="tooltip" , data-original-title="Annuler demande", style="padding:3px 6px 3px 6px;margin-left:5px", href="/rejectRequest/#{user._id}")
+																		i.fa.fa-times
+																	a.btn-flat-blue.btn-disabled.pull-right(rel="tooltip", data-toggle="tooltip" , data-original-title="Demande en attente", style="padding:3px 6px 3px 6px;")
+																		i.fa.fa-spinner
+																else if pending2 == true
+																	a.btn-flat-red.pull-right(rel="tooltip", data-toggle="tooltip" , data-original-title="Refuser invitation", style="padding:3px 6px 3px 6px;margin-left:5px", href="/rejectRequest/#{user._id}")
+																		i.fa.fa-times
+																	a.btn-flat-green.pull-right(rel="tooltip", data-toggle="tooltip" , data-original-title="Confirmer invitation", style="padding:3px 6px 3px 6px;",href="/confirmRequest/#{user._id}")
+																		i.fa.fa-check
+																else
+																	a.btn-flat-blue.pull-right(rel="tooltip", data-toggle="tooltip" , data-original-title="Ajouter en ami", style="padding:3px 6px 3px 6px;",href="/addFriend/#{user._id}")
+																		i.fa.fa-plus
+																	
+																	
 														.row-fluid
-															p.pull-left.comment.blue
+															p.pull-left.comment.blue(style="font-size:12px")
 																a.link(href='mailto:#{user.email}') #{user.email}
 												.row-fluid
 													p.pull-left(style="margin:10px 0 0 10px")

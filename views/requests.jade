@@ -3,7 +3,7 @@ html(lang='fr')
 	head
 		meta(charset='utf-8')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
-		title LinkFeed - Demandes en attente de #{user}
+		title LinkFeed - Invitations en attente de #{user._id}
 		link(rel='shortcut icon',href='/img/favicon.ico')
 		link(rel='icon',href='/img/favicon.ico')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400')
@@ -18,11 +18,12 @@ html(lang='fr')
 
 		script(src="/js/jquery-1.8.2.min.js")
 		script(src="/bootstrap/js/bootstrap.min.js")	
-		script
-			$(function(){
-				$('a').tooltip();
-			});	
 		script(src="/js/md5hash.js")
+		
+		script.
+			$(document).ready(function() { 
+				$("[rel='tooltip']").tooltip();
+			});
 			
 	body
 		div.header.row
@@ -60,50 +61,70 @@ html(lang='fr')
 					div.span12
 						i.fa.fa-tasks.page-title-icon
 						h2
-							| Consultez vos demandes en attente
+							| Consultez vos invitations amis en attente
 							| /
 
 		
 		div.container
 			div.row
 				div.span12
-						if demandes
-							h4.blue Voici vos demandes en attente :
-							br
-							table.table
-								thead
-									tr
-										th
-										th Nom d'utilisateur
-										th Email
-										th
-								tbody
-									each demande in demandes
-										tr
-											td
-												script(type="text/javascript") email = "#{demande.email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?s=80' />");
-											td 
-												a(href="profil/#{demande._id}") #{demande._id}
-											td 
-												a(href='mailto:#{demande.email}') #{demande.email}
-											td
-												a.btn.btn-success(rel="tooltip",data-original-title="Confirmer la demande",href="/confirmRequest/#{demande._id}")
-													i.fa.fa-check
-												a.btn.btn-danger(style='margin-left:3px',rel="tooltip",data-original-title="Refuser la demande", href="/rejectRequest/#{demande._id}")
-													i.fa.fa-times
-							br
-							h6.blue Vous avez reçu #{demandes.length} invitations
+					if demandes
+						.container
+							.row
+								each demande in demandes
+										.span4
+											.well
+												.row-fluid
+													.span4
+														script(type="text/javascript") email = "#{demande.email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=60' />");
+													.span8
+														.row-fluid
+															.span12
+																a.link.pull-left(href="/profil/#{demande._id.toLowerCase()}")
+																	i.fa.fa-user
+																	|  #{demande._id.toUpperCase()} 
+																a.btn-flat-red.pull-right(rel="tooltip", data-toggle="tooltip" , data-original-title="Refuser", style="padding:3px 6px 3px 6px;", href="/rejectRequest/#{demande._id.toLowerCase()}")
+																	i.fa.fa-ban
+																a.btn-flat-green.pull-right(rel="tooltip", data-toggle="tooltip" , data-original-title="Confirmer", style="padding:3px 6px 3px 6px;margin-right:5px", href="/confirmRequest/#{demande._id.toLowerCase()}")
+																	i.fa.fa-check
+														.row-fluid
+															p.pull-left.comment.blue(style="font-size:12px")
+																a.link(href='mailto:#{demande.email}') #{demande.email}
+												.row-fluid
+													p.pull-left(style="margin:10px 0 0 10px")
+														| Inscrit depuis le #{demande.date_ins} 
 
+												hr.black
+												.row-fluid.tags-bar
+													div.span12
+														span.tag
+															- var nbamis = 0
+															if demande.friends
+																- each ami in demande.friends
+																	if ami.confirmed == true
+																		- nbamis++
+																| #{nbamis} amis
+															else
+																| 0 ami
+															
+														if links
+															- var nblinks = 0
+															- each link in links
+																if link.user == demande._id
+																	- nblinks++
+															
+															span.tag
+																if nblinks == 0
+																	| #{nblinks} lien partagé
+																else
+																	| #{nblinks} liens partagés
+									
 
-						else
-							h4.blue Vous n'avez aucune demande
-		
-		br
-		br
-		br
-		a(href="profil", class="btn btn-large btn-info") 
-			i.fa.fa-reply
-			|  Retourner sur votre profil
+					else
+						h4.blue Vous n'avez aucune nouvelle invitation.
+						hr
+						a.btn-flat-blue.pull-left(href="/users") Rerchercher des amis	
+					a.btn-flat-green.pull-left(href="/profil") Retour au profil
 
 
 

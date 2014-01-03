@@ -83,25 +83,25 @@ html(lang='fr')
 										
 										
 						if ami == true
-							a.btn.btn-danger.btn-large.pull-right(href="/deleteFriend/#{userdisp[0]._id}")
+							a.btn-flat-red.pull-right(href="/deleteFriend/#{userdisp[0]._id}")
 								i.fa.fa-user
 								|  Retirer de la liste d'amis
 						else if pending == true
-							a.btn.btn-danger.btn-large.pull-right(style="margin-left:15px", href="/rejectRequest/#{userdisp[0]._id}")
+							a.btn-flat-red.pull-right(style="margin-left:5px;", href="/rejectRequest/#{userdisp[0]._id}")
 								i.fa.fa-times
 								|  Annuler
-							a.btn.btn-info.btn-large.disabled.pull-right()
-								i.fa.fa-ellipsis-h
+							a.btn-flat-blue.btn-disabled.pull-right
+								i.fa.fa-spinner
 								|  Demande en attente
 						else if pending2 == true
-							a.btn.btn-danger.btn-large.pull-right(style="margin-left:15px", href="/rejectRequest/#{userdisp[0]._id}")
+							a.btn-flat-red.pull-right(style="margin-left:15px", href="/rejectRequest/#{userdisp[0]._id}")
 								i.fa.fa-times
 								|  Refuser la demande
-							a.btn.btn-success.btn-large.pull-right(href="/confirmRequest/#{userdisp[0]._id}")
+							a.btn-flat-green.pull-right(href="/confirmRequest/#{userdisp[0]._id}")
 								i.fa.fa-check
 								|  Confirmer la demande
 						else
-							a.btn.btn-info.btn-large.pull-right(href="/addFriend/#{userdisp[0]._id}")
+							a.btn-flat-blue.pull-right(href="/addFriend/#{userdisp[0]._id}")
 								i.fa.fa-plus
 								|  Ajouter à la liste d'amis
 		
@@ -111,7 +111,7 @@ html(lang='fr')
 					div.row-fluid
 						div.span3
 							script(type="text/javascript") email = "#{userdisp[0].email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=140' />")
-							p.blue
+							p.blue(style="margin-top:15px")
 								| Inscrit depuis le 
 								b
 									| #{userdisp[0].date_ins} 

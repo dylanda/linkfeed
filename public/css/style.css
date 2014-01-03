@@ -201,3 +201,129 @@ input {
 	padding: 0px 30px 5px 30px;
 	margin-left:5px;
 }
+
+/* #Bouton flat bleu
+==================================================*/
+
+.btn-flat-blue {
+  position: relative;
+  vertical-align: middle;
+  font-size: 15px;
+  color: white;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: #3498db;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 -2px #2a8bcc;
+  box-shadow: inset 0 -2px #2a8bcc;
+}
+
+a.btn-flat-blue {
+  display: inline-block;
+  padding: 8px 16px 8px 16px;
+  border: 1px solid #2a8bcc;
+}
+
+button.btn-flat-blue {
+  padding: 8px 16px 8px 16px;
+  border: 0;
+}
+
+button.btn-flat-blue#searchbtn {
+  height: 34px;
+}
+
+.btn-flat-blue:active {
+  top: 1px;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.btn-flat-blue:hover {
+	color:white;
+	background: #2980b9;
+}
+
+/* #Bouton flat vert
+==================================================*/
+.btn-flat-green {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 8px 16px 8px 16px;
+  border: 1px solid #219d55;
+  font-size: 15px;
+  color: white;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: #27ae60;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 -2px #219d55;
+  box-shadow: inset 0 -2px #219d55;
+}
+.btn-flat-green:active {
+  top: 1px;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.btn-flat-green:hover {
+	color:white;
+	background: #219d55;
+}
+
+/* #Bouton flat rouge
+==================================================*/
+.btn-flat-red {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 8px 16px 8px 16px;
+  border: 1px solid #db4334;
+  font-size: 15px;
+  color: white;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: #e74c3c;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 -2px #db4334;
+  box-shadow: inset 0 -2px #db4334;
+}
+.btn-flat-red:active {
+  top: 1px;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.btn-flat-red:hover {
+	color:white;
+	background: #db4334;
+}
+
+a.btn-flat-red {
+  display: inline-block;
+  padding: 8px 16px 8px 16px;
+  border: 1px solid #e74c3c;
+}
+
+button.btn-flat-red {
+  padding: 8px 16px 8px 16px;
+  border: 0;
+}
+
+
+
+
+
+
+.badge {
+	padding-bottom:0 !important;
+}
+
+.btn-disabled {
+   cursor: default;
+   opacity:0.45;
+}
