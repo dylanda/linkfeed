@@ -186,10 +186,10 @@ html(lang='fr')
 										input#email(type='email', name='email', placeholder='Email',value="#{user[0].email}")
 									div.left-inner-addon
 										i.fa.fa-lock
-										input#mdp_reg(type='password', name='mdp', placeholder='Nouveau mot de passe',value="#{user[0].mdp}")
+										input#mdp_reg(type='password', name='mdp', placeholder='Nouveau mot de passe')
 									div.left-inner-addon
 										i.fa.fa-lock
-										input#mdp_again(type='password', name='mdp_again', placeholder='Confirmer mot de passe',value="#{user[0].mdp}")
+										input#mdp_again(type='password', name='mdp_again', placeholder='Confirmer nouveau mdp')
 									#passError.alert.alert-danger
 										| Les mots de passe ne correspondent pas
 									button.btn.btn-success(type="submit") Valider
