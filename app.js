@@ -28,10 +28,6 @@ app.configure(function(){
 		  }));
 });
 
-app.get('/test', function(request,response){
-		console.log(test);
-});
-
 
 //------------------------------
 //			 Test session
@@ -122,6 +118,18 @@ app.post('/users/search',requiresLogin, search.searchInUsers);
 //			fermeture session
 //----------------------------------
 app.get("/user/logout", connect.logout);
+
+
+//----------------------------------
+//	PAGE NOT FOUND
+//----------------------------------
+
+app.use(function(req, res, next){
+    res.status(404).render('404', {title: "Désolé, page introuvable!"});
+});
+
+
+
 
 var port_express = process.env.PORT || 5000;
 app.listen(port_express);

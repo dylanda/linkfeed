@@ -22,7 +22,11 @@ var dateFormat = require('dateformat');
 //ajout d'un lien
 
 exports.newLink=function(request,response){
-		var tagsarray = request.body.tags.split(",");
+		if (request.body.tags != ""){
+			var tagsarray = request.body.tags.split(",");
+		}else{
+			var tagsarray = new Array();
+		}
 		dateFormat.masks.fr_time = 'yyyy-mm-dd "à" HH"h"MM';
 		var lien={url:request.body.url, title:request.body.titre, description:request.body.description, tags:tagsarray, user:request.session.user, date: dateFormat(new Date(), "fr_time")};
 		db.liens.insert(lien);

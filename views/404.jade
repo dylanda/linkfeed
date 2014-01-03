@@ -1,0 +1,41 @@
+!!! 5
+html(lang='fr')
+	head
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		title Oops 404 - LinkFeed 
+		link(rel='shortcut icon',href='/img/favicon.ico')
+		link(rel='icon',href='/img/favicon.ico')
+		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400')
+		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Droid+Sans')
+		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster')
+		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
+		link(rel='stylesheet', href='/font-awesome-4.0.3/css/font-awesome.css')
+		link(rel='stylesheet', href='/css/style.css')
+		
+		//if lt IE 9
+		script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
+		
+		script(src='/js/jquery-1.8.2.min.js')
+
+		script(src='/bootstrap/js/bootstrap.min.js')
+
+
+		
+	body.fullscreen_bg
+		div.page-title
+			div.container
+				div.row
+					div.span12
+						i.fa.fa-thumbs-down.page-title-icon
+							h2 Oops 404 !
+							
+		img.img-rounded(src='/img/linkfeed.png', width='750', style="margin:20px auto 20px auto")
+		
+		div.container
+			div.row
+				div.span12
+					h2(style="color:white;margin-bottom:20px") Désolé... Page introuvable!
+					a.btn-flat-blue(href="/")
+						| Retour à l'accueil
