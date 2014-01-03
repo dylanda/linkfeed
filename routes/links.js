@@ -146,3 +146,19 @@ exports.updateLink=function(req,res){
 	res.redirect('/profil');
 };
 
+exports.reshare=function(request,response){
+	var ObjectID=require('mongodb').ObjectID;
+	var idString=request.params.id;
+	db.liens.find({_id:new ObjectID(idString)},function(err,link){
+		var url=link[0].url;
+		var titre=link[0].title;
+		var description=link[0].description;
+		var tags=new Array();
+		tags=link[0].tags;
+		dateFormat.masks.fr_time = 'yyyy-mm-dd "à" HH"h"MM';
+		var lien={url:url, title:titre, description:description, tags:tags, user:request.session.user, date: dateFormat(new Date(), "fr_time")};
+		db.liens.insert(lien);
+		response.redirect('/profil');
+	});
+};
+

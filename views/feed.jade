@@ -116,6 +116,9 @@ html(lang='fr')
 																“#{link.description}” 
 															div(style="float:right;")
 																//- a.btn-social(style="background-image: url('/img/fb.png');",href='http://www.facebook.com/sharer.php?u=#{link.url}&t=#{link.title}', target="_blank")
+																a.btn.btn-mini.btn-success.pull-right(href='/reshare/#{link._id}')
+																	i.fa.fa-share
+																	|  Reshare
 													.row-fluid
 														p.pull-left
 															| Partagé le #{link.date} par 
@@ -123,6 +126,7 @@ html(lang='fr')
 														div(style="float:right;")
 															a.btn-social(style="background-image: url('/img/twitter.png');", href='http://twitter.com/home?status=Regardez ça! #{link.url}', target="_blank")
 															a.btn-social(style="background-image: url('/img/fb.png');",href='http://www.facebook.com/sharer.php?u=#{link.url}&t=#{link.title}', target="_blank")
+
 
 											hr.black
 											.row-fluid.rating-desc

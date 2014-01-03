@@ -79,6 +79,9 @@ app.get('/delete/:id',requiresLogin, links.deleteLink);
 //modifier lien
 app.post('/update/:id',requiresLogin, links.updateLink);
 
+//ajouter un lien d'un contact dans sa liste de contact
+app.get('/reshare/:id',requiresLogin,links.reshare);
+
 //------------------------------------
 // 			friendship system
 //------------------------------------
