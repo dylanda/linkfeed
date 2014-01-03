@@ -63,10 +63,9 @@ exports.register=function(request,response){
 
 exports.profil=function(request,response){
 		var userdisp=request.params.id.toLowerCase();
-		db.users.find({ $query: {_id:userdisp}, $orderby: { date : -1 } }	,function(error,user){
+		db.users.find({_id:userdisp},function(error,user){
 				if(user.length!=0 && userdisp!=request.session.user){
-				
-					db.liens.find({user:userdisp},function(err,link){
+					db.liens.find({ $query: {user:userdisp}, $orderby: { date : -1 } },function(err,link){
 						response.render('profildisp',{links: link, userdisp:user, currentuser:request.session.user});
 					});
 				}
