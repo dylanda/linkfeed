@@ -42,16 +42,6 @@ html(lang='fr')
 					closeOnSelect: true
 				}); 
 				
-				$("#e2").select2({
-					width: 'resolve',
-					tags:myArray,
-					multiple: true,
-					id: function(object) {
-						return object.text.replace("#","");
-					},
-					closeOnSelect: true
-				}); 
-				
 				$("#e1").select2('val',[filtresTab]);
 				
 				
@@ -100,6 +90,9 @@ html(lang='fr')
 								input#e1(name="searchfield", placeholder="Filtrer par tags et/ou personnes", style="margin-right:5px;")
 								button.btn.btn-info(id="searchbtn" type="submit")
 									i.fa.fa-search
+						a.btn.btn-info.btn-small.pull-right(style="margin:5px 30px 0 0", href="/users")
+							i.fa.fa-search
+							|  Rechercher des contacts
 
 		div.container
 			div.row

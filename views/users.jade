@@ -124,8 +124,12 @@ html(lang='fr')
 												.row-fluid.tags-bar
 													div.span12
 														span.tag
+															- var nbamis = 0
 															if user.friends
-																| #{user.friends.length} amis
+																- each friend in user.friends
+																	if friend.confirmed == true
+																		- nbamis++
+																| #{nbamis} amis
 															else
 																| 0 ami
 															
