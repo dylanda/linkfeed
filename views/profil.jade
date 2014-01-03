@@ -31,6 +31,15 @@ html(lang='fr')
 				var tagsarray = tags.split(",");
 				$(id).select2('val',[tagsarray]);
 			};
+			
+			function fillTitre() { 
+				var regUrl = new RegExp('(^([a-z]*://)?(www.)?)', 'gi');
+				var titre = $('#url').val().replace(regUrl,"");
+				if (titre.indexOf(".")!=-1){
+					var titre = titre.substring(0,titre.indexOf("."));
+				}
+				$('#titre').val(titre.charAt(0).toUpperCase()+titre.slice(1));
+			};
 		
 			$(document).ready(function() { 
 			
@@ -81,15 +90,6 @@ html(lang='fr')
 				
 				$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) {
 					e.stopPropagation(); 
-				});
-				
-				$('#titre').bind('click', function() { 
-					var regUrl = new RegExp('(^([a-z]*://)?(www.)?)', 'gi');
-					var titre = $('#url').val().replace(regUrl,"");
-					if (titre.indexOf(".")!=-1){
-						var titre = titre.substring(0,titre.indexOf("."));
-					}
-					$('#titre').val(titre.charAt(0).toUpperCase()+titre.slice(1));
 				});
 
 				$('#passError').hide();
@@ -255,7 +255,7 @@ html(lang='fr')
 								h3.blue Partage de lien :
 								form(method="POST", action="/lien/new", accept-charset="UTF-8")
 									input#url.span4(type="url", value="http://", name="url", placeholder="URL", required="required")
-									input(id="titre", type="text", maxlength="25" , name="titre", placeholder="Titre", required="required")
+									input(onFocus="fillTitre();" , id="titre", type="text", maxlength="25" , name="titre", placeholder="Titre", required="required")
 									input#description.span4(type="text", maxlength="40", name="description", placeholder="Description", required="required")
 									p.blue
 										i.fa.fa-tags
