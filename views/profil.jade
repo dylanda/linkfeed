@@ -176,7 +176,7 @@ html(lang='fr')
 
 
 						div.span3
-							script(type="text/javascript") email = "#{user[0].email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=110' />")
+							script(type="text/javascript") email = "#{user[0].email}";hash_email = calcMD5(email); document.write("<img class='img-avatar' src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=110' />")
 							p.blue(style="margin-top:15px")
 								| Inscrit depuis le 
 								b
@@ -319,7 +319,7 @@ html(lang='fr')
 														each ctag in link.tags
 															span.tag ##{ctag.toUpperCase()}
 													else
-														span.tag AUCUN TAGS
+														span.tag AUCUN TAG
 
 											div.hide(id= update)
 												br

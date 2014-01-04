@@ -26,7 +26,7 @@ html(lang='fr')
 		script.
 		
 			$(document).ready(function() { 
-			
+		
 				$("[rel='tooltip']").tooltip();
 				
 				var myArray="#{data}";
@@ -46,10 +46,12 @@ html(lang='fr')
 				}); 
 				
 				$("#e1").select2('val',[filtresTab]);
-				
-				
 			});
 			
+		
+
+
+		
 		
 	body	
 			div.header.row
@@ -136,7 +138,7 @@ html(lang='fr')
 														each ctag in link.tags
 															span.tag ##{ctag.toUpperCase()}
 													else
-														span.tag AUCUN TAGS
+														span.tag AUCUN TAG
 
 						if filtre
 							a.btn-flat-green.pull-left(href="/feed") Annuler filtre

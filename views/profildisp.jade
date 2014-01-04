@@ -110,7 +110,7 @@ html(lang='fr')
 				div.span12
 					div.row-fluid
 						div.span3
-							script(type="text/javascript") email = "#{userdisp[0].email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=140' />")
+							script(type="text/javascript") email = "#{userdisp[0].email}";hash_email = calcMD5(email); document.write("<img class='img-avatar' src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=140' />")
 							p.blue(style="margin-top:15px")
 								| Inscrit depuis le 
 								b
@@ -158,7 +158,7 @@ html(lang='fr')
 														each ctag in link.tags
 															span.tag ##{ctag.toUpperCase()}
 													else
-														span.tag AUCUN TAGS
+														span.tag AUCUN TAG
 
 												
 					else if ami == false

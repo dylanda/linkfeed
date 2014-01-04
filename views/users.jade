@@ -109,7 +109,7 @@ html(lang='fr')
 											.well
 												.row-fluid
 													.span4
-														script(type="text/javascript") email = "#{user.email}";hash_email = calcMD5(email); document.write("<img src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=60' />");
+														script(type="text/javascript") email = "#{user.email}";hash_email = calcMD5(email); document.write("<img class='img-avatar' src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=60' />");
 													.span8
 														.row-fluid
 															.span12
