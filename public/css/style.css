@@ -154,6 +154,13 @@ input {
 	border-radius: 5px 0 5px 0;
 	border-bottom: 4px solid #0D609E;
 	border-left: 4px solid #0D609E;
+	cursor:default;
+}
+
+a.tag:hover {
+    color:#fff;
+    background:#2570a7;
+	cursor:pointer;
 }
 
 .url {

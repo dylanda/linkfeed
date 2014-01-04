@@ -48,7 +48,10 @@ html(lang='fr')
 				$("#e1").select2('val',[filtresTab]);
 			});
 			
-		
+			function searchTag(tag){
+				$("#e1").select2('val',[tag]);
+				$("#searchbtn").click();
+			};
 
 
 		
@@ -128,7 +131,7 @@ html(lang='fr')
 															a.link(href="/profil/#{link.user}") #{link.user}
 														div(style="float:right;")
 															a.btn-social(rel="tooltip",data-original-title="Partager sur Twitter",style="background-image: url('/img/twitter.png');", href='http://twitter.com/home?status=Regardez ça! #{link.url}', target="_blank")
-															a.btn-social(rel="tooltip",data-original-title="Paratager sur Facebook",style="background-image: url('/img/fb.png');",href='http://www.facebook.com/sharer.php?u=#{link.url}&t=#{link.title}', target="_blank")
+															a.btn-social(rel="tooltip",data-original-title="Partager sur Facebook",style="background-image: url('/img/fb.png');",href='http://www.facebook.com/sharer.php?u=#{link.url}&t=#{link.title}', target="_blank")
 
 
 											hr.black
@@ -136,7 +139,7 @@ html(lang='fr')
 												div.span12
 													if link.tags.length != 0
 														each ctag in link.tags
-															span.tag ##{ctag.toUpperCase()}
+															a.tag(onClick="searchTag('#{ctag}');") ##{ctag.toUpperCase()}
 													else
 														span.tag AUCUN TAG
 

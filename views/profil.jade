@@ -120,7 +120,12 @@ html(lang='fr')
 				{
 					$('#passError').hide();
 				}
-			}
+			};
+			
+			function searchTag(tag){
+				$("#e2").select2('val',[tag]);
+				$("#searchbtn").click();
+			};
 
 	body
 			div.header.row
@@ -343,7 +348,7 @@ html(lang='fr')
 												div.span12
 													if link.tags.length != 0
 														each ctag in link.tags
-															span.tag ##{ctag.toUpperCase()}
+															a.tag(onClick="searchTag('#{ctag}');") ##{ctag.toUpperCase()}
 													else
 														span.tag AUCUN TAG
 
