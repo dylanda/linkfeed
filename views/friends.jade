@@ -3,7 +3,7 @@ html(lang='fr')
 	head
 		meta(charset='utf-8')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
-		title LinkFeed - Amis de #{user._id}
+		title LinkFeed - Amis de #{user._id.charAt(0).toUpperCase()}#{user._id.slice(1)}
 		link(rel='shortcut icon',href='/img/favicon.ico')
 		link(rel='icon',href='/img/favicon.ico')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400')
