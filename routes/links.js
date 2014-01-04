@@ -130,9 +130,17 @@ exports.feedLinks=function(request,response){
 
 exports.deleteLink=function(req,res){
 	var ObjectID = require('mongodb').ObjectID;
-	var idString = req.params.id;
-	db.liens.remove({_id: new ObjectID(idString), user: req.session.user});
-	res.redirect('/profil');
+	var idString=req.params.id;
+
+	var re = /[0-9a-f]{24}/;
+	
+	if (re.test(idString)){
+		var ObjectIDL= new ObjectID(idString);
+		db.liens.remove({_id: ObjectIDL, user: req.session.user});
+		res.redirect('/profil');
+	}else{
+		res.status(404).render('404', {title: "Désolé, page introuvable!"});
+	}
 };
 
 //modifier lien
@@ -149,16 +157,29 @@ exports.updateLink=function(req,res){
 exports.reshare=function(request,response){
 	var ObjectID=require('mongodb').ObjectID;
 	var idString=request.params.id;
-	db.liens.find({_id:new ObjectID(idString)},function(err,link){
-		var url=link[0].url;
-		var titre=link[0].title;
-		var description=link[0].description;
-		var tags=new Array();
-		tags=link[0].tags;
-		dateFormat.masks.fr_time = 'yyyy-mm-dd "à" HH"h"MM';
-		var lien={url:url, title:titre, description:description, tags:tags, user:request.session.user, date: dateFormat(new Date(), "fr_time")};
-		db.liens.insert(lien);
-		response.redirect('/profil');
-	});
+
+	
+	var re = /[0-9a-f]{24}/;
+	
+	if (re.test(idString)){
+		var ObjectIDL= new ObjectID(idString);
+		db.liens.find({_id:ObjectIDL},function(err,link){
+			if (link.length != 0){
+				var url=link[0].url;
+				var titre=link[0].title;
+				var description=link[0].description;
+				var tags=new Array();
+				tags=link[0].tags;
+				dateFormat.masks.fr_time = 'yyyy-mm-dd "à" HH"h"MM';
+				var lien={url:url, title:titre, description:description, tags:tags, user:request.session.user, date: dateFormat(new Date(), "fr_time")};
+				db.liens.insert(lien);
+				response.redirect('/profil');
+			}else{
+				response.status(404).render('404', {title: "Désolé, page introuvable!"});
+			}
+		});
+	}else{
+		response.status(404).render('404', {title: "Désolé, page introuvable!"});
+	}
 };
 

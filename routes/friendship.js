@@ -20,24 +20,30 @@ exports.addFriend=function(request,response){
 		var currentuser=request.session.user;
 		var toAdd=request.params.id.toLowerCase();
 		db.users.find({_id:currentuser},function(error,user){
-			if(currentuser!=toAdd)
-			{
-				db.users.update({"_id":currentuser},
+			db.users.find({_id:toAdd},function(error,UsertoAdd){
+				if (UsertoAdd.length != 0){
+					if(currentuser!=toAdd)
 					{
-						"$addToSet":{"friends":{user:toAdd,confirmed:false,demandeur:currentuser}}
+						db.users.update({"_id":currentuser},
+							{
+								"$addToSet":{"friends":{user:toAdd,confirmed:false,demandeur:currentuser}}
+							}
+						);
+						db.users.update({"_id":toAdd},
+							{
+								"$addToSet":{"friends":{user:currentuser,confirmed:false,demandeur:currentuser}}
+							}
+						);
+						response.redirect('/profil/'+toAdd);
 					}
-				);
-				db.users.update({"_id":toAdd},
+					else
 					{
-						"$addToSet":{"friends":{user:currentuser,confirmed:false,demandeur:currentuser}}
+						response.redirect('/profil/'+currentuser.toString());
 					}
-				);
-				response.redirect('/profil/'+toAdd);
-			}
-			else
-			{
-				response.redirect('/profil/'+currentuser.toString());
-			}
+				}else{
+					response.status(404).render('404', {title: "Désolé, page introuvable!"});
+				}
+			});
 		});
 };
 
