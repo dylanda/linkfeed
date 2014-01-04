@@ -97,6 +97,7 @@ html(lang='fr')
 			div.container
 				div.row
 					div.span12
+						a.btn-social(rel="tooltip",data-original-title="À propos de LinkFeed",style="background-image: url('/img/info.jpg');",href='/info')
 						i.fa.fa-tasks.page-title-icon
 						h2
 							| Faites-vous des amis 
@@ -119,7 +120,7 @@ html(lang='fr')
 											.well
 												.row-fluid
 													.span4
-														a(target="_blank", href="/profil/#{user._id.toLowerCase()}")
+														a(href="/profil/#{user._id.toLowerCase()}")
 															script(type="text/javascript") email = "#{user.email}";hash_email = calcMD5(email); document.write("<img class='img-avatar' src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=60' />");
 													.span8
 														.row-fluid
@@ -194,5 +195,5 @@ html(lang='fr')
 							h4.blue Désolé, aucun utilisateur ne correspond à votre filtre. 
 							a.btn(href="/users") Retour
 						else
-							h4.blue Désolé, il n'y a aucun utilisateur sur LinkFeed
+							h4.blue Désolé, il n'y a aucun utilisateur
 							h5.blue Invitez vos amis!

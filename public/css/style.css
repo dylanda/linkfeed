@@ -7,6 +7,7 @@ body {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     color: #888;
     font-size: 12px;
+	margin-bottom:20px;
 }
 
 .blue { color: #1f5575; }
@@ -350,4 +351,24 @@ button.btn-flat-red {
 
 .thumbshot:hover {
 	box-shadow:0px 0px 20px #3498db;
+}
+
+@keyframes blink {
+    0% { box-shadow: 0 0 15px #3498db; }
+    50% { box-shadow: none; }
+    100% { box-shadow: 0 0 15px #3498db; }
+}
+
+@-webkit-keyframes blink {
+    0% { box-shadow: 0 0 20px #3498db; }
+    50% { box-shadow: 0 0 0;}
+    100% { box-shadow: 0 0 20px #3498db;}
+}
+
+.blink {
+    -webkit-animation: blink 1.0s linear infinite;
+    -moz-animation: blink 1.0s linear infinite;
+    -ms-animation: blink 1.0s linear infinite;
+    -o-animation: blink 1.0s linear infinite;
+    animation: blink 1.0s linear infinite;
 }

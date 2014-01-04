@@ -73,7 +73,8 @@ html(lang='fr')
 							- each index in user.friends
 								if index.confirmed == true
 									- nbamisUser++
-					
+									
+						a.btn-social(rel="tooltip",data-original-title="À propos de LinkFeed",style="background-image: url('/img/info.jpg');",href='/info')
 						i.fa.fa-tasks.page-title-icon
 						h2
 							| Consultez vos amis ! 
@@ -95,7 +96,7 @@ html(lang='fr')
 											.well
 												.row-fluid
 													.span4
-														a(target="_blank", href="/profil/#{friend._id.toLowerCase()}")
+														a(href="/profil/#{friend._id.toLowerCase()}")
 															script(type="text/javascript") email = "#{friend.email}";hash_email = calcMD5(email); document.write("<img class='img-avatar' src='http://www.gravatar.com/avatar/"+hash_email+"?d=mm&s=60' />");
 													.span8
 														.row-fluid

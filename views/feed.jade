@@ -78,6 +78,7 @@ html(lang='fr')
 								span.icon-bar
 							h1
 								a.brand(href='/feed') LinkFeed
+								
 							div.nav-collapse.collapse
 								ul.nav.pull-right
 									li.current-page
@@ -94,11 +95,13 @@ html(lang='fr')
 										a(href='/user/logout')
 											i.fa.fa-power-off
 											br
-											| Déconnexion
+											| Déconnexion	
+
 		div.page-title
 			div.container
 				div.row
 					div.span12
+						a.btn-social(rel="tooltip",data-original-title="À propos de LinkFeed",style="background-image: url('/img/info.jpg');",href='/info')
 						i.fa.fa-tasks.page-title-icon
 						h2 Découvrez ! / 
 							p  Voici les posts récents de vos amis
@@ -112,6 +115,7 @@ html(lang='fr')
 						a.btn-flat-blue.pull-right(style="top:-2px;", href="/users")
 							i.fa.fa-search
 							|  Rechercher des contacts
+						
 
 		div.container
 			div.row

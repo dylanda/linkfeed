@@ -77,7 +77,7 @@ html(lang='fr')
 		img.img-rounded(src='/img/linkfeed.png', width='750', style="margin:20px auto 20px auto")
 		
 		div.container
-			div.row
+			div.row-fluid
 				div.span4.offset2.well
 					div.row-fluid
 						legend Identifiez-vous !
@@ -101,8 +101,8 @@ html(lang='fr')
 						p.blue DA CONCEICAO Dylan - HAZAN Raphaël
 						p.blue MANDICA Simon - SZYMANSKI Loïc
 							
-				div.span3.well
-					div.row-fluid
+				div.span3
+					div.well(style="min-width:310px;")
 						legend Pas encore inscrit ?
 						- if (typeof(messageError2) !== 'undefined'){
 							div.alert.alert-danger.alert-dismissable
@@ -137,5 +137,8 @@ html(lang='fr')
 						a.btn-flat-blue(id="registerbtn", onClick="$('#registerbtn').hide()", data-toggle='collapse', data-target='.register-collapse')
 							i.fa.fa-pencil
 							|   S'inscrire
-
-			
+				
+					div.well(style="min-width:310px;")
+						a.btn-flat-blue.blink(style="border-radius:10px;" , href='/info') 
+							i.fa.fa-info(style="margin-right:10px;")
+							| À propos de LinkFeed

@@ -1,4 +1,4 @@
-var express=require('express');
+﻿var express=require('express');
 
 var app = express();
 
@@ -46,6 +46,10 @@ function requiresLogin(request,response,next) {
 //------------------------------
 
 app.get('/',requiresLogin, connect.index);
+
+app.get("/info", function (req, res) {
+	res.render('info');
+});
 
 //------------------------------
 //			Users

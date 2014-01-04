@@ -187,6 +187,7 @@ html(lang='fr')
 			div.container
 				div.row
 					div.span12
+						a.btn-social(rel="tooltip",data-original-title="À propos de LinkFeed",style="background-image: url('/img/info.jpg');",href='/info')
 						i.fa.fa-tasks.page-title-icon
 						h2
 							| Bienvenue 
@@ -340,7 +341,7 @@ html(lang='fr')
 								|  Invitation reçue  
 								span.badge.badge-success  #{nbddes}
 						else
-							a.btn-flat-red(style="width:218px", href="/pendingRequests")
+							a.btn-flat-red.blink(style="width:218px", href="/pendingRequests")
 								i.fa.fa-bell
 								|  Invitations reçues  
 								span.badge.badge-important #{nbddes}
