@@ -55,6 +55,12 @@ app.post('/user/login', users.login);
 app.post('/user/new', users.register);
 app.get('/users',requiresLogin, users.usersList);
 
+//modifier son mot de passe
+app.post('/updatePass',requiresLogin,users.updatePass);
+
+//modifier son email
+app.post('/updateEmail',requiresLogin,users.updateEmail);
+
 //--------------------------------------
 // 				Profils & Liens
 //--------------------------------------
@@ -66,9 +72,6 @@ app.get('/profil',requiresLogin, links.profileLinks);
 
 //affichage des liens du profil de qq1
 app.get('/profil/:id',requiresLogin, users.profil);
-
-//modifier ses informations
-app.post('/updateUser',requiresLogin,users.updateUser);
 
 //afficher tous les liens dans le feed
 app.get('/feed',requiresLogin, links.feedLinks);

@@ -94,15 +94,15 @@ html(lang='fr')
 
 				$('#passError').hide();
 
-				$('#mdp_reg').bind('input',function () {
-					if ($('#mdp_reg').val()!="" && $('#mdp_again').val()!=""){
+				$('#mdp').bind('input',function () {
+					if ($('#mdp').val()!="" && $('#mdpConf').val()!=""){
 						check();
 					}
 				});
 				
 				
-				$('#mdp_again').bind('input',function () {
-					if ($('#mdp_reg').val()!="" && $('#mdp_again').val()!=""){
+				$('#mdpConf').bind('input',function () {
+					if ($('#mdp').val()!="" && $('#mdpConf').val()!=""){
 						check();
 					}
 				});
@@ -110,7 +110,7 @@ html(lang='fr')
 			});
 			
 			function check(){
-				if ($('#mdp_reg').val()!=$('#mdp_again').val()) 
+				if ($('#mdp').val()!=$('#mdpConf').val()) 
 				{
 					$('#passError').hide();
 					$('#passError').show();
@@ -181,25 +181,54 @@ html(lang='fr')
 								| Inscrit depuis le 
 								b
 									| #{user[0].date_ins.slice(0,10)} 
+
 						div.span9
-							div.edit-collapse.collapse
-								form#editForm(method='POST',action='/updateUser',accept-charset='UTF-8')
+							div.btn-group(style="float:right;position:relative;")
+								a.btn-flat-blue.dropdown-toggle(id="btnEdit",data-toggle='dropdown', href='#')
+									i.fa.fa-pencil(style="font-size:15px")
+								ul.dropdown-menu(style="right: 0; left: auto;")
+									li
+										a#modifMail(href="#NULL",onClick="$('#info').hide();$('#btnEdit').hide();",data-toggle='collapse',data-target='.email-collapse')
+											i.fa.fa-envelope
+											|   Modifier l'adresse E-mail
+									li
+										a(href="#NULL",onClick="$('#info').hide();$('#btnEdit').hide();",data-toggle='collapse',data-target='.pass-collapse')
+											i.fa.fa-lock
+											|	Modifier le mot de passe  
+
+							- if (typeof(messageError) !== 'undefined'){
+							div.alert.alert-danger.alert-dismissable
+								button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+								strong Erreur!
+								|  #{messageError}
+							if messageError
+								script.
+									$(document).ready(function() { 
+										$('#modifMail').click();
+									});
+							-}
+							
+							div.email-collapse.collapse(id="email")
+								form#emailForm(method='POST', action='/updateEmail', accept-charset='UTF-8')
 									div.left-inner-addon
 										i.fa.fa-envelope
-										input#email(type='email', name='email', placeholder='Email',value="#{user[0].email}")
+										input#email(type='email', name='email', placeholder='Adresse E-mail', value="#{user[0].email}" required='required')
+										br
+									button.btn-flat-green(type="submit") Valider
+									button.btn-flat-red(type="button", onClick="$('#info').show();$('#btnEdit').show();", style="margin-left:15px", data-toggle='collapse', data-target='.email-collapse') Annuler
+
+							div.pass-collapse.collapse(id="pass")
+								form#passForm(method='POST',action='/updatePass',accept-charset='UTF-8')
 									div.left-inner-addon
 										i.fa.fa-lock
-										input#mdp_reg(type='password', name='mdp', placeholder='Nouveau mot de passe')
+										input#mdp(type='password', name='mdp', placeholder='Nouveau mot de passe',required='required')
 									div.left-inner-addon
 										i.fa.fa-lock
-										input#mdp_again(type='password', name='mdp_again', placeholder='Confirmer nouveau mdp')
+										input#mdpConf(type='password', name='mdp_conf', placeholder='Confirmer nouveau mdp',required='required')
 									#passError.alert.alert-danger
 										| Les mots de passe ne correspondent pas
-									button.btn-flat-green(type="submit") Valider
-									a.btn-flat-red(onClick="$('#editbtn').show();$('#info').show();return check();" style="margin-left:15px", data-toggle='collapse', data-target='.edit-collapse') Annuler	
-
-							a.btn-flat-blue.pull-right(id="editbtn", onClick="$('#editbtn').hide();$('#info').hide()", data-toggle='collapse', data-target='.edit-collapse')
-								i.fa.fa-pencil
+									button.btn-flat-green(type="submit", onClick="return check();") Valider
+									button.btn-flat-red(type="button", onClick="$('#info').show();$('#btnEdit').show();", style="margin-left:15px", data-toggle='collapse', data-target='.pass-collapse') Annuler
 
 							div(id="info")
 								h4.blue À propos :
@@ -208,9 +237,6 @@ html(lang='fr')
 									a.link(href='mailto:#{user[0].email}') #{user[0].email}
 								p.blue Nombre de liens postés : 
 									span.badge.badge-info #{links.length}
-							
-							
-
 
 		div.container
 			div.row-fluid

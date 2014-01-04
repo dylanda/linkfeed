@@ -119,9 +119,57 @@ exports.usersList=function(request,response){
 		});
 };
 
-exports.updateUser=function(request,response){
-	var currentuser=request.params.id;
-	var user={$set:{email:request.body.email,mdp:request.body.mdp}};
-	db.users.update({_id:currentuser},user);
+exports.updatePass=function(request,response){
+	var modif={ $set: {mdp:request.body.mdp}};
+	db.users.update({_id:request.session.user}, modif);
 	response.redirect('/profil');
+};
+
+exports.updateEmail=function(request,response){
+	db.users.find({email:request.body.email.toLowerCase().trim()},function(error,user){
+				if(user.length==0){
+					modif={$set:{email:request.body.email.toLowerCase().trim()}};
+					db.users.update({_id:request.session.user},modif);
+					response.redirect('/profil');
+				}
+				else
+				{
+					var auteur=request.session.user;
+                	db.users.find({_id:auteur},function(error,user){
+                        var dde=new Array;
+                        var j=0;
+                        if (user[0].friends != undefined)
+                        {        
+                                for(var i=0;i<user[0].friends.length;i++)
+                                {
+                                        if (user[0].friends[i].confirmed==false && user[0].friends[i].demandeur!=auteur) 
+                                        {
+                                                dde[j]=user[0].friends[i].demandeur;
+                                                j++;
+                                        }
+                                }
+                        }
+
+                        db.liens.find( { $query: {user:auteur}, $orderby: { date : -1 } } ,function(err,link){
+                        
+                                // RECUPERATION TAGS dans DATA
+                                db.users.find({},function(err,users){
+                                
+                                        var data = new Array();
+                                        var k = 0;
+                                        for (var i=0; i<link.length; i++) {
+                                                if(link[i].tags!=null){
+                                                        for (var j=0; j<link[i].tags.length; j++) {
+                                                                data[k] = "#"+link[i].tags[j];
+                                                                k = k +1;
+                                                        }
+                                                }
+                                        }
+                                // FIN        
+                                        response.render('profil',{links: link, data:data, user:user, nbddes:dde.length,messageError:"L'adresse email est déjà utilisée."});
+                                });
+                        });
+                	});
+				}
+		});
 };
