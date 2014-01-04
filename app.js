@@ -61,6 +61,8 @@ app.post('/updatePass',requiresLogin,users.updatePass);
 //modifier son email
 app.post('/updateEmail',requiresLogin,users.updateEmail);
 
+//Supprimer compte
+app.post('/deleteAccount',requiresLogin, users.deleteAccount);
 //--------------------------------------
 // 				Profils & Liens
 //--------------------------------------

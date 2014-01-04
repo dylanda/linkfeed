@@ -218,3 +218,44 @@ exports.updateEmail=function(request,response){
 				}
 		});
 };
+
+exports.deleteAccount=function(request,response){
+		var username = request.session.user;
+		
+		if (request.body.confirmDel.toLowerCase() == "supprimer mon compte"){
+		
+			db.liens.find({user:username} ,function(err,link){
+				db.users.find({_id:username} ,function(err,user){
+			
+					for (var i=0; i<link.length; i++) {
+						db.liens.remove({_id: link[i]._id, user: username});
+					}
+					
+					if (user[0].friends != undefined){
+						var userfriends = user[0].friends;
+					}
+					else{
+						var userfriends = new Array();
+					}
+					
+					var nb = 0;
+					for (var i=0; i<userfriends.length; i++) {
+						db.users.update({"_id":userfriends[i].user},
+							{
+								$pull:{"friends":{user:username}}
+							});
+					}
+					
+					if(request.session.user){
+							request.session.user=undefined;
+					}
+					
+					db.users.remove({_id: username});
+					
+					response.redirect('/');
+				});
+			});
+		}
+
+};
+
