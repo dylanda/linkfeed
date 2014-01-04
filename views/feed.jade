@@ -4,11 +4,22 @@ html(lang='fr')
 		meta(charset='utf-8')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
 		title LinkFeed - Share what you Care
-		link(rel='shortcut icon',href='/img/favicon.ico')
-		link(rel='icon',href='/img/favicon.ico')
+		
+		link(rel='shortcut icon', href='/img/favicon.ico', type='image/x-icon')
+		link(rel='apple-touch-icon', href='/img/apple-touch-icon.png')
+		link(rel='apple-touch-icon', sizes='57x57', href='/img/apple-touch-icon-57x57.png')
+		link(rel='apple-touch-icon', sizes='60x60', href='/img/apple-touch-icon-60x60.png')
+		link(rel='apple-touch-icon', sizes='72x72', href='/img/apple-touch-icon-72x72.png')
+		link(rel='apple-touch-icon', sizes='76x76', href='/img/apple-touch-icon-76x76.png')
+		link(rel='apple-touch-icon', sizes='114x114', href='/img/apple-touch-icon-114x114.png')
+		link(rel='apple-touch-icon', sizes='120x120', href='/img/apple-touch-icon-120x120.png')
+		link(rel='apple-touch-icon', sizes='144x144', href='/img/apple-touch-icon-144x144.png')
+		link(rel='apple-touch-icon', sizes='152x152', href='/img/apple-touch-icon-152x152.png')
+		
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Droid+Sans')
 		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster')
+
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
 		link(rel='stylesheet', href='/font-awesome-4.0.3/css/font-awesome.css')
@@ -118,9 +129,6 @@ html(lang='fr')
 													.row-fluid
 														a.link.url.pull-left(href="#{link.url}" target="_blank")  #{link.title.toUpperCase()} 
 															i.fa.fa-share
-														a.btn-flat-green.pull-right(rel="tooltip",data-original-title="Ajouter à mes liens",style="padding:3px 6px 3px 6px;", href='/reshare/#{link._id}')
-															i.fa.fa-share
-															|  Reshare
 														.row-fluid
 														p.pull-left
 															span.comment.blue
@@ -130,6 +138,7 @@ html(lang='fr')
 															| Partagé le #{link.date} par 
 															a.link(href="/profil/#{link.user}") #{link.user}
 														div(style="float:right;")
+															a.btn-social(rel="tooltip",data-original-title="Ajouter à mes liens",style="background-image: url('/img/lf_icon.png');",href='/reshare/#{link._id}')
 															a.btn-social(rel="tooltip",data-original-title="Partager sur Twitter",style="background-image: url('/img/twitter.png');", href='http://twitter.com/home?status=Regardez ça! #{link.url}', target="_blank")
 															a.btn-social(rel="tooltip",data-original-title="Partager sur Facebook",style="background-image: url('/img/fb.png');",href='http://www.facebook.com/sharer.php?u=#{link.url}&t=#{link.title}', target="_blank")
 
