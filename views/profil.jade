@@ -107,6 +107,10 @@ html(lang='fr')
 					}
 				});
 				
+				$('#confirmDel').bind('input',function () {
+						checkDel();
+				});
+				
 			});
 			
 			function check(){
@@ -119,6 +123,19 @@ html(lang='fr')
 				else
 				{
 					$('#passError').hide();
+				}
+			};
+			
+			function checkDel(){
+				if ($('#confirmDel').val().toLowerCase()!="supprimer mon compte") 
+				{
+					$('#confirmError').hide();
+					$('#confirmError').show();
+					return false;
+				}
+				else
+				{
+					$('#confirmError').hide();
 				}
 			};
 			
@@ -200,6 +217,11 @@ html(lang='fr')
 										a#modifPass(href="#NULL",onClick="$('#info').hide();$('#btnEdit').hide();",data-toggle='collapse',data-target='.pass-collapse')
 											i.fa.fa-lock
 											|	Modifier le mot de passe  
+									li
+										a#modifPass(href="#NULL",onClick="$('#info').hide();$('#btnEdit').hide();",data-toggle='collapse',data-target='.deleteAc-collapse')
+											i.fa.fa-trash-o
+											|	Supprimer mon compte
+
 
 							- if (typeof(messageError) !== 'undefined'){
 							div.alert.alert-danger.alert-dismissable
@@ -213,14 +235,33 @@ html(lang='fr')
 									});
 							-}
 							
+							div.deleteAc-collapse.collapse(id="deleteAc")
+								form#deleteAc(method='POST', action='/deleteAccount', accept-charset='UTF-8')
+									p Veuillez saisir "Supprimer mon compte" dans le champ ci-dessous puis valider (irréversible)
+									div.left-inner-addon
+										i.fa.fa-eye
+										input#confirmDel(type='text', name='confirmDel', placeholder='Supprimer mon compte',required='required')
+									#confirmError.alert.alert-danger
+										| Veuillez entrer le message complet!
+									button.btn-flat-green(type="submit", onClick="return checkDel();") 
+										i.fa.fa-check
+										|  Valider
+									button.btn-flat-red(type="button", onClick="$('#info').show();$('#btnEdit').show();", style="margin-left:15px", data-toggle='collapse', data-target='.deleteAc-collapse') 
+										i.fa.fa-times
+										|  Annuler
+						
 							div.email-collapse.collapse(id="email")
 								form#emailForm(method='POST', action='/updateEmail', accept-charset='UTF-8')
 									div.left-inner-addon
 										i.fa.fa-envelope
 										input#email(type='email', name='email', placeholder='Adresse E-mail', value="#{user[0].email}" required='required')
 										br
-									button.btn-flat-green(type="submit") Valider
-									button.btn-flat-red(type="button", onClick="$('#info').show();$('#btnEdit').show();", style="margin-left:15px", data-toggle='collapse', data-target='.email-collapse') Annuler
+									button.btn-flat-green(type="submit") 
+										i.fa.fa-check
+										|  Valider
+									button.btn-flat-red(type="button", onClick="$('#info').show();$('#btnEdit').show();", style="margin-left:15px", data-toggle='collapse', data-target='.email-collapse') 
+										i.fa.fa-times
+										|  Annuler
 
 							- if (typeof(messageError2) !== 'undefined'){
 							div.alert.alert-danger.alert-dismissable

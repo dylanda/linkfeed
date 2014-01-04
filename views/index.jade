@@ -109,7 +109,7 @@ html(lang='fr')
 							form#registerForm(method='POST', action='/user/new', accept-charset='UTF-8')
 								div.left-inner-addon
 									i.fa.fa-user
-									input#username(type='text', name='username', placeholder='Nom d\'utilisateur', required='required')
+									input#username(type='text', name='username', maxlength="10" , placeholder='Nom d\'utilisateur', required='required')
 								div.left-inner-addon
 									i.fa.fa-lock
 									input#mdp_reg(type='password', name='mdp', placeholder='Mot de passe', required='required')
