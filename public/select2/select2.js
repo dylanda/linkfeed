@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright 2012 Igor Vaynberg
 
 Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
@@ -3203,7 +3203,7 @@ the specific language governing permissions and limitations under the Apache Lic
         formatNoMatches: function () { return "No matches found"; },
         formatInputTooShort: function (input, min) { var n = min - input.length; return "Please enter " + n + " more character" + (n == 1? "" : "s"); },
         formatInputTooLong: function (input, max) { var n = input.length - max; return "Please delete " + n + " character" + (n == 1? "" : "s"); },
-        formatSelectionTooBig: function (limit) { return "You can only select " + limit + " item" + (limit == 1 ? "" : "s"); },
+        formatSelectionTooBig: function (limit) { return "Vous ne pouvez insérer plus de "+limit+" tag" + (limit == 1 ? "" : "s"); },
         formatLoadMore: function (pageNumber) { return "Loading more results..."; },
         formatSearching: function () { return "Searching..."; },
         minimumResultsForSearch: 0,
