@@ -149,7 +149,8 @@ html(lang='fr')
 										.well
 											.row-fluid
 												.span3
-													img.img-rounded(src='http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=120&stwymax=90&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}', border='0')
+													a(target="_blank", href="#{link.url}")
+														img.img-rounded.thumbshot(src='http://images.shrinktheweb.com/xino.php?stwembed=1&stwxmax=120&stwymax=90&stwaccesskeyid=cb820c771236ff3&stwurl=#{link.url}', border='0')
 												.span9
 													.row-fluid
 														a.link.url.pull-left(href="#{link.url}" target="_blank") #{link.title.toUpperCase()} 

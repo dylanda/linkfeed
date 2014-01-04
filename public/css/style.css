@@ -343,3 +343,11 @@ button.btn-flat-red {
 .img-avatar {
     border-radius: 50%;
 }
+
+.img-avatar:hover {
+	box-shadow:0px 0px 20px #3498db;
+}
+
+.thumbshot:hover {
+	box-shadow:0px 0px 20px #3498db;
+}
