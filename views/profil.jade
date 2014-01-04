@@ -197,7 +197,7 @@ html(lang='fr')
 											i.fa.fa-envelope
 											|   Modifier l'adresse E-mail
 									li
-										a(href="#NULL",onClick="$('#info').hide();$('#btnEdit').hide();",data-toggle='collapse',data-target='.pass-collapse')
+										a#modifPass(href="#NULL",onClick="$('#info').hide();$('#btnEdit').hide();",data-toggle='collapse',data-target='.pass-collapse')
 											i.fa.fa-lock
 											|	Modifier le mot de passe  
 
@@ -222,8 +222,23 @@ html(lang='fr')
 									button.btn-flat-green(type="submit") Valider
 									button.btn-flat-red(type="button", onClick="$('#info').show();$('#btnEdit').show();", style="margin-left:15px", data-toggle='collapse', data-target='.email-collapse') Annuler
 
+							- if (typeof(messageError2) !== 'undefined'){
+							div.alert.alert-danger.alert-dismissable
+								button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+								strong Erreur!
+								|  #{messageError2}
+							if messageError2
+								script.
+									$(document).ready(function() { 
+										$('#modifPass').click();
+									});
+							-}
+
 							div.pass-collapse.collapse(id="pass")
 								form#passForm(method='POST',action='/updatePass',accept-charset='UTF-8')
+									div.left-inner-addon
+										i.fa.fa-lock
+										input#oldPass(type='password', name='old', placeholder='Mot de passe actuel',required='required')
 									div.left-inner-addon
 										i.fa.fa-lock
 										input#mdp(type='password', name='mdp', placeholder='Nouveau mot de passe',required='required')
@@ -232,8 +247,12 @@ html(lang='fr')
 										input#mdpConf(type='password', name='mdp_conf', placeholder='Confirmer nouveau mdp',required='required')
 									#passError.alert.alert-danger
 										| Les mots de passe ne correspondent pas
-									button.btn-flat-green(type="submit", onClick="return check();") Valider
-									button.btn-flat-red(type="button", onClick="$('#info').show();$('#btnEdit').show();", style="margin-left:15px", data-toggle='collapse', data-target='.pass-collapse') Annuler
+									button.btn-flat-green(type="submit", onClick="return check();") 
+										i.fa.fa-check
+										|  Valider
+									button.btn-flat-red(type="button", onClick="$('#info').show();$('#btnEdit').show();", style="margin-left:15px", data-toggle='collapse', data-target='.pass-collapse')
+										i.fa.fa-times
+										|  Annuler
 
 							div(id="info")
 								h4.blue À propos :

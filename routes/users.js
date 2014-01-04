@@ -120,9 +120,54 @@ exports.usersList=function(request,response){
 };
 
 exports.updatePass=function(request,response){
-	var modif={ $set: {mdp:request.body.mdp}};
-	db.users.update({_id:request.session.user}, modif);
-	response.redirect('/profil');
+	db.users.find({$and:[{_id:request.session.user},{mdp:request.body.old}]},function(error,user){
+		if(user.length!=0)
+		{
+			var modif={ $set: {mdp:request.body.mdp}};
+			db.users.update({_id:request.session.user}, modif);
+			response.redirect('/profil');
+		}
+		else
+		{	
+			var auteur=request.session.user;
+            db.users.find({_id:auteur},function(error,user){
+                var dde=new Array;
+                var j=0;
+                if (user[0].friends != undefined)
+                {        
+                    for(var i=0;i<user[0].friends.length;i++)
+                    {
+                        if (user[0].friends[i].confirmed==false && user[0].friends[i].demandeur!=auteur) 
+                        {
+                            dde[j]=user[0].friends[i].demandeur;
+                            j++;
+                        }
+                    }
+                }
+
+                db.liens.find( { $query: {user:auteur}, $orderby: { date : -1 } } ,function(err,link){
+                        
+                    // RECUPERATION TAGS dans DATA
+                    db.users.find({},function(err,users){
+                                
+                        var data = new Array();
+                        var k = 0;
+                        for (var i=0; i<link.length; i++) {
+	                        if(link[i].tags!=null){
+		                        for (var j=0; j<link[i].tags.length; j++) {
+		                            data[k] = "#"+link[i].tags[j];
+		                            k = k +1;
+		                        }
+	                       	}
+                        }
+                        // FIN        
+                        response.render('profil',{links: link, data:data, user:user, nbddes:dde.length,messageError2:"Le mot de passe est incorrect"});
+                    });
+                });
+            });
+		}
+	});
+	
 };
 
 exports.updateEmail=function(request,response){
