@@ -134,7 +134,7 @@ html(lang='fr')
 																
 																if user.friends
 																	- each friend in user.friends
-																		if friend.confirmed == false && friend.demandeur && friend.user == currentuser
+																		if friend.confirmed == false && friend.user == currentuser
 																			if friend.demandeur == currentuser
 																				- pending = true
 																			if friend.demandeur == user._id
@@ -188,12 +188,12 @@ html(lang='fr')
 																| #{nblinks} liens partagés
 											
 						if filtre
-							a.btn.pull-left(href="/users") Annuler filtre											
+							a.btn-flat-green.pull-left(href="/users") Annuler filtre											
 
 					else
 						if filtre
 							h4.blue Désolé, aucun utilisateur ne correspond à votre filtre. 
-							a.btn(href="/users") Retour
+							a.btn-flat-green(href="/users") Retour
 						else
 							h4.blue Désolé, il n'y a aucun utilisateur
 							h5.blue Invitez vos amis!

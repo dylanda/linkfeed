@@ -372,3 +372,11 @@ button.btn-flat-red {
     -o-animation: blink 1.0s linear infinite;
     animation: blink 1.0s linear infinite;
 }
+
+a.btn.btn-navbar {
+	margin-top:30px;
+}
+
+img.img-rounded.thumbshot {
+	margin-bottom:10px;
+}

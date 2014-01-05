@@ -99,7 +99,7 @@ exports.usersList=function(request,response){
 				db.liens.find({ user: { $ne: user } },function(error,liens){
 				
 						// RECUPERATION USERS dans DATA
-					db.users.find({},function(err,datausers){
+					db.users.find({_id: {$nin: amis} },function(err,datausers){
 					
 						var data = new Array();
 						var k = 0;

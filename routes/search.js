@@ -101,10 +101,27 @@ exports.searchInUsers=function(request,response){
 		var filtre=request.body.searchfield;
 		var currentuser = request.session.user;
 		if (filtre){
-			var usersarray = filtre.split(",");
-			db.users.find({ $query: {$and: [{ _id: {$in: usersarray}} , { _id: {$ne: currentuser}}]}, $orderby: { date_ins : -1 } },function(err,users){
-				db.liens.find({},function(err,links){
-					response.render('users',{links:links, users:users, currentuser:currentuser, data:request.body.data, filtre:true,  filtresTab:filtre});
+			
+			db.users.find({_id: currentuser},function(error,user){
+				var amis=new Array;
+				var j=0;
+				if (user[0].friends!=undefined)
+				{
+					for (var i= 0; i<user[0].friends.length; i++)
+					{ 
+						if (user[0].friends[i].confirmed==true)
+						{
+							amis[j]=user[0].friends[i].user;
+							j++;
+						}
+					}
+				}
+		
+				var usersarray = filtre.split(",");
+				db.users.find({ $query: {$and: [{ _id: {$in: usersarray}} , { _id: {$ne: currentuser}}, { _id: {$nin: amis}}]}, $orderby: { date_ins : -1 } },function(err,users){
+					db.liens.find({},function(err,links){
+						response.render('users',{links:links, users:users, currentuser:currentuser, data:request.body.data, filtre:true,  filtresTab:filtre});
+					});
 				});
 			});
 		}
