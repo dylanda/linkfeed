@@ -47,7 +47,7 @@ html(lang='fr')
 						check();
 					}
 				});
-				
+								
 			});
 			
 			function check(){
@@ -101,43 +101,44 @@ html(lang='fr')
 						p.blue DA CONCEICAO Dylan - HAZAN Raphaël
 						p.blue MANDICA Simon - SZYMANSKI Loïc
 							
-				div.span3.well
-					legend Pas encore inscrit ?
-					- if (typeof(messageError2) !== 'undefined'){
-						div.alert.alert-danger.alert-dismissable
-							button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
-							strong Erreur!
-							|  #{messageError2}
-						if messageError2
-							script.
-								$(document).ready(function() { 
-									$('#registerbtn').click();
-								});
-					-}
-					div.register-collapse.collapse
-						form#registerForm(method='POST', action='/user/new', accept-charset='UTF-8')
-							div.left-inner-addon
-								i.fa.fa-user
-								input#username(type='text', name='username', maxlength="10" , placeholder='Nom d\'utilisateur', required='required')
-							div.left-inner-addon
-								i.fa.fa-lock
-								input#mdp_reg(type='password', name='mdp', placeholder='Mot de passe', required='required')
-							div.left-inner-addon
-								i.fa.fa-lock
-								input#mdp_again(type='password', name='mdp_again', placeholder='Mot de passe \(confirmation\)', required='required')
-							#passError.alert.alert-danger
-								| Les mots de passe ne correspondent pas
-							div.left-inner-addon
-								i.fa.fa-envelope
-								input#email(type='email', name='email', placeholder='Email', required='required')
-							br
-							button.btn-flat-blue(type="submit", onClick="return check();") Valider
-							button.btn-flat-red(type="button", onClick="$('#registerbtn').show()", style="margin-left:15px", data-toggle='collapse', data-target='.register-collapse') Annuler	
-					a.btn-flat-blue(id="registerbtn", onClick="$('#registerbtn').hide()", data-toggle='collapse', data-target='.register-collapse')
-						i.fa.fa-pencil
-						|   S'inscrire
-			
-					hr
-					a.btn-flat-blue.blink(style="border-radius:10px;" , href='/info') 
-						i.fa.fa-info(style="margin-right:10px;")
-						| À propos de LinkFeed
+				div.span3
+					div.row-fluid.well
+						legend Pas encore inscrit ?
+						- if (typeof(messageError2) !== 'undefined'){
+							div.alert.alert-danger.alert-dismissable
+								button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+								strong Erreur!
+								|  #{messageError2}
+							if messageError2
+								script.
+									$(document).ready(function() { 
+										$('#registerbtn').click();
+									});
+						-}
+						div.register-collapse.collapse
+							form#registerForm(method='POST', action='/user/new', accept-charset='UTF-8')
+								div.left-inner-addon
+									i.fa.fa-user
+									input#username(type='text', name='username', maxlength="10" , placeholder='Nom d\'utilisateur', required='required')
+								div.left-inner-addon
+									i.fa.fa-lock
+									input#mdp_reg(type='password', name='mdp', placeholder='Mot de passe', required='required')
+								div.left-inner-addon
+									i.fa.fa-lock
+									input#mdp_again(type='password', name='mdp_again', placeholder='Mot de passe \(confirmation\)', required='required')
+								#passError.alert.alert-danger
+									| Les mots de passe ne correspondent pas
+								div.left-inner-addon
+									i.fa.fa-envelope
+									input#email(type='email', name='email', placeholder='Email', required='required')
+								br
+								button.btn-flat-blue(type="submit", onClick="return check();") Valider
+								button.btn-flat-red(type="button", onClick="$('#registerbtn').show()", style="margin-left:15px", data-toggle='collapse', data-target='.register-collapse') Annuler	
+						a.btn-flat-blue(id="registerbtn", onClick="$('#registerbtn').hide()", data-toggle='collapse', data-target='.register-collapse')
+							i.fa.fa-pencil
+							|   S'inscrire
+				
+						hr
+						a.btn-flat-blue.blink(style="border-radius:10px;" , href='/info') 
+							i.fa.fa-info(style="margin-right:10px;")
+							| À propos de LinkFeed
