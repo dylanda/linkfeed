@@ -34,16 +34,26 @@ html(lang='fr')
 		script.
 			$(document).ready(function() { 
 				$('#passError').hide();
+				$('#userError').hide();
 				
 				$('#mdp_reg').bind('input',function () {
 					if ($('#mdp_reg').val()!="" && $('#mdp_again').val()!=""){
-						check();
+						check2();
 					}
 				});
 				
 				
 				$('#mdp_again').bind('input',function () {
 					if ($('#mdp_reg').val()!="" && $('#mdp_again').val()!=""){
+						check2();
+					}
+				});
+				
+				$('#username_reg').bind('input',function () {
+					regex = /^[a-z0-9_-]{3,15}$/;
+					
+					if ($('#username_reg').val()!="")
+					{
 						check();
 					}
 				});
@@ -51,6 +61,24 @@ html(lang='fr')
 			});
 			
 			function check(){
+				regex = /^[a-z0-9_-]{3,10}$/;
+				
+				if (regex.test($('#username_reg').val())==false)
+				{
+					$('#userError').hide();
+					$('#userError').show();
+					return false;
+				}
+				else
+				{
+					$('#userError').hide();
+					return true;
+				}
+
+			}
+			
+			function check2(){
+				
 				if ($('#mdp_reg').val()!=$('#mdp_again').val()) 
 				{
 					$('#passError').hide();
@@ -60,6 +88,7 @@ html(lang='fr')
 				else
 				{
 					$('#passError').hide();
+					return true;
 				}
 			}
 			
@@ -101,8 +130,8 @@ html(lang='fr')
 						p.blue DA CONCEICAO Dylan - HAZAN Raphaël
 						p.blue MANDICA Simon - SZYMANSKI Loïc
 							
-				div.span3
-					div.row-fluid.well
+				div.span4.well
+					div.row-fluid
 						legend Pas encore inscrit ?
 						- if (typeof(messageError2) !== 'undefined'){
 							div.alert.alert-danger.alert-dismissable
@@ -117,22 +146,30 @@ html(lang='fr')
 						-}
 						div.register-collapse.collapse
 							form#registerForm(method='POST', action='/user/new', accept-charset='UTF-8')
+								#userError.alert.alert-danger
+									| Le nom d'utilisateur doit respecter ces conditions :
+									br
+									| *Ne doit pas contenir d'espace
+									br
+									| *Caractères possibles : a-z A-Z 0-9 '_' '-'
+									br
+									| *Taille : 3 jusqu'à 10 caractères
 								div.left-inner-addon
 									i.fa.fa-user
-									input#username(type='text', name='username', maxlength="10" , placeholder='Nom d\'utilisateur', required='required')
+									input#username_reg(style="width:75%;", type='text', name='username', maxlength="10" , placeholder='Nom d\'utilisateur', required='required')
 								div.left-inner-addon
 									i.fa.fa-lock
-									input#mdp_reg(type='password', name='mdp', placeholder='Mot de passe', required='required')
+									input#mdp_reg(style="width:75%;", type='password', name='mdp', placeholder='Mot de passe', required='required')
 								div.left-inner-addon
 									i.fa.fa-lock
-									input#mdp_again(type='password', name='mdp_again', placeholder='Mot de passe \(confirmation\)', required='required')
+									input#mdp_again(style="width:75%;", type='password', name='mdp_again', placeholder='Mot de passe \(confirmation\)', required='required')
 								#passError.alert.alert-danger
 									| Les mots de passe ne correspondent pas
 								div.left-inner-addon
 									i.fa.fa-envelope
-									input#email(type='email', name='email', placeholder='Email', required='required')
+									input#email(style="width:75%;", type='email', name='email', placeholder='Email', required='required')
 								br
-								button.btn-flat-blue(type="submit", onClick="return check();") Valider
+								button.btn-flat-blue(type="submit", onclick="return check2() && check()") Valider
 								button.btn-flat-red(type="button", onClick="$('#registerbtn').show()", style="margin-left:15px", data-toggle='collapse', data-target='.register-collapse') Annuler	
 						a.btn-flat-blue(id="registerbtn", onClick="$('#registerbtn').hide()", data-toggle='collapse', data-target='.register-collapse')
 							i.fa.fa-pencil

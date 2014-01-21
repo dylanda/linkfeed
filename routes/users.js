@@ -161,7 +161,7 @@ exports.updatePass=function(request,response){
 	                       	}
                         }
                         // FIN        
-                        response.render('profil',{links: link, data:data, user:user, nbddes:dde.length,messageError2:"Le mot de passe est incorrect"});
+                        response.render('profil',{links: link, data:data, user:user, nbddes:dde.length,messageError2:"Le mot de passe actuel est incorrect"});
                     });
                 });
             });
@@ -221,41 +221,83 @@ exports.updateEmail=function(request,response){
 
 exports.deleteAccount=function(request,response){
 		var username = request.session.user;
-		
-		if (request.body.confirmDel.toLowerCase() == "supprimer mon compte"){
-		
-			db.liens.find({user:username} ,function(err,link){
-				db.users.find({_id:username} ,function(err,user){
-			
-					for (var i=0; i<link.length; i++) {
-						db.liens.remove({_id: link[i]._id, user: username});
-					}
-					
-					if (user[0].friends != undefined){
-						var userfriends = user[0].friends;
-					}
-					else{
-						var userfriends = new Array();
-					}
-					
-					var nb = 0;
-					for (var i=0; i<userfriends.length; i++) {
-						db.users.update({"_id":userfriends[i].user},
-							{
-								$pull:{"friends":{user:username}}
-							});
-					}
-					
-					if(request.session.user){
-							request.session.user=undefined;
-					}
-					
-					db.users.remove({_id: username});
-					
-					response.redirect('/');
-				});
-			});
-		}
 
+		db.users.find({$and:[{_id:username},{mdp:request.body.pass}]},function(error,user){
+			if(user.length!=0)
+			{
+		
+				db.liens.find({user:username} ,function(err,link){
+					db.users.find({_id:username} ,function(err,user){
+				
+						for (var i=0; i<link.length; i++) {
+							db.liens.remove({_id: link[i]._id, user: username});
+						}
+						
+						if (user[0].friends != undefined){
+							var userfriends = user[0].friends;
+						}
+						else{
+							var userfriends = new Array();
+						}
+						
+						var nb = 0;
+						for (var i=0; i<userfriends.length; i++) {
+							db.users.update({"_id":userfriends[i].user},
+								{
+									$pull:{"friends":{user:username}}
+								});
+						}
+						
+						if(request.session.user){
+								request.session.user=undefined;
+						}
+						
+						db.users.remove({_id: username});
+						
+						response.redirect('/');
+					});
+				});
+			
+			}
+			else
+			{
+				var auteur=request.session.user;
+				db.users.find({_id:auteur},function(error,user){
+					var dde=new Array;
+					var j=0;
+					if (user[0].friends != undefined)
+					{        
+							for(var i=0;i<user[0].friends.length;i++)
+							{
+									if (user[0].friends[i].confirmed==false && user[0].friends[i].demandeur!=auteur) 
+									{
+											dde[j]=user[0].friends[i].demandeur;
+											j++;
+									}
+							}
+					}
+
+					db.liens.find( { $query: {user:auteur}, $orderby: { date : -1 } } ,function(err,link){
+					
+							// RECUPERATION TAGS dans DATA
+							db.users.find({},function(err,users){
+							
+									var data = new Array();
+									var k = 0;
+									for (var i=0; i<link.length; i++) {
+											if(link[i].tags!=null){
+													for (var j=0; j<link[i].tags.length; j++) {
+															data[k] = "#"+link[i].tags[j];
+															k = k +1;
+													}
+											}
+									}
+							// FIN        
+									response.render('profil',{links: link, data:data, user:user, nbddes:dde.length,messageError3:"Le mot de passe est incorrect."});
+							});
+					});
+				});
+			}
+	});
 };
 

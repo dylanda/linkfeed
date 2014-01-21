@@ -233,31 +233,46 @@ html(lang='fr')
 											i.fa.fa-lock
 											|	Modifier le mot de passe  
 									li
-										a#modifPass(href="#NULL",onClick="$('#info').hide();$('#btnEdit').hide();",data-toggle='collapse',data-target='.deleteAc-collapse')
+										a#delAcc(href="#NULL",onClick="$('#info').hide();$('#btnEdit').hide();",data-toggle='collapse',data-target='.deleteAc-collapse')
 											i.fa.fa-trash-o
 											|	Supprimer mon compte
 
 
-							- if (typeof(messageError) !== 'undefined'){
+							- if (typeof(messageError3) !== 'undefined'){
 							div.alert.alert-danger.alert-dismissable
 								button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
 								strong Erreur!
-								|  #{messageError}
-							if messageError
+								|  #{messageError3}
+							if messageError3
 								script.
 									$(document).ready(function() { 
-										$('#modifMail').click();
+										$('#delAcc').click();
 									});
 							-}
 							
 							div.deleteAc-collapse.collapse(id="deleteAc")
 								form#deleteAc(method='POST', action='/deleteAccount', accept-charset='UTF-8')
+								
+									- if (typeof(messageError2) !== 'undefined'){
+									div.alert.alert-danger.alert-dismissable
+										button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+										strong Erreur!
+										|  #{messageError2}
+									if messageError2
+										script.
+											$(document).ready(function() { 
+												$('#modifPass').click();
+											});
+									-}
+									#confirmError.alert.alert-warning
+										| Veuillez entrer le message complet!
 									p Veuillez saisir "Supprimer mon compte" dans le champ ci-dessous puis valider (irréversible)
 									div.left-inner-addon
 										i.fa.fa-eye
 										input#confirmDel(type='text', name='confirmDel', placeholder='Supprimer mon compte',required='required')
-									#confirmError.alert.alert-danger
-										| Veuillez entrer le message complet!
+									div.left-inner-addon
+										i.fa.fa-lock
+										input#PassActu(type='password', name='pass', placeholder='Mot de passe actuel',required='required')
 									button.btn-flat-green(type="submit", onClick="return checkDel();") 
 										i.fa.fa-check
 										|  Valider
@@ -289,6 +304,8 @@ html(lang='fr')
 										$('#modifPass').click();
 									});
 							-}
+							
+
 
 							div.pass-collapse.collapse(id="pass")
 								form#passForm(method='POST',action='/updatePass',accept-charset='UTF-8')
@@ -368,9 +385,6 @@ html(lang='fr')
 										| Tags :
 									p
 										input#e1(name="tags", placeholder="Tags", multiple)
-									button.btn-flat-blue(type="submit")
-										i.fa.fa-share
-										|  Partager !
 			
 		div.container
 			div.row
