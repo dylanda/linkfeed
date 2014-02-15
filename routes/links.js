@@ -158,7 +158,6 @@ exports.reshare=function(request,response){
 	var ObjectID=require('mongodb').ObjectID;
 	var idString=request.params.id;
 
-	
 	var re = /[0-9a-f]{24}/;
 	
 	if (re.test(idString)){
